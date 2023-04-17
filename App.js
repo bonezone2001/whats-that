@@ -1,13 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeScreen from './components/screens/home';
-import LoginScreen from './components/screens/login';
-import RegisterScreen from './components/screens/register';
+import HomeScreen from './screens/home';
+import LoginScreen from './screens/login';
+import RegisterScreen from './screens/register';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
