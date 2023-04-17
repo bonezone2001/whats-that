@@ -1,30 +1,17 @@
 import { StyleSheet } from "react-native";
+import { colors } from "./variables";
 
 export const mainStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#171717",
+    backgroundColor: colors.background
   },
   entryTitle: {
     fontWeight: "bold",
     fontSize: 50,
-    color: "#FF7F50",
+    color: colors.primary,
     marginBottom: 30,
-  },
-  entryInputText: {
-    height: 50,
-    color: "#fff",
-  },
-  entryBtn: {
-    width: "80%",
-    backgroundColor: "#FF7F50",
-    borderRadius: 15,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
   },
 });

@@ -29,6 +29,7 @@ export default ({
   ghost = false,
   block = 0,
   children,
+  style
 }) => {
   // Handle click and navigation
   const navigation = useNavigation();
@@ -56,7 +57,7 @@ export default ({
 
   // Switches all the different button styles and combines them
   function getButtonStyles() {
-    const style = {
+    const bStyle = {
       base: [styles.button],
       size: {
         small: styles.small,
@@ -77,13 +78,14 @@ export default ({
     };
 
     return [
-      ...style.base,
-      style["size"][size],
-      style["shape"][shape],
-      style["type"][type],
-      style["block"],
-      style["ghost"],
-      style["disabled"],
+      ...bStyle.base,
+      bStyle["size"][size],
+      bStyle["shape"][shape],
+      bStyle["type"][type],
+      bStyle["block"],
+      bStyle["ghost"],
+      bStyle["disabled"],
+      style
     ];
   }
 

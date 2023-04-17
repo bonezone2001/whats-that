@@ -1,10 +1,15 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { mainStyle, entryStyle } from "@styles";
+import TextInput from "@components/input";
+import Button from "@components/button";
 import { useState } from "react";
 
 export default ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = () => {
     // handle login logic here
@@ -13,29 +18,72 @@ export default ({ navigation }) => {
 
   return (
     <View style={mainStyle.container}>
-      <Text style={entryStyle.title}>WhatsThat</Text>
-      <View style={entryStyle.inputView}>
-        <TextInput
-          style={entryStyle.inputText}
-          placeholder="Username"
-          placeholderTextColor="#fff"
-          value={username}
-          onChangeText={setUsername}
-        />
-      </View>
-      <View style={entryStyle.inputView}>
-        <TextInput
-          secureTextEntry
-          style={entryStyle.inputText}
-          placeholder="Password"
-          placeholderTextColor="#fff"
-          value={password}
-          onChangeText={setPassword}
-        />
-      </View>
-      <TouchableOpacity style={entryStyle.btn} onPress={handleRegister}>
-        <Text style={entryStyle.btnText}>CREATE ACCOUNT</Text>
-      </TouchableOpacity>
+      <Text style={entryStyle.title}>Register</Text>
+
+      {/* Login form */}
+      <TextInput
+        shape="rounded"
+        style={{ marginBottom: 20 }}
+        placeholder="First Name"
+        ghost
+        value={firstName}
+        onChangeText={setFirstName}
+        required
+        block={80}
+      />
+      <TextInput
+        shape="rounded"
+        style={{ marginBottom: 20 }}
+        placeholder="Last Name"
+        ghost
+        value={lastName}
+        onChangeText={setLastName}
+        required
+        block={80}
+      />
+      <TextInput
+        type="email-address"
+        shape="rounded"
+        style={{ marginBottom: 20 }}
+        placeholder="Email Address"
+        ghost
+        value={email}
+        onChangeText={setEmail}
+        required
+        block={80}
+      />
+      <TextInput
+        type="password"
+        shape="rounded"
+        style={{ marginBottom: 20 }}
+        placeholder="Password"
+        ghost
+        value={password}
+        onChangeText={setPassword}
+        required
+        block={80}
+      />
+      <TextInput
+        type="password"
+        shape="rounded"
+        style={{ marginBottom: 20 }}
+        placeholder="Confirm Password"
+        ghost
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        required
+        block={80}
+      />
+      <Button
+        type="primary"
+        block={80}
+        onClick={handleRegister}
+        shape="rounded"
+      >
+        CREATE ACCOUNT
+      </Button>
+
+      {/* Switch to login screen */}
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={entryStyle.touchableText}>
           Already have an account? Login

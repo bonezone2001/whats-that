@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import HomeScreen from './screens/home';
 import LoginScreen from './screens/login';
 import RegisterScreen from './screens/register';
+import { colors } from '@styles';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Stack navigator options
 const stackOptions = {
-  headerShown: false
+  headerShown: false,
+  animation: 'fade_from_bottom',
 };
 
 export default function App() {
@@ -21,7 +23,7 @@ export default function App() {
   const [authToken, setAuthToken] = useState("");
 
   return (
-    <NavigationContainer>
+    <NavigationContainer style={styles.root}>
       {isAuthenticated ? (
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeScreen} />
@@ -37,10 +39,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
-    justifyContent: 'center',
+  root: {
+    backgroundColor: colors.background,
   }
 });
