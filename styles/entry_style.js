@@ -1,32 +1,30 @@
-// Stylesheet for the entry screens (login/register)
 import { StyleSheet } from "react-native";
-import { colors } from "./variables";
+import { colors } from "@styles/global_style";
 
 export const entryStyle = StyleSheet.create({
-  title: {
-    fontWeight: "bold",
-    fontSize: 50,
-    color: colors.primary,
-    marginBottom: 30,
-  },
-  inputText: {
-    height: 50,
-    color: colors.text,
-  },
-  inputView: {
-    width: "80%",
-    backgroundColor: "#101010",
-    borderRadius: 15,
-    height: 50,
-    marginBottom: 20,
-    justifyContent: "center",
-    padding: 20,
-    color: "#FF7F50",
-    borderWidth: 1,
-    borderColor: "#303030",
-  },
-  touchableText: {
-    color: "#555",
-    marginTop: 20,
-  },
+    title: {
+        fontFamily: "Montserrat_Regular",
+        fontSize: 50,
+        color: colors.primary,
+        marginBottom: 30,
+    },
+    touchableText: {
+        fontWeight: "bold",
+        color: "#555",
+        marginTop: 20,
+    },
+    touchableTextBold: {
+        fontWeight: "bold",
+        color: colors.primary,
+    },
+    input: {
+        marginBottom: 10,
+        backgroundColor: "#f6f6f6"
+    },
+    backgroundImage: {
+        flex: 1,
+        width: "100%",
+        resizeMode: "cover",
+        backgroundColor: colors.background,
+    },
 });

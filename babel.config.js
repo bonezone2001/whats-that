@@ -1,21 +1,23 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
-    // add path alias
+    presets: ["babel-preset-expo"],
     plugins: [
       [
-        'module-resolver',
+        "module-resolver",
         {
           alias: {
-            '@components': './components',
-            '@screens': './screens',
-            '@utils': './utils',
-            '@assets': './assets',
-            "@styles": "./styles"
+            "@components": "./components",
+            "@navigator": "./navigator",
+            "@utils": "./utils",
+            "@assets": "./assets",
+            "@styles": "./styles",
+            "@locales": "./locales",
+            "@locales": "./locales",
+            "@api": "./api",
           },
         },
-      ]
+      ],
     ],
   };
 };
