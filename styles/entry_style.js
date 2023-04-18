@@ -12,6 +12,7 @@ export const entryStyle = StyleSheet.create({
         fontWeight: "bold",
         color: "#555",
         marginTop: 20,
+        marginBottom: 20,
     },
     touchableTextBold: {
         fontWeight: "bold",
@@ -26,5 +27,11 @@ export const entryStyle = StyleSheet.create({
         width: "100%",
         resizeMode: "cover",
         backgroundColor: colors.background,
+    },
+    errorText: {
+        color: "#555",
+        fontSize: 12,
+        fontWeight: "bold",
+        marginTop: 10,
     },
 });

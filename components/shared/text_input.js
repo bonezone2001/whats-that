@@ -7,8 +7,8 @@ import {
     Text,
     Platform,
 } from "react-native";
+import { useEffect, useRef, useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
-import { useRef, useState } from "react";
 import { colors } from "@styles";
 
 
@@ -28,6 +28,10 @@ import { colors } from "@styles";
 // - onBlur: function - Called when the input is blurred
 // - placeholder: string - Placeholder text to show when the input is empty
 // - readonly: boolean - Set to true to make the input uneditable
+// - required: boolean - Set to true to show a red asterisk next to the input
+// - triggerValidate: boolean - Set to true to force the input to validate
+// - inputStyle: object - Style to apply to the input
+// - style: object - Style to apply to the container
 
 export default ({
     size = "medium",
@@ -48,6 +52,7 @@ export default ({
     ghost = false,
     textColor = colors.text,
     placeholderTextColor = colors.inputPlaceholder,
+    triggerValidate = false,
     inputStyle,
     style,
 }) => {
@@ -83,40 +88,45 @@ export default ({
     ];
   };
 
-  const getViewStyles = () => {
-    const vStyle = {
-        base: [styles.view],
-        block: block > 0 && { width: `${block}%` },
+    const getViewStyles = () => {
+        const vStyle = {
+            base: [styles.view],
+            block: block > 0 && { width: `${block}%` },
+        };
+
+        return [...vStyle.base, vStyle["block"]];
     };
 
-    return [...vStyle.base, vStyle["block"]];
-};
+    // Here for scalability and expandability (currently useless)
+    function getInputStyles() {
+        style = { };
+        if (textColor) style.color = textColor;
+        return [styles.input, style, inputStyle]
+    }
 
-  // Here for scalability and expandability (currently useless)
-  function getInputStyles() {
-    style = { };
-    if (textColor) style.color = textColor;
-    return [styles.input, style, inputStyle]
-  }
+    function focusInput() {
+        inputRef.current.focus();
+    }
 
-  function focusInput() {
-    inputRef.current.focus();
-  }
+    function performValidation() {
+        if (!onValidate) return;
+        const error = onValidate();
+        setError(error);
+    }
 
-  function performValidation() {
-    const error = onValidate();
-    setError(error);
-  }
+    function internalOnBlur() {
+        performValidation();
+        onBlur();
+    }
 
-  function internalOnBlur() {
-    performValidation();
-    onBlur();
-  }
+    useEffect(() => {
+        if (triggerValidate) performValidation();
+    }, [triggerValidate]);
 
     return (
         <View style={getViewStyles()}>
             {error?.length > 0 && <Text style={styles.errorText}>{error}</Text>}
-            <TouchableWithoutFeedback onPressIn={focusInput} disabled={disabled}>
+            <TouchableWithoutFeedback onPressIn={focusInput} onFocus={focusInput} disabled={disabled}>
                 <View style={getContainerStyles()}>
                     {
                         loading ? <ActivityIndicator color="#FFF" />

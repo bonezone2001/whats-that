@@ -3,6 +3,7 @@ import { globalStyle, entryStyle, colors } from "@styles";
 import { useEffect, useState } from "react";
 import { entryUtils } from "@utils";
 import fetch from "node-fetch";
+import { user } from "@api";
 
 import Button from "@components/shared/button";
 import TextInput from "@components/shared/text_input";
@@ -19,7 +20,9 @@ export default ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [triggerValidation, setTriggerValidation] = useState(false);
     const [bgImage, setBgImage] = useState(bgImageWeb);
+    const [majorError, setMajorError] = useState("");
 
     // Auto adjust the background image based on the dimensions and platform
     useEffect(() => {
@@ -27,9 +30,33 @@ export default ({ navigation }) => {
         const subscription = Dimensions.addEventListener("change", () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile));
         return () => subscription.remove();
     }, []);
+
+    // Reset the trigger validation
+    useEffect(() => {
+        if (triggerValidation) setTriggerValidation(false);
+    }, [triggerValidation]);
     
-    const handleRegister = () => {
-        //
+    const handleRegister = async () => {
+        setMajorError("");
+        const errors = entryUtils.validateRegister(firstName, lastName, email, password, confirmPassword);
+        if (errors) {
+            setTriggerValidation(true);
+            return;
+        }
+
+        const fields = [firstName, lastName, email];
+        const setFields = [setFirstName, setLastName, setEmail];
+        fields.forEach((field, index) => setFields[index](field.trim()));
+
+        setLoading(true);
+        const response = await user.register(firstName, lastName, email, password);
+        if (response.status === 201) {
+            navigation.navigate("Login");
+        } else {
+            const error = (await response.text())?.split("-").splice(1).join("-").trim() || "An unknown error occurred";
+            setMajorError(error);
+        }
+        setLoading(false);
     };
 
     return (
@@ -48,6 +75,7 @@ export default ({ navigation }) => {
                     value={firstName}
                     onChangeText={setFirstName}
                     onValidate={() => entryUtils.validateName(firstName)}
+                    triggerValidate={triggerValidation}
                 />
                 <TextInput
                     placeholder="Last Name"
@@ -58,6 +86,7 @@ export default ({ navigation }) => {
                     value={lastName}
                     onChangeText={setLastName}
                     onValidate={() => entryUtils.validateName(lastName)}
+                    triggerValidate={triggerValidation}
                 />
                 <TextInput
                     placeholder="Email Address"
@@ -69,6 +98,7 @@ export default ({ navigation }) => {
                     value={email}
                     onChangeText={setEmail}
                     onValidate={() => entryUtils.validateEmail(email)}
+                    triggerValidate={triggerValidation}
                 />
                 <TextInput
                     placeholder="Password"
@@ -80,6 +110,7 @@ export default ({ navigation }) => {
                     value={password}
                     onChangeText={setPassword}
                     onValidate={() => entryUtils.validatePassword(password)}
+                    triggerValidate={triggerValidation}
                 />
                 <TextInput
                     placeholder="Confirm Password"
@@ -91,17 +122,22 @@ export default ({ navigation }) => {
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
                     onValidate={() => entryUtils.validateConfirmPassword(password, confirmPassword)}
+                    triggerValidate={triggerValidation}
                 />
                 <Button
                     type="primary"
                     block={80}
-                    onClick={handleRegister}
+                    onPress={handleRegister}
                     loading={loading}
                     shape="rounded"
                     textColor="black"
                 >
                 CREATE ACCOUNT
                 </Button>
+                {
+                    majorError &&
+                    <Text style={entryStyle.errorText}>{majorError}</Text>
+                }
 
                 {/* Switch to login screen */}
                 <TouchableOpacity onPress={() => navigation.navigate("Login")}>

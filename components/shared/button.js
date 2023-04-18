@@ -23,6 +23,7 @@ import React from "react";
 // - ghost: boolean - Set to true to make the button transparent with a border
 // - block: number - Set to a number between 0 and 100 to make the button fill the screens width by that percentage
 // - children: string - What to show on the button
+// - style: object - Style to apply to the button
 
 export default ({
     onPress,

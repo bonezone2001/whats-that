@@ -2,6 +2,7 @@ import { Text, View, TouchableOpacity, ImageBackground, Dimensions } from "react
 import { globalStyle, entryStyle, colors } from "@styles";
 import { useEffect, useState } from "react";
 import { entryUtils } from "@utils";
+import { user } from "@api";
 
 import Button from "@components/shared/button";
 import TextInput from "@components/shared/text_input";
@@ -16,6 +17,8 @@ export default ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [bgImage, setBgImage] = useState(bgImageWeb);
+    const [majorError, setMajorError] = useState("");
+    const [triggerValidation, setTriggerValidation] = useState(false);
 
     // Auto adjust the background image based on the dimensions and platform
     useEffect(() => {
@@ -23,8 +26,29 @@ export default ({ navigation }) => {
         const subscription = Dimensions.addEventListener("change", () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile));
         return () => subscription.remove();
     }, []);
+
+    // Reset the trigger validation
+    useEffect(() => {
+        if (triggerValidation) setTriggerValidation(false);
+    }, [triggerValidation]);
     
-    const handleLogin = () => {
+    const handleLogin = async () => {
+        setMajorError("");
+        const errors = entryUtils.validateLogin(email, password);
+        if (errors) {
+            setTriggerValidation(true);
+            return;
+        }
+        setEmail(email.trim());
+        setLoading(true);
+        const response = await user.login(email, password);
+        if (response.status === 200) {
+            
+        } else {
+            const error = (await response.text()) || "An unknown error occurred";
+            setMajorError(error);
+        }
+        setLoading(false);
     };
 
     return (
@@ -48,6 +72,8 @@ export default ({ navigation }) => {
                     textColor="black"
                     value={email}
                     onChangeText={setEmail}
+                    onValidate={() => entryUtils.validateEmail(email)}
+                    triggerValidate={triggerValidation}
                 />
                 <TextInput
                     placeholder="Password"
@@ -58,17 +84,23 @@ export default ({ navigation }) => {
                     textColor="black"
                     value={password}
                     onChangeText={setPassword}
+                    onValidate={() => password.length === 0 ? "Password is required" : null}
+                    triggerValidate={triggerValidation}
                 />
                 <Button
                     type="primary"
                     block={80}
-                    onClick={handleLogin}
+                    onPress={handleLogin}
                     loading={loading}
                     shape="rounded"
                     textColor="black"
                 >
                 LOGIN
                 </Button>
+                {
+                    majorError &&
+                    <Text style={entryStyle.errorText}>{majorError}</Text>
+                }
 
                 {/* Switch to register screen */}
                 <TouchableOpacity onPress={() => navigation.navigate("Register")}>
