@@ -14,6 +14,7 @@ module.exports = function (api) {
             "@styles": "./styles",
             "@locales": "./locales",
             "@locales": "./locales",
+            '@store': './store',
             "@api": "./api",
           },
         },

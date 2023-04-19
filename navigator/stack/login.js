@@ -1,8 +1,10 @@
 import { Text, View, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { globalStyle, entryStyle, colors } from "@styles";
 import { useEffect, useState } from "react";
 import { entryUtils } from "@utils";
-import { user } from "@api";
+import { useStore } from "@store";
+import api from "@api";
 
 import Button from "@components/shared/button";
 import TextInput from "@components/shared/text_input";
@@ -19,6 +21,8 @@ export default ({ navigation }) => {
     const [bgImage, setBgImage] = useState(bgImageWeb);
     const [majorError, setMajorError] = useState("");
     const [triggerValidation, setTriggerValidation] = useState(false);
+
+    const store = useStore();
 
     // Auto adjust the background image based on the dimensions and platform
     useEffect(() => {
@@ -41,12 +45,17 @@ export default ({ navigation }) => {
         }
         setEmail(email.trim());
         setLoading(true);
-        const response = await user.login(email, password);
-        if (response.status === 200) {
-            
-        } else {
-            const error = (await response.text()) || "An unknown error occurred";
-            setMajorError(error);
+        try {
+            const reponse = await api.login(email, password);
+            const { token, id } = reponse.data;
+            await AsyncStorage.setItem("userId", id);
+            store.setUserId(id);
+            await AsyncStorage.setItem("token", token);
+            store.setToken(token);
+        } catch (error) {
+            console.log(error);
+            const errorMsg = error?.response?.data || "An unknown error occurred";
+            setMajorError(errorMsg);
         }
         setLoading(false);
     };
@@ -98,8 +107,9 @@ export default ({ navigation }) => {
                 LOGIN
                 </Button>
                 {
-                    majorError &&
+                    majorError ?
                     <Text style={entryStyle.errorText}>{majorError}</Text>
+                    : null
                 }
 
                 {/* Switch to register screen */}

@@ -2,8 +2,7 @@ import { Text, View, TouchableOpacity, ImageBackground, Dimensions } from "react
 import { globalStyle, entryStyle, colors } from "@styles";
 import { useEffect, useState } from "react";
 import { entryUtils } from "@utils";
-import fetch from "node-fetch";
-import { user } from "@api";
+import api from "@api";
 
 import Button from "@components/shared/button";
 import TextInput from "@components/shared/text_input";
@@ -49,12 +48,12 @@ export default ({ navigation }) => {
         fields.forEach((field, index) => setFields[index](field.trim()));
 
         setLoading(true);
-        const response = await user.register(firstName, lastName, email, password);
-        if (response.status === 201) {
+        try {
+            await api.register(firstName, lastName, email, password);
             navigation.navigate("Login");
-        } else {
-            const error = (await response.text())?.split("-").splice(1).join("-").trim() || "An unknown error occurred";
-            setMajorError(error);
+        } catch (error) {
+            const errorMsg = error?.response.data?.split("-").splice(1).join("-").trim() || "An unknown error occurred";
+            setMajorError(errorMsg);
         }
         setLoading(false);
     };
@@ -135,8 +134,9 @@ export default ({ navigation }) => {
                 CREATE ACCOUNT
                 </Button>
                 {
-                    majorError &&
+                    majorError ?
                     <Text style={entryStyle.errorText}>{majorError}</Text>
+                    : null
                 }
 
                 {/* Switch to login screen */}

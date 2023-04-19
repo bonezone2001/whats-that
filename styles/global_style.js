@@ -19,9 +19,16 @@ export const colors = {
   
     inputPlaceholder: '#666',
     text: "#fff",
-  };
 
-  export const globalStyle = StyleSheet.create({
+    tabIconDefault: '#868686',
+    tabIconSelected: '#52c443',
+    tabBar: '#242424',
+};
+
+colors.tabIconSelected = colors.secondary;
+  
+
+export const globalStyle = StyleSheet.create({
     root: {
         flex: 1,
         backgroundColor: colors.background,
