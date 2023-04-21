@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderColor: "#fff",
         backgroundColor: "#aaa",
+        textAlign: 'center',
     },
     small: {
         paddingVertical: 8,
