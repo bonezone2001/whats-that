@@ -46,8 +46,8 @@ export default {
         const response = await api.get(`/user/${userId}`);
         return response;
     },
-    updateUserInfo: async (first_name, last_name, email, password) => {
-        const response = await api.patch('/user', { first_name, last_name, email, password });
+    updateUserInfo: async (userId, details) => {
+        const response = await api.patch(`/user/${userId}`, details);
         return response;
     },
     getUserPhoto: async (userId) => {
