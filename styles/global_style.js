@@ -33,6 +33,7 @@ export const globalStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         color: colors.text,
+        overflow: "hidden",
     },
     container: {
         flex: 1,
