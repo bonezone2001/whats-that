@@ -206,4 +206,8 @@ const styles = StyleSheet.create({
         borderColor: colors.danger,
         color: colors.danger,
     },
+    ghost: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
+    },
 });
