@@ -28,6 +28,7 @@ import React from "react";
 export default ({
     onPress,
     size = "medium",
+    textAlign = "center",
     shape,
     loading = false,
     icon,
@@ -41,7 +42,7 @@ export default ({
     style,
 }) => {
     // Handle click and navigation
-    const navigation = useNavigation();
+    const navigation = href ? useNavigation() : null;
     function onClick() {
         if (href) return navigation.navigate(href);
         if (onPress) onPress();
@@ -60,7 +61,7 @@ export default ({
         if (icon)
             child = (
                 <View style={styles.iconContainer}>
-                    <Ionicons name={icon} size={20} color={textColor || colors.text} />
+                    <Ionicons style={styles.icon} name={icon} size={20} color={textColor || colors.text} />
                     {child}
                 </View>
             );
@@ -69,6 +70,12 @@ export default ({
 
     // Switches all the different button styles and combines them
     function getButtonStyles() {
+        const alignLookup = {
+            center: "center",
+            left: "flex-start",
+            right: "flex-end",
+        };
+        
         const bStyle = {
             base: [styles.button],
             size: {
@@ -87,6 +94,7 @@ export default ({
             block: block > 0 ? { width: `${block}%` } : null,
             ghost: ghost ? styles.ghost : null,
             disabled: disabled && styles.disabled,
+            align: { justifyContent: alignLookup[textAlign] },
         };
 
         return [
@@ -97,6 +105,7 @@ export default ({
             bStyle["block"],
             bStyle["ghost"],
             bStyle["disabled"],
+            bStyle["align"],
             style,
         ];
     }
@@ -156,12 +165,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-    icon: {
-        marginRight: 5,
-    },
     iconContainer: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+    },
+    icon: {
+        marginRight: 8,
+    },
+    ghost: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
     },
 });

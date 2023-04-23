@@ -36,4 +36,4 @@ export const appUtils = {
         const buffer = Buffer.from(data, 'base64');
         return { buffer, type };
     },
-}
+};

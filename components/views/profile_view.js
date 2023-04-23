@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useEffect, useRef, useMemo, useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import InfoCard from "@components/shared/info_card";
 import Button from "@components/shared/button";
@@ -6,7 +7,6 @@ import Avatar from "@components/shared/avatar";
 import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "@styles";
 import { useStore } from "@store";
-import { useEffect } from "react";
 
 export default () => {
     const navigation = useNavigation();
@@ -16,11 +16,15 @@ export default () => {
         navigation.navigate("Edit");
     };
 
+    const onHamburgerPress = () => {
+        store.bottomSheet.current?.expand();
+    };
+
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <Button
-                    onPress={() => navigation.navigate("View")}
+                    onPress={onHamburgerPress}
                     style={globalStyle.transparent}
                     size="small"
                 >
@@ -28,7 +32,7 @@ export default () => {
                 </Button>
             ),
         });
-    }, []);
+    }, [store.bottomSheet]);
     
     return (
         <View style={globalStyle.container}>
@@ -96,4 +100,5 @@ const styles = StyleSheet.create({
     profileContent: {
         marginTop: 20,
     },
+    
 });

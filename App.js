@@ -1,6 +1,8 @@
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthorizedTabs from '@navigator/bottom/authorized_bottom_tab';
 import { NavigationContainer } from '@react-navigation/native';
+import BottomSheet from '@components/shared/bottom_sheet';
 import { useEffect, useCallback, useState } from 'react';
 import AuthStack from '@navigator/stack/auth_stack';
 import * as SplashScreen from 'expo-splash-screen';
@@ -39,11 +41,14 @@ export default function App() {
     return (
         <SafeAreaProvider>
             <StatusBar style="auto" />
-            <SafeAreaView style={globalStyle.root} onLayout={onLayoutRootView}>
-                <NavigationContainer style={globalStyle.root}>
-                    {store.token ? (<AuthorizedTabs />) : (<AuthStack />)}
-                </NavigationContainer>
-            </SafeAreaView>
+            <GestureHandlerRootView style={globalStyle.root}>
+                <SafeAreaView style={globalStyle.root} onLayout={onLayoutRootView}>
+                    <NavigationContainer style={globalStyle.root}>
+                        {store.token ? (<AuthorizedTabs />) : (<AuthStack />)}
+                        <BottomSheet />
+                    </NavigationContainer>
+                </SafeAreaView>
+            </GestureHandlerRootView>
         </SafeAreaProvider>
     );
 }

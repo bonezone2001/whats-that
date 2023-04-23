@@ -15,7 +15,7 @@ export const colors = {
     background: "#171717",
     buttonBackground: "#aaa",
     inputBackground: '#aaa',
-    modalBackground: '#000000',
+    modalBackground: '#101010',
   
     inputPlaceholder: '#666',
     text: "#fff",
