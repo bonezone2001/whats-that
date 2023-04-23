@@ -123,7 +123,7 @@ export default () => {
                             style={styles.input}
                             textColor="black"
                             value={firstName}
-                            onChangeText={setFirstName}
+                            onChangeText={(name) => setFirstName(entryUtils.sanitizeAndTrim(name))}
                             onValidate={() => entryUtils.validateName(firstName)}
                         />
 
@@ -133,7 +133,7 @@ export default () => {
                             style={styles.input}
                             textColor="black"
                             value={lastName}
-                            onChangeText={setLastName}
+                            onChangeText={(name) => setLastName(entryUtils.sanitizeAndTrim(name))}
                             onValidate={() => entryUtils.validateName(lastName)}
                         />
 
@@ -144,7 +144,7 @@ export default () => {
                             style={styles.input}
                             textColor="black"
                             value={email}
-                            onChangeText={setEmail}
+                            onChangeText={(email) => setEmail(entryUtils.sanitizeEmail(email))}
                             onValidate={() => entryUtils.validateEmail(email)}
                         />
                         {majorError ? <Text style={globalStyle.errorText}>{majorError}</Text> : null}

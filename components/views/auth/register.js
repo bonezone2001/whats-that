@@ -71,7 +71,7 @@ export default ({ navigation }) => {
                     style={entryStyle.input}
                     textColor="black"
                     value={firstName}
-                    onChangeText={setFirstName}
+                    onChangeText={(name) => setFirstName(entryUtils.sanitizeAndTrim(name))}
                     onValidate={() => entryUtils.validateName(firstName)}
                     triggerValidate={triggerValidation}
                 />
@@ -82,7 +82,7 @@ export default ({ navigation }) => {
                     style={entryStyle.input}
                     textColor="black"
                     value={lastName}
-                    onChangeText={setLastName}
+                    onChangeText={(name) => setLastName(entryUtils.sanitizeAndTrim(name))}
                     onValidate={() => entryUtils.validateName(lastName)}
                     triggerValidate={triggerValidation}
                 />
@@ -94,7 +94,7 @@ export default ({ navigation }) => {
                     style={entryStyle.input}
                     textColor="black"
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={(email) => setEmail(entryUtils.sanitizeEmail(email))}
                     onValidate={() => entryUtils.validateEmail(email)}
                     triggerValidate={triggerValidation}
                 />

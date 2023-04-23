@@ -19,6 +19,16 @@ export const entryUtils = {
         }
     },
 
+    // Sanatization of text inputs
+    sanitizeAndTrim(text) {
+        return text.replace(/[^a-zA-Z0-9 ]/g, "").trim();
+    },
+    sanitizeEmail(email) {
+        // Remove all emojis and spaces
+        // |\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\u{d000}-\u{dfff}])/g, "").replace(/\s/g, "");
+        return email.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]|[\\r])/g, "").replace(/\s/g, "").trim();
+    },
+
     // Validation of text inputs
     validateName(name) {
         if (name.length >= 3) return;
@@ -125,5 +135,14 @@ export const entryUtils = {
         // };
         // store.setUser(userData);
         // return true;
-    }
+    },
+
+    logout: async () => {
+        const store = useStore.getState();
+        await api.logout();
+        AsyncStorage.removeItem('userId');
+        AsyncStorage.removeItem('token');
+        store.setUserId(null);
+        store.setToken(null);
+    },
 };
