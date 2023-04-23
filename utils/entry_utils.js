@@ -57,15 +57,25 @@ export const entryUtils = {
         if (emailError == null && passwordError == null) return null;
         return { email: emailError, password: passwordError };
     },
+    validateUpdateDetails(firstName, lastName, email) {
+        const errors = {
+            firstName: entryUtils.validateName(firstName),
+            lastName: entryUtils.validateName(lastName),
+            email: entryUtils.validateEmail(email)
+        };
+        if (Object.values(errors).every(error => error == null)) return null;
+        return errors;
+    },
 
     // Test user token
-    async loadOrPurgeDeadToken(setLoading) {
+    async loadOrPurgeDeadToken(setLoading = null) {
         // Debug set token and userId
+        // const store = useStore.getState();
         // await AsyncStorage.setItem("token", "e570f8f5e245cdbef146a5ece5e74d0d");
         // await AsyncStorage.setItem("userId", "10");
         // store.setToken("e570f8f5e245cdbef146a5ece5e74d0d");
         // store.setUserId(10);
-        //setLoading(false);
+        // return true;
 
         const store = useStore.getState();
         const token = await AsyncStorage.getItem("token");
@@ -74,8 +84,9 @@ export const entryUtils = {
         try {
             if (token) {
                 await api.testAuth(token);
-                store.setUserId(userId);
+                store.setUserId(parseInt(userId));
                 store.setToken(token);
+                return true;
             }
         } catch (error) {
             if (error?.response?.status === 401) {
@@ -84,9 +95,35 @@ export const entryUtils = {
                 store.setToken(null);
             } else
                 console.log(error);
-        } finally {
-            setLoading(false);
         }
+        return false;
     },
-    
+
+    // Gather user data and put it in the store
+    async loadUserData() {
+        const store = useStore.getState();
+        try {
+            const userData = (await api.getUserInfo(store.userId)).data;
+            const avatarData = await api.getUserPhoto(store.userId);
+            userData.avatar = avatarData;
+            userData.friends = 123;
+            userData.chats = 456;
+            store.setUser(userData);
+            return true;
+        } catch (error) {
+            console.log(error);
+        }
+        return false;
+
+        // const store = useStore.getState();
+        // const userData = {
+        //     first_name: "John",
+        //     last_name: "Doe",
+        //     email: "test@test.com",
+        //     friends: 123,
+        //     chats: 456
+        // };
+        // store.setUser(userData);
+        // return true;
+    }
 };

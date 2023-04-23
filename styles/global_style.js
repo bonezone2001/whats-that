@@ -26,7 +26,6 @@ export const colors = {
 };
 
 colors.tabIconSelected = colors.secondary;
-  
 
 export const globalStyle = StyleSheet.create({
     root: {
@@ -40,5 +39,18 @@ export const globalStyle = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: colors.background,
+    },
+    contentContainer: {
+        width: "100%",
+        marginTop: 5,
+    },
+    transparent: {
+        backgroundColor: "transparent",
+    },
+    errorText: {
+        color: "#555",
+        fontSize: 12,
+        fontWeight: "bold",
+        marginTop: 10,
     },
 });

@@ -1,13 +1,12 @@
 import { Text, View, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { globalStyle, entryStyle, colors } from "@styles";
+import TextInput from "@components/shared/text_input";
+import Button from "@components/shared/button";
 import { useEffect, useState } from "react";
 import { entryUtils } from "@utils";
 import { useStore } from "@store";
 import api from "@api";
-
-import Button from "@components/shared/button";
-import TextInput from "@components/shared/text_input";
 
 // Since mobile doesn't support SVG, we need two versions of the background image
 // Could have just used the png version for both, but I wanted svg for higher quality on web
@@ -21,7 +20,6 @@ export default ({ navigation }) => {
     const [bgImage, setBgImage] = useState(bgImageWeb);
     const [majorError, setMajorError] = useState("");
     const [triggerValidation, setTriggerValidation] = useState(false);
-
     const store = useStore();
 
     // Auto adjust the background image based on the dimensions and platform
@@ -48,12 +46,12 @@ export default ({ navigation }) => {
         try {
             const reponse = await api.login(email, password);
             const { token, id } = reponse.data;
-            await AsyncStorage.setItem("userId", id);
-            store.setUserId(id);
+            await AsyncStorage.setItem("userId", id.toString());
+            await store.setUserId(id);
             await AsyncStorage.setItem("token", token);
-            store.setToken(token);
+            await store.setToken(token);
+            await entryUtils.loadUserData();
         } catch (error) {
-            console.log(error);
             const errorMsg = error?.response?.data || "An unknown error occurred";
             setMajorError(errorMsg);
         }
@@ -64,7 +62,6 @@ export default ({ navigation }) => {
         // Switch between the two background images based on the platform
         <ImageBackground source={bgImage} style={entryStyle.backgroundImage}>
             <View style={[globalStyle.container, { backgroundColor: "transparent" }]}>
-                
                 {/* Have whats and that be different colours */}
                 <Text style={entryStyle.title}>
                     <Text style={{ color: colors.primary }}>Whats</Text>
@@ -108,7 +105,7 @@ export default ({ navigation }) => {
                 </Button>
                 {
                     majorError ?
-                    <Text style={entryStyle.errorText}>{majorError}</Text>
+                    <Text style={globalStyle.errorText}>{majorError}</Text>
                     : null
                 }
 
@@ -118,7 +115,6 @@ export default ({ navigation }) => {
                         Don't have an account? <Text style={entryStyle.touchableTextBold}>Register</Text>
                     </Text>
                 </TouchableOpacity>
-                
             </View>
         </ImageBackground>
     );

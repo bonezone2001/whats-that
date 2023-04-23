@@ -1,3 +1,4 @@
+import { appUtils } from '@utils/app_utils';
 import Constants from 'expo-constants';
 import { useStore } from '@store';
 import axios from 'axios';
@@ -37,7 +38,7 @@ export default {
         return response;
     },
     testAuth: async (token) => {
-        const response = await api.get('/contacts', { headers: { 'X-Authorization': token } });
+        const response = await api.get('/contacts', { headers: { 'X-Authorization': token }, timeout: 2500 });
         return response;
     },
 
@@ -51,11 +52,18 @@ export default {
         return response;
     },
     getUserPhoto: async (userId) => {
-        const response = await api.get(`/user/${userId}/photo`);
-        return response;
+        const response = await api.get(`/user/${userId}/photo`, { responseType: 'blob' });
+        const blob = new Blob([response.data], { type: "image/jpeg" });
+        return appUtils.blobToDataUrl(blob);
     },
-    uploadUserPhoto: async (photo) => {
-        const response = await api.post(`/user/${userId}/photo`, photo);
+    uploadUserPhoto: async (userId, photo) => {
+        // Accept support for blob + base64 (base64 to a buffer)
+        // Blob wouldn't work on android at all but buffer works on both
+        if (typeof photo === 'string') photo = appUtils.dataUrlToBuffer(photo);
+        else photo = { buffer: photo, type: photo.type };
+        const response = await api.post(`/user/${userId}/photo`, photo.buffer, {
+            headers: { 'Content-Type': photo.type },
+        });
         return response;
     },
     searchUsers: async (query, search_in, limit = 20, offset = 0) => {

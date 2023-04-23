@@ -1,8 +1,4 @@
 // Zustand module for user state management (includes auth token)
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { AsyncStorage } from "react-native";
-
 export const createUserSlice = (set, get) => ({
     user: null,
     userId: null,

@@ -24,8 +24,13 @@ export default function App() {
     });
 
     useEffect(() => {
-        entryUtils.loadOrPurgeDeadToken(setLoading);
-    }, []);
+        (async () => {
+            if (await entryUtils.loadOrPurgeDeadToken())
+                await entryUtils.loadUserData();
+            await appUtils.loadIcons();
+            setLoading(false);
+        })();
+    }, [store.token]);
 
     // Display splash screen until app is ready
     const onLayoutRootView = useCallback(async () => fontLoaded && !loading && await SplashScreen.hideAsync(), [fontLoaded, loading]);

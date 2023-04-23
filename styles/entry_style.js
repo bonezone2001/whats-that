@@ -28,10 +28,4 @@ export const entryStyle = StyleSheet.create({
         resizeMode: "cover",
         backgroundColor: colors.background,
     },
-    errorText: {
-        color: "#555",
-        fontSize: 12,
-        fontWeight: "bold",
-        marginTop: 10,
-    },
 });

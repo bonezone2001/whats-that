@@ -63,7 +63,6 @@ export default ({ navigation }) => {
         <ImageBackground source={bgImage}  style={entryStyle.backgroundImage}>
             <View style={[globalStyle.container, { backgroundColor: "transparent" }]}>
                 <Text style={entryStyle.title}>Register</Text>
-
                 {/* Input form */}
                 <TextInput
                     placeholder="First Name"
@@ -135,7 +134,7 @@ export default ({ navigation }) => {
                 </Button>
                 {
                     majorError ?
-                    <Text style={entryStyle.errorText}>{majorError}</Text>
+                    <Text style={globalStyle.errorText}>{majorError}</Text>
                     : null
                 }
 

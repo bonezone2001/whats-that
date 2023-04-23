@@ -7,6 +7,7 @@ export const screenOptions = {
     animation: "fade_from_bottom",
 };
 
+// TODO: Move this to authorized_bottom_tab.js
 export const tabBarOptions = ({ route }) => ({
     tabBarIcon: ({ focused, color, size }) => {
         let iconName;

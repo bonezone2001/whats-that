@@ -2,7 +2,6 @@
 import {
     StyleSheet,
     Image,
-    TouchableWithoutFeedback,
 } from "react-native";
 
 import defaultAvatar from '@assets/images/default_avatar.jpg';
@@ -20,7 +19,6 @@ export default ({
     source,
     size = 50,
     style,
-    onPress,
     shape = "circle", // circle, square, rounded
 }) => {
     const styles = StyleSheet.create({
