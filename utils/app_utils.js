@@ -59,5 +59,14 @@ export const appUtils = {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(this, args), wait);
         };
+    },
+
+    debounceLeading(func, wait) {
+        let timeout;
+        return function(...args) {
+            if (!timeout) func.apply(this, args);
+            clearTimeout(timeout);
+            timeout = setTimeout(() => timeout = null, wait);
+        };
     }
 };

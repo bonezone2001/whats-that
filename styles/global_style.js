@@ -7,10 +7,10 @@ export const colors = {
     secondary: "#57CC99",
     secondaryDark: "#003300",
   
-    warning: "#FF7F50",
     danger: "#e16468",
-    success: "#00FF00",
-    info: "#0000FF",
+    success: "#57CC99",
+    warning: "#FF7F50",
+    info: "#aaa",
   
     background: "#171717",
     buttonBackground: "#aaa",

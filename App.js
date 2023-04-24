@@ -6,7 +6,7 @@ import BottomSheet from '@components/shared/bottom_sheet';
 import { useEffect, useCallback, useState } from 'react';
 import AuthStack from '@navigator/stack/auth_stack';
 import * as SplashScreen from 'expo-splash-screen';
-import { appUtils, entryUtils } from '@utils';
+import { apiUtils, appUtils, entryUtils } from '@utils';
 import { StatusBar } from 'expo-status-bar';
 import { globalStyle } from '@styles';
 import { useFonts } from 'expo-font';
@@ -27,8 +27,10 @@ export default function App() {
 
     useEffect(() => {
         (async () => {
-            if (await entryUtils.loadOrPurgeDeadToken())
+            if (await entryUtils.loadOrPurgeDeadToken()) {
                 await entryUtils.loadUserData();
+                await apiUtils.updateContactsAndBlocked();
+            }
             await appUtils.loadIcons();
             setLoading(false);
         })();

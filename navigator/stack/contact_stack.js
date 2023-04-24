@@ -3,9 +3,12 @@ import ContactView from '@components/views/contact_view';
 import ContactAdd from '@components/views/contact_add';
 import Button from "@components/shared/button";
 import { Feather } from "@expo/vector-icons";
+import { apiUtils, appUtils } from '@utils';
 import { headerOptions } from '@styles';
 import { globalStyle } from '@styles';
 import { View } from 'react-native';
+import { useEffect } from 'react';
+import { useStore } from '@store';
 
 const ContactStack = createNativeStackNavigator();
 
@@ -40,6 +43,13 @@ export default ({ navigation }) => {
             </View>
         ),
     };
+
+    // This is a hack but it works (abuse of debounce since react-navigation doesn't have a listener for when the stacks are changed for some reason)
+    // debounce is needed because the listener is called multiple times when the stack is changed
+    useEffect(() => {
+        const updateFunc = appUtils.debounceLeading(apiUtils.updateContactsAndBlocked, 100);
+        navigation.addListener("state", () => updateFunc());
+    }, []);
 
     return (
         <ContactStack.Navigator initialRouteName="Add">

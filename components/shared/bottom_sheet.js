@@ -2,7 +2,7 @@
 // For now, its only for logout and settings
 
 import React, { useEffect, useMemo, useRef } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useStore } from "@store";
 import Animated, {
@@ -13,7 +13,7 @@ import { colors } from '@styles';
 import Button from './button';
 import { useNavigation } from '@react-navigation/native';
 import { entryUtils } from '@utils';
-  
+
 const customBackground = ({
     style,
     animatedIndex,
@@ -32,7 +32,7 @@ const customBackground = ({
   };
 
 export default () => {
-    const snapPoints = useMemo(() => [Math.round((window.innerHeight * 18) / 100)], []);
+    const snapPoints = useMemo(() => [Math.round((Dimensions.get('window').height * 18) / 100) || "15%"], []);
     const bottomSheetRef = useRef(null);
     const navigation = useNavigation();
     const store = useStore();
