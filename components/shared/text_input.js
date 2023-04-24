@@ -132,7 +132,7 @@ export default ({
             <TouchableWithoutFeedback onPressIn={focusInput} onFocus={focusInput} disabled={disabled}>
                 <View style={getContainerStyles()}>
                     {
-                        loading ? <ActivityIndicator style={[styles.indicator, prefixStyle]} color="#FFF" />
+                        loading ? <ActivityIndicator style={[styles.indicator, prefixStyle]} size={24} color="#FFF" />
                         : icon && <IconLibrary style={[styles.icon, prefixStyle]} name={icon} size={24} color="#fff" />
                     }
                     <TextInput

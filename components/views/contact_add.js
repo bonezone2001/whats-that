@@ -5,7 +5,7 @@ import TextInput from "@components/shared/text_input";
 import { View, Text, Image } from "react-native";
 import Avatar from "@components/shared/avatar";
 import Button from "@components/shared/button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiUtils, appUtils } from "@utils";
 import { useStore } from "@store";
 import api from "@api";
@@ -14,6 +14,7 @@ import noResultsImage from '@assets/images/no_results.png';
 
 export default () => {
     const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     const store = useStore();
 
@@ -41,7 +42,23 @@ export default () => {
     };
 
     // Delay calling searchForContact to prevent spamming the server with incomplete queries
-    const debouncedSearch = appUtils.debounce(searchForContact, 250);
+    // useCallback is used to prevent the debounce function from being recreated on every render (due to the loading update)
+    const debouncedSearch = useCallback(
+        appUtils.debounce(async (query) => {
+            searchForContact(query);
+            setLoading(false);
+        }, 250),
+        []
+    );
+
+    // Show loading indicator while waiting for debounce and search
+    const search = useCallback(
+        (query) => {
+            setLoading(true);
+            debouncedSearch(query);
+        },
+        [debouncedSearch]
+    );
 
     const addContact = async (user) => {
         try {
@@ -91,12 +108,13 @@ export default () => {
                         placeholder="Search"
                         placeholderTextColor="#fff"
                         icon="search"
-                        onChangeText={debouncedSearch}
+                        loading={loading}
+                        onChangeText={search}
                     />
                 </View>
             ),
         });
-    }, [setSearchResults, store]);
+    }, [setSearchResults, store, loading]);
     
     return (
         <View style={contactStyle.container}>
