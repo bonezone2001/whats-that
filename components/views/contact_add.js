@@ -1,10 +1,10 @@
+import { View, Text, StyleSheet, Image } from "react-native";
+import { colors, contactStyle, globalStyle } from "@styles";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
-import { View, Text, StyleSheet, Image } from "react-native";
 import TextInput from "@components/shared/text_input";
 import Avatar from "@components/shared/avatar";
 import Button from "@components/shared/button";
-import { colors, globalStyle } from "@styles";
 import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { apiUtils, appUtils } from "@utils";
@@ -37,7 +37,7 @@ export default () => {
             }
             setSearchResults(contacts);
         } catch (error) {
-            console.log(error);
+            console.log(error); 
         }
     };
 
@@ -51,7 +51,7 @@ export default () => {
             else
                 await api.addContact(user.user_id);
             user.isContact = !user.isContact;
-            await apiUtils.updateContacts(store);
+            await apiUtils.updateContacts();
             console.log("Added contact!");
         } catch (error) {
             console.log(error);
@@ -65,7 +65,8 @@ export default () => {
             else
                 await api.blockUser(user.user_id);
             user.isBlocked = !user.isBlocked;
-            await apiUtils.updateBlocked(store);
+            user.isContact = !user.isBlocked;
+            await apiUtils.updateContactsAndBlocked();
         } catch (error) {
             console.log(error);
         }
@@ -83,9 +84,9 @@ export default () => {
                 </Button>
             ),
             headerTitle: () => (
-                <View style={styles.searchBar}>
+                <View style={contactStyle.searchBar}>
                     <TextInput
-                        style={styles.searchBarText}
+                        style={contactStyle.searchBarText}
                         placeholder="Search"
                         placeholderTextColor="#fff"
                         icon="search"
@@ -97,28 +98,28 @@ export default () => {
     }, [setSearchResults, store]);
     
     return (
-        <View style={[globalStyle.container, styles.container]}>
+        <View style={contactStyle.container}>
             {searchResults.length > 0 ? (
                 <FlatList
-                    style={[globalStyle.contactList, { width: "100%" }]}
+                    style={contactStyle.contactList}
                     data={searchResults}
                     renderItem={({ item }) => (
-                        <View style={styles.contact}>
-                            <View style={styles.avatarContainer}>
+                        <View style={contactStyle.contact}>
+                            <View style={contactStyle.avatarContainer}>
                                 <Avatar
                                     size={60}
                                     shape="circle"
                                     source={{ uri: item.avatar }}
                                 />
                             </View>
-                            <View style={styles.infoContainer}>
-                                <Text numberOfLines={1} style={styles.contactName}>{`${item.given_name} ${item.family_name}`}</Text>
-                                <Text numberOfLines={1} style={styles.contactEmail}>{item.email}</Text>
+                            <View style={contactStyle.infoContainer}>
+                                <Text numberOfLines={1} style={contactStyle.name}>{`${item.given_name} ${item.family_name}`}</Text>
+                                <Text numberOfLines={1} style={contactStyle.email}>{item.email}</Text>
                             </View>
-                            <View style={styles.actionsContainer}>
-                                {item.isContact ? (
+                            <View style={contactStyle.actionsContainer}>
+                                {(item.isContact || item.isBlocked) ? (
                                     <Button
-                                        style={styles.actionButton}
+                                        style={contactStyle.actionButton}
                                         onPress={() => blockContact(item)}
                                         size="small"
                                         icon={!item.isBlocked ? "unlock" : "lock"}
@@ -127,97 +128,28 @@ export default () => {
                                         textColor={!item.isBlocked ? colors.info : colors.danger}
                                     />
                                 ) : null}
-                                <Button
-                                    style={styles.actionButton}
-                                    onPress={() => addContact(item)}
-                                    size="small"
-                                    icon={item.isContact ? "minus" : "plus"}
-                                    iconSize={28}
-                                    iconLibrary="feather"
-                                    textColor={item.isContact ? colors.danger : colors.success}
-                                />
+                                {!item.isBlocked ? (
+                                    <Button
+                                        style={contactStyle.actionButton}
+                                        onPress={() => addContact(item)}
+                                        size="small"
+                                        icon={item.isContact ? "minus" : "plus"}
+                                        iconSize={28}
+                                        iconLibrary="feather"
+                                        textColor={item.isContact ? colors.danger : colors.success}
+                                    />
+                                ) : null}
                             </View>
                         </View>
                     )}
                     keyExtractor={(item) => item.user_id.toString()}
                 />
             ) : (
-                <View style={[styles.placeholderContainer, { alignItems: 'center' }]}>
-                    <Image source={noResultsImage} style={styles.placeholderImage} />
-                    <Text style={styles.placeholderText}>No results found</Text>
+                <View style={[contactStyle.placeholderContainer, { alignItems: 'center' }]}>
+                    <Image source={noResultsImage} style={contactStyle.placeholderImage} />
+                    <Text style={contactStyle.placeholderText}>No results found</Text>
                 </View>
             )}
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: "flex-start",
-    },
-    searchBar: {
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: 'flex-start',
-    },
-    searchBarText: {
-        color: "#fff",
-        fontSize: 18,
-        backgroundColor: 'transparent',
-    },
-    contactList: {
-        flex: 1,
-    },
-    contact: {
-        backgroundColor: colors.modalBackground,
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-    },
-    contactContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-        marginBottom: 10,
-    },
-    avatarContainer: {
-        marginRight: 10,
-    },
-    infoContainer: {
-        flex: 1,
-    },
-    contactName: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    contactEmail: {
-        fontSize: 16,
-        color: '#888',
-    },
-    actionsContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    actionButton: {
-        backgroundColor: 'transparent',
-    },
-    placeholderContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-    },
-    placeholderImage: {
-        width: 200,
-        height: 200,
-        resizeMode: 'contain',
-    },
-    placeholderText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginTop: 20,
-    },
-});

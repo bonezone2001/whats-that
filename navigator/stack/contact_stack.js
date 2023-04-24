@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ContactBlock from '@components/views/contact_blocked';
 import ContactView from '@components/views/contact_view';
 import ContactAdd from '@components/views/contact_add';
 import Button from "@components/shared/button";
@@ -8,7 +9,6 @@ import { headerOptions } from '@styles';
 import { globalStyle } from '@styles';
 import { View } from 'react-native';
 import { useEffect } from 'react';
-import { useStore } from '@store';
 
 const ContactStack = createNativeStackNavigator();
 
@@ -52,8 +52,9 @@ export default ({ navigation }) => {
     }, []);
 
     return (
-        <ContactStack.Navigator initialRouteName="Add">
+        <ContactStack.Navigator initialRouteName="View">
             <ContactStack.Screen name="View" component={ContactView} options={viewHeaderOptions} />
+            <ContactStack.Screen name="Blocked" component={ContactBlock} options={headerOptions} />
             <ContactStack.Screen name="Add" component={ContactAdd} options={headerOptions} />
         </ContactStack.Navigator>
     );
