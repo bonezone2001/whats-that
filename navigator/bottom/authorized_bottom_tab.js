@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ProfileStack from '@navigator/stack/profile_stack';
 import ContactStack from '@navigator/stack/contact_stack';
 import ChatStack from '@navigator/stack/chat_stack';
-import Chat from '@components/views/chat';
 import { tabBarOptions } from '@styles';
 
 const AuthorizedTab = createBottomTabNavigator();

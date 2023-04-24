@@ -3,7 +3,6 @@ import ContactBlock from '@components/views/contact_blocked';
 import ContactView from '@components/views/contact_view';
 import ContactAdd from '@components/views/contact_add';
 import Button from "@components/shared/button";
-import { Feather } from "@expo/vector-icons";
 import { apiUtils, appUtils } from '@utils';
 import { headerOptions } from '@styles';
 import { globalStyle } from '@styles';
@@ -30,16 +29,20 @@ export default ({ navigation }) => {
                     onPress={onBlockedContacts}
                     style={globalStyle.transparent}
                     size="small"
-                >
-                    <Feather name="x-circle" size={28} color="#fff" />
-                </Button>
+                    icon="x-circle"
+                    iconLibrary="Feather"
+                    iconSize={28}
+                    textColor="#fff"
+                />
                 <Button
                     onPress={onAddContact}
                     style={globalStyle.transparent}
                     size="small"
-                >
-                    <Feather name="user-plus" size={28} color="#fff" />
-                </Button>
+                    icon="user-plus"
+                    iconLibrary="Feather"
+                    iconSize={28}
+                    textColor="#fff"
+                />
             </View>
         ),
     };

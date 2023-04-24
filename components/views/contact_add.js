@@ -1,11 +1,10 @@
-import { View, Text, StyleSheet, Image } from "react-native";
 import { colors, contactStyle, globalStyle } from "@styles";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
 import TextInput from "@components/shared/text_input";
+import { View, Text, Image } from "react-native";
 import Avatar from "@components/shared/avatar";
 import Button from "@components/shared/button";
-import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { apiUtils, appUtils } from "@utils";
 import { useStore } from "@store";
@@ -79,9 +78,11 @@ export default () => {
                     onPress={() => navigation.navigate("View")}
                     style={globalStyle.transparent}
                     size="small"
-                >
-                    <Feather name="x" size={40} color="#fff" />
-                </Button>
+                    icon="x"
+                    iconLibrary="Feather"
+                    iconSize={40}
+                    textColor="#fff"
+                />
             ),
             headerTitle: () => (
                 <View style={contactStyle.searchBar}>

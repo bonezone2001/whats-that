@@ -3,7 +3,6 @@ import { View, Text, FlatList, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Button from "@components/shared/button";
 import Avatar from "@components/shared/avatar";
-import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { apiUtils } from "@utils";
 import { useStore } from "@store";
@@ -32,9 +31,11 @@ export default () => {
                     onPress={() => navigation.navigate("View")}
                     style={globalStyle.transparent}
                     size="small"
-                >
-                    <Feather name="x" size={40} color="#fff" />
-                </Button>
+                    icon="x"
+                    iconLibrary="Feather"
+                    iconSize={40}
+                    textColor="#fff"
+                />
             ),
         });
     }, []);

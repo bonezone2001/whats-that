@@ -85,9 +85,11 @@ export default () => {
                     onPress={() => navigation.navigate("View")}
                     style={globalStyle.transparent}
                     size="small"
-                >
-                    <Feather name="x" size={40} color="#fff" />
-                </Button>
+                    icon="x"
+                    iconLibrary="Feather"
+                    iconSize={40}
+                    textColor="#fff"
+                />
             ),
             headerRight: () => (
                 <Button
