@@ -6,9 +6,9 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons';
 import { colors } from "@styles";
 import React from "react";
+import { appUtils } from "@utils";
 
 // Properties:
 // - onClick: function - called when the button is pressed
@@ -32,6 +32,8 @@ export default ({
     shape,
     loading = false,
     icon,
+    iconSize = 20,
+    iconLibrary = "Ionicons",
     href,
     textColor = null,
     disabled = false,
@@ -40,6 +42,7 @@ export default ({
     block = 0,
     children,
     style,
+    prefixStyle,
 }) => {
     // Handle click and navigation
     const navigation = href ? useNavigation() : null;
@@ -58,13 +61,15 @@ export default ({
             if (textColor) style.color = textColor;
             child = <Text style={[styles.text, style]}>{children}</Text>;
         }
-        if (icon)
+        if (icon) {
+            const IconLibrary = appUtils.getIconLibrary(iconLibrary);
             child = (
                 <View style={styles.iconContainer}>
-                    <Ionicons style={styles.icon} name={icon} size={20} color={textColor || colors.text} />
+                    <IconLibrary style={[styles.icon, !child ? {marginRight: 0} : null, prefixStyle]} name={icon} size={iconSize} color={textColor || colors.text} />
                     {child}
                 </View>
             );
+        }
         return child;
     }
 

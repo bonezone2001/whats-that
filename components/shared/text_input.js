@@ -8,15 +8,15 @@ import {
     Platform,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
-import { Ionicons } from '@expo/vector-icons';
 import { colors } from "@styles";
-
+import { appUtils } from "@utils";
 
 // Properties:
 // - size: small, medium, large - Size of the input
 // - shape: rounded - Shape of the input
 // - loading: boolean - Set to true to show a loading indicator
-// - icon: string - Icon to show on the input (currently unimplemented)
+// - icon: string - Icon to show on the input
+// - iconLibrary: string - Icon library to use
 // - disabled: boolean - Set to true to disable the input
 // - type: default, password, email-address, numeric, phone-pad - Type of input
 // - ghost: boolean - Set to true to make the input transparent with a border
@@ -43,6 +43,7 @@ export default ({
     type,
     value,
     icon,
+    iconLibrary = "Ionicons",
     onValidate = () => "",
     onChangeText = () => {},
     onFocus = () => {},
@@ -55,6 +56,7 @@ export default ({
     triggerValidate = false,
     inputStyle,
     style,
+    prefixStyle,
 }) => {
   const inputRef = useRef(null);
   const [error, setError] = useState("");
@@ -122,15 +124,16 @@ export default ({
     useEffect(() => {
         if (triggerValidate) performValidation();
     }, [triggerValidate]);
-
+    
+    const IconLibrary = appUtils.getIconLibrary(iconLibrary);
     return (
         <View style={getViewStyles()}>
             {error?.length > 0 && <Text style={styles.errorText}>{error}</Text>}
             <TouchableWithoutFeedback onPressIn={focusInput} onFocus={focusInput} disabled={disabled}>
                 <View style={getContainerStyles()}>
                     {
-                        loading ? <ActivityIndicator color="#FFF" />
-                        : icon && <Ionicons name={icon} size={24} color="#fff" />
+                        loading ? <ActivityIndicator style={[styles.indicator, prefixStyle]} color="#FFF" />
+                        : icon && <IconLibrary style={[styles.icon, prefixStyle]} name={icon} size={24} color="#fff" />
                     }
                     <TextInput
                         ref={inputRef}
@@ -209,5 +212,11 @@ const styles = StyleSheet.create({
     ghost: {
         backgroundColor: "transparent",
         borderWidth: 1,
+    },
+    indicator: {
+        marginRight: 8,
+    },
+    icon: {
+        marginRight: 8,
     },
 });

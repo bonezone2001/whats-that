@@ -137,7 +137,7 @@ export const entryUtils = {
         // return true;
     },
 
-    logout: async () => {
+    async logout() {
         const store = useStore.getState();
         await api.logout();
         AsyncStorage.removeItem('userId');

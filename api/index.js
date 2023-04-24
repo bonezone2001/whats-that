@@ -66,8 +66,8 @@ export default {
         });
         return response;
     },
-    searchUsers: async (query, search_in, limit = 20, offset = 0) => {
-        const response = await api.get(`/search?q=${query}&search_in=${search_in}&limit=${limit}&offset=${offset}`);
+    searchUsers: async (query, search_in = "all", limit = 20, offset = 0) => {
+        const response = await api.get(`/search?q=${encodeURIComponent(query)}&search_in=${search_in}&limit=${limit}&offset=${offset}`);
         return response;
     },
 
@@ -77,11 +77,11 @@ export default {
         return response;
     },
     addContact: async (userId) => {
-        const response = await api.post(`/contacts/${userId}`);
+        const response = await api.post(`/user/${userId}/contact`);
         return response;
     },
     removeContact: async (userId) => {
-        const response = await api.delete(`/contacts/${userId}`);
+        const response = await api.delete(`/user/${userId}/contact`);
         return response;
     },
 
