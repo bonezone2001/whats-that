@@ -12,7 +12,7 @@ export default () => {
     const store = useStore();
 
     useEffect(() => {
-        Promise.all(store.contacts.map(async (contact) => {
+        Promise.all(store.contacts?.map(async (contact) => {
             const avatarData = await api.getUserPhoto(contact.user_id);
             contact.avatar = avatarData;
             return contact;

@@ -48,7 +48,10 @@ export default ({ navigation }) => {
     // debounce is needed because the listener is called multiple times when the stack is changed
     useEffect(() => {
         const updateFunc = appUtils.debounceLeading(apiUtils.updateContactsAndBlocked, 100);
-        navigation.addListener("state", () => updateFunc());
+        navigation.addListener("state", () => {
+            if (navigation.getState().index == 1)
+                updateFunc();
+        });
     }, []);
 
     return (

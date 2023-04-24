@@ -21,7 +21,6 @@ export const contactStyle = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     contact: {
-        backgroundColor: colors.modalBackground,
         flexDirection: "row",
         alignItems: "center",
         padding: 10,

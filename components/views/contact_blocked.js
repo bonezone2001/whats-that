@@ -40,7 +40,7 @@ export default () => {
     }, []);
 
     useEffect(() => {
-        Promise.all(store.blocked.map(async (blocked) => {
+        Promise.all(store.blocked?.map(async (blocked) => {
             const avatarData = await api.getUserPhoto(blocked.user_id);
             blocked.avatar = avatarData;
             return blocked;
