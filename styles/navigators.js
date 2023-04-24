@@ -8,6 +8,20 @@ export const screenOptions = {
     animation: "fade_from_bottom",
 };
 
+export const headerOptions = {
+    headerTitle: () => null,
+    ...screenOptions,
+    headerShown: true,
+    headerShadowVisible: false,
+    headerStyle: {
+        backgroundColor: colors.background,
+        borderBottomColor: 'transparent',
+        borderBottomWidth: 0,
+        elevation: 0,
+        shadowOpacity: 0,
+    },
+};
+
 // TODO: Move this to authorized_bottom_tab.js
 export const tabBarOptions = ({ route }) => {
     const store = useStore();
@@ -19,7 +33,7 @@ export const tabBarOptions = ({ route }) => {
                 return <Avatar size={30} style={{ opacity: focused ? 1 : 0.5, borderWidth: 1, borderColor: 'grey' }} source={{ uri: store?.user?.avatar }} />
             else if (route.name === 'Chat')
                 iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline';
-            else if (route.name === 'Friends')
+            else if (route.name === 'Contacts')
                 iconName = focused ? 'people' : 'people-outline';
             return <Ionicons name={iconName} size={size} color={color} />;
         },

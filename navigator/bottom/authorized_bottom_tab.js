@@ -1,15 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ProfileStack from '@navigator/stack/profile_stack';
-import Friends from '@components/views/friends';
+import ContactStack from '@navigator/stack/contact_stack';
 import Chat from '@components/views/chat';
 import { tabBarOptions } from '@styles';
 
 const AuthorizedTab = createBottomTabNavigator();
 
 export default () => (
-    <AuthorizedTab.Navigator screenOptions={tabBarOptions}>
+    <AuthorizedTab.Navigator screenOptions={tabBarOptions} initialRouteName="Contacts">
         <AuthorizedTab.Screen name="Chat" component={Chat} />
-        <AuthorizedTab.Screen name="Friends" component={Friends} />
+        <AuthorizedTab.Screen name="Contacts" component={ContactStack} />
         <AuthorizedTab.Screen name="Profile" component={ProfileStack} />
     </AuthorizedTab.Navigator>
 );
