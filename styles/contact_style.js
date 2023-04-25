@@ -24,6 +24,8 @@ export const contactStyle = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#333',
     },
     avatarContainer: {
         marginRight: 10,

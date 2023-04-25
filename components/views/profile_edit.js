@@ -85,7 +85,7 @@ export default () => {
                     onPress={() => navigation.navigate("View")}
                     style={globalStyle.transparent}
                     size="small"
-                    icon="x"
+                    icon="chevron-left"
                     iconLibrary="Feather"
                     iconSize={40}
                     textColor="#fff"

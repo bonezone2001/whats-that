@@ -29,7 +29,10 @@ export default function App() {
         (async () => {
             if (await entryUtils.loadOrPurgeDeadToken()) {
                 await entryUtils.loadUserData();
-                await apiUtils.updateContactsAndBlocked();
+
+                apiUtils.updateContactsAndBlocked();
+                // This endpoint breaks if the user has no chats, it doesn't send a response so it eventually timesout
+                apiUtils.updateChats().catch((error) => console.log(error));
             }
             await appUtils.loadIcons();
             setLoading(false);
@@ -44,7 +47,7 @@ export default function App() {
         <SafeAreaProvider>
             <StatusBar style="auto" />
             <GestureHandlerRootView style={globalStyle.root}>
-                <SafeAreaView style={globalStyle.root} onLayout={onLayoutRootView}>
+                <SafeAreaView style={[globalStyle.root]} edges={['right', 'bottom', 'left']} onLayout={onLayoutRootView}>
                     <NavigationContainer style={globalStyle.root}>
                         {store.token ? (<AuthorizedTabs />) : (<AuthStack />)}
                         <BottomSheet />

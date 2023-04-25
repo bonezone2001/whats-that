@@ -17,5 +17,11 @@ export const apiUtils = {
     updateContactsAndBlocked: async () => {
         await apiUtils.updateContacts();
         await apiUtils.updateBlocked();
+    },
+
+    updateChats: async () => {
+        const store = useStore.getState();
+        const response = await api.getAllChats();
+        await store.setChats(response.data);
     }
 };

@@ -32,7 +32,7 @@ export default () => {
                 </Button>
             ),
             headerTitle: () => (
-                <Text style={globalStyle.headerTitle}>Profile</Text>
+                <Text numberOfLines={1} style={globalStyle.headerTitle}>Profile</Text>
             ),
         });
     }, [store.bottomSheet]);

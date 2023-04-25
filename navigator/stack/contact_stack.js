@@ -46,7 +46,7 @@ export default ({ navigation }) => {
             </View>
         ),
         headerTitle: () => (
-            <Text style={globalStyle.headerTitle}>Contacts</Text>
+            <Text numberOfLines={1} style={globalStyle.headerTitle}>Contacts</Text>
         ),
     };
 
