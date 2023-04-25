@@ -9,16 +9,19 @@ export default () => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
+            headerRight: () => (
                 <Button
-                    onPress={() => navigation.navigate("View")}
+                    onPress={() => navigation.navigate("Create")}
                     style={globalStyle.transparent}
                     size="small"
-                    icon="x"
+                    icon="plus"
                     iconLibrary="Feather"
-                    iconSize={40}
+                    iconSize={30}
                     textColor="#fff"
                 />
+            ),
+            headerTitle: () => (
+                <Text style={globalStyle.headerTitle}>Chats</Text>
             ),
         });
     }, []);

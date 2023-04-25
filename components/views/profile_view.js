@@ -28,8 +28,11 @@ export default () => {
                     style={globalStyle.transparent}
                     size="small"
                 >
-                    <Ionicons name="menu" size={40} color="#fff" />
+                    <Ionicons name="menu" size={38} color="#fff" />
                 </Button>
+            ),
+            headerTitle: () => (
+                <Text style={globalStyle.headerTitle}>Profile</Text>
             ),
         });
     }, [store.bottomSheet]);

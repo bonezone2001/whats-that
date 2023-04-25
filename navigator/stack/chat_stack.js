@@ -16,7 +16,7 @@ export default ({ navigation }) => {
     };
 
     return (
-        <ChatStack.Navigator>
+        <ChatStack.Navigator screenOptions={{headerBackVisible: false}}>
             <ChatStack.Screen name="View" component={ChatView} options={viewHeaderOptions} />
         </ChatStack.Navigator>
     );

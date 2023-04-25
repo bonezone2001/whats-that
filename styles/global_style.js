@@ -44,6 +44,12 @@ export const globalStyle = StyleSheet.create({
         width: "100%",
         marginTop: 5,
     },
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#fff",
+        textTransform: "uppercase",
+    },
     transparent: {
         backgroundColor: "transparent",
     },

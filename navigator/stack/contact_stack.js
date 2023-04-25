@@ -6,7 +6,7 @@ import Button from "@components/shared/button";
 import { apiUtils, appUtils } from '@utils';
 import { headerOptions } from '@styles';
 import { globalStyle } from '@styles';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useEffect } from 'react';
 
 const ContactStack = createNativeStackNavigator();
@@ -45,6 +45,9 @@ export default ({ navigation }) => {
                 />
             </View>
         ),
+        headerTitle: () => (
+            <Text style={globalStyle.headerTitle}>Contacts</Text>
+        ),
     };
 
     // This is a hack but it works (abuse of debounce since react-navigation doesn't have a listener for when the stacks are changed for some reason)
@@ -58,7 +61,7 @@ export default ({ navigation }) => {
     }, []);
 
     return (
-        <ContactStack.Navigator initialRouteName="View">
+        <ContactStack.Navigator initialRouteName="View" screenOptions={{headerBackVisible: false}}>
             <ContactStack.Screen name="View" component={ContactView} options={viewHeaderOptions} />
             <ContactStack.Screen name="Blocked" component={ContactBlock} options={headerOptions} />
             <ContactStack.Screen name="Add" component={ContactAdd} options={headerOptions} />
