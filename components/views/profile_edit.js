@@ -104,6 +104,9 @@ export default () => {
                     )}  
                 </Button>
             ),
+            headerTitle: () => (
+                <Text numberOfLines={1} style={globalStyle.headerTitle}>Edit Profile</Text>
+            ),
         });
     }, [firstName, lastName, email, avatar, updating]);
 

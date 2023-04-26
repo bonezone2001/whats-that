@@ -6,6 +6,7 @@ import {
     TouchableWithoutFeedback,
     Text,
     Platform,
+    KeyboardAvoidingView
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { colors } from "@styles";
@@ -40,6 +41,8 @@ export default ({
     shape,
     readonly = false,
     required = false,
+    multiline = false,
+    maxHeight = 100,
     type,
     value,
     icon,
@@ -48,6 +51,7 @@ export default ({
     onChangeText = () => {},
     onFocus = () => {},
     onBlur = () => {},
+    onChange = () => {},
     loading = false,
     placeholder = "",
     ghost = false,
@@ -103,7 +107,7 @@ export default ({
     function getInputStyles() {
         style = { };
         if (textColor) style.color = textColor;
-        return [styles.input, style, inputStyle]
+        return [styles.input, style, inputStyle, { maxHeight }];
     }
 
     function focusInput() {
@@ -117,17 +121,40 @@ export default ({
     }
 
     function internalOnBlur() {
-        performValidation();
         onBlur();
+        performValidation();
     }
+
+    // Web doesn't support the multiline parameter auto resizing, so we have to manually do it
+    function resizeInput() {
+        if (Platform.OS === "web") {
+            const el = inputRef.current;
+            if (el) {
+                el.style.height = 0;
+                const newHeight = el.offsetHeight - el.clientHeight + el.scrollHeight;
+                el.style.height = `${newHeight}px`;
+            }
+        }
+    }
+
+    // Triggered in case of no value provided and user only relies on onChangeText
+    const internalContentChange = (event) => {
+        onChange(event);
+        if (value || !multiline) return;
+        resizeInput();
+    };
 
     useEffect(() => {
         if (triggerValidate) performValidation();
     }, [triggerValidate]);
+
+    useEffect(() => {
+        if (multiline) resizeInput();
+    }, [value]);
     
     const IconLibrary = appUtils.getIconLibrary(iconLibrary);
     return (
-        <View style={getViewStyles()}>
+        <KeyboardAvoidingView style={getViewStyles()}>
             {error?.length > 0 && <Text style={styles.errorText}>{error}</Text>}
             <TouchableWithoutFeedback onPressIn={focusInput} onFocus={focusInput} disabled={disabled}>
                 <View style={getContainerStyles()}>
@@ -138,8 +165,10 @@ export default ({
                     <TextInput
                         ref={inputRef}
                         style={getInputStyles()}
+                        multiline={multiline}
                         onChangeText={onChangeText}
                         onFocus={onFocus}
+                        onChange={internalContentChange}
                         onBlur={internalOnBlur}
                         value={value}
                         placeholder={placeholder}
@@ -151,7 +180,7 @@ export default ({
                     />
                 </View>
             </TouchableWithoutFeedback>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 

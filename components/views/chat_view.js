@@ -42,7 +42,7 @@ export default () => {
                 return `You ${placeholder}`;
             return `${creator.first_name} ${creator.last_name} ${placeholder}`;
         }
-        return "WIP";
+        return `${item.last_message.author.first_name}: ${item.last_message.message}`;
     };
 
     return (
