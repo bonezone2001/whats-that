@@ -3,6 +3,9 @@ import Constants from 'expo-constants';
 import { useStore } from '@store';
 import axios from 'axios';
 
+// Since most of the api is stateless (we don't store any data in the api itself)
+// we don't need to use react hooks, we can just use an object and import the store for the single state (token )
+
 const API_BASE_URL = Constants.manifest.extra.API_BASE_URL;
 
 // Create api client
@@ -100,6 +103,8 @@ export default {
     },
 
     // Chats
+    // limit and offset aren't implemented on the api. I ended up implementing scrolling to load but
+    // it wasn't working, so I checked the api and it doesn't support it. sadness.
     getChatDetails: async (chatId, limit = 20, offset = 0) => {
         const response = await api.get(`/chat/${chatId}?limit=${limit}&offset=${offset}`);
         return response;
@@ -141,12 +146,12 @@ export default {
     },
 
     // Messages
-    sendMessage: async (chatId, text) => {
-        const response = await api.post(`/chat/${chatId}/message`, { text });
+    sendMessage: async (chatId, message) => {
+        const response = await api.post(`/chat/${chatId}/message`, { message });
         return response;
     },
-    editMessage: async (chatId, messageId, text) => {
-        const response = await api.patch(`/chat/${chatId}/message/${messageId}`, { text });
+    editMessage: async (chatId, messageId, message) => {
+        const response = await api.patch(`/chat/${chatId}/message/${messageId}`, { message });
         return response;
     },
     deleteMessage: async (chatId, messageId) => {

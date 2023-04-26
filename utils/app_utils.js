@@ -68,5 +68,11 @@ export const appUtils = {
             clearTimeout(timeout);
             timeout = setTimeout(() => timeout = null, wait);
         };
-    }
+    },
+
+    hashBasedNumber(textInput) {
+        var seed = textInput.split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+        Math.seedrandom(seed);
+        return Math.floor(Math.random() * 100) + 1;
+      }
 };
