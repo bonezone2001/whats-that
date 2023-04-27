@@ -8,7 +8,7 @@ export const appUtils = {
     // So this is a temporary fix for a bug that doesn't affect the android app but breaks the web app
     fixReanimated() {
         if (Platform.OS === 'web')
-            window._frameTimestamp = null
+            window._frameTimestamp = null;
     },
 
     // Make sure icons are loaded before using them (prevent boxy icons)

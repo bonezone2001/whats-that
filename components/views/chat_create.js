@@ -28,6 +28,7 @@ export default () => {
 
             // Navigate to new chat
             const chatDetails = (await api.getChatDetails(chat.chat_id)).data;
+            chatDetails.chat_id = chat.chat_id;
             navigation.navigate("ViewChat", { chat: chatDetails });
         } catch (error) {
             console.log(error);

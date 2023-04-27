@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { entryUtils } from "@utils";
 import api from "@api";
 
-import Button from "@components/shared/button";
 import TextInput from "@components/shared/text_input";
+import Button from "@components/shared/button";
 
 // Since mobile doesn't support SVG, we need two versions of the background image
 // Could have just used the png version for both, but I wanted svg for higher quality on web

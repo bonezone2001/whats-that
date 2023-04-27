@@ -106,7 +106,8 @@ export default {
     // limit and offset aren't implemented on the api. I ended up implementing scrolling to load but
     // it wasn't working, so I checked the api and it doesn't support it. sadness.
     getChatDetails: async (chatId, limit = 20, offset = 0) => {
-        const response = await api.get(`/chat/${chatId}?limit=${limit}&offset=${offset}`);
+        // const response = await api.get(`/chat/${chatId}?limit=${limit}&offset=${offset}`);
+        const response = await api.get(`/chat/${chatId}`);
         return response;
     },
     getAllChats: async () => {
@@ -119,10 +120,6 @@ export default {
     },
     updateChat: async (chatId, name) => {
         const response = await api.patch(`/chat/${chatId}`, { name });
-        return response;
-    },
-    deleteChat: async (chatId) => {
-        const response = await api.delete(`/chat/${chatId}`);
         return response;
     },
     addUserToChat: async (chatId, userId) => {
@@ -138,11 +135,6 @@ export default {
         for (const userId of userIds)
             await addUserToChat(chat_id, userId);
         return chat_id;
-    },
-    // idk if this will work
-    leaveChat: async (chatId) => {
-        const response = await api.delete(`/chat/${chatId}/user/self`);
-        return response;
     },
 
     // Messages

@@ -14,12 +14,12 @@ import bgImageMobile from "@assets/images/login_bg.png";
 import bgImageWeb from "@assets/images/login_bg.svg";
 
 export default ({ navigation }) => {
-    const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [triggerValidation, setTriggerValidation] = useState(false);
     const [bgImage, setBgImage] = useState(bgImageWeb);
     const [majorError, setMajorError] = useState("");
-    const [triggerValidation, setTriggerValidation] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const store = useStore();
 
     // Auto adjust the background image based on the dimensions and platform

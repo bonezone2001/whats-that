@@ -6,6 +6,7 @@ import Button from '@components/shared/button';
 import { colors, globalStyle } from '@styles';
 import { useStore } from '@store';
 import api from '@api';
+import { apiUtils } from '@utils';
 
 export default ({ route }) => {
     const { chat } = route.params;
@@ -35,7 +36,11 @@ export default ({ route }) => {
         navigation.setOptions({
             headerLeft: () => (
                 <Button
-                    onPress={() => navigation.navigate("View")}
+                    onPress={() => {
+                        // Move this from here since the back button is not always what is used to go back
+                        apiUtils.updateChats();
+                        navigation.navigate("View")
+                    }}
                     style={globalStyle.transparent}
                     size="small"
                     icon="chevron-left"
@@ -46,7 +51,7 @@ export default ({ route }) => {
             ),
             headerRight: () => (
                 <Button
-                    onPress={() => navigation.navigate("ViewChatSettings", { chat })}
+                    onPress={() => store.bottomSheet.current?.expand()}
                     style={globalStyle.transparent}
                     size="small"
                     icon="more-vertical"
@@ -70,7 +75,8 @@ export default ({ route }) => {
     const fetchMessages = async (silent = false) => {
         if (!silent) setLoading(true);
         const { messages } = (await api.getChatDetails(chat.chat_id)).data;
-        setChatMessages(messages);
+        if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) 
+            setChatMessages(messages);
         if (!silent) setLoading(false);
     };
 
