@@ -55,7 +55,7 @@ export const appUtils = {
 
     debounce(func, wait) {
         let timeout;
-        return function(...args) {
+        return function (...args) {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(this, args), wait);
         };
@@ -63,16 +63,53 @@ export const appUtils = {
 
     debounceLeading(func, wait) {
         let timeout;
-        return function(...args) {
+        return function (...args) {
             if (!timeout) func.apply(this, args);
             clearTimeout(timeout);
             timeout = setTimeout(() => timeout = null, wait);
         };
     },
 
-    hashBasedNumber(textInput) {
-        var seed = textInput.split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
-        Math.seedrandom(seed);
-        return Math.floor(Math.random() * 100) + 1;
-      }
+    strToColor(str) {
+        const hash = str.split('').reduce((acc, char) => {
+            const newHash = (acc << 5) - acc + char.charCodeAt(0);
+            return newHash & newHash;
+        }, 0);
+
+        let r = (hash & 0xFF0000) >> 16;
+        let g = (hash & 0x00FF00) >> 8;
+        let b = hash & 0x0000FF;
+
+        const isGreyish = Math.abs(r - g) <= 32 && Math.abs(g - b) <= 32 && Math.abs(r - b) <= 32;
+        const isBlack = r <= 32 && g <= 32 && b <= 32;
+
+        if (isGreyish || isBlack) {
+            r = Math.min(r + 64, 255);
+            g = Math.min(g + 64, 255);
+            b = Math.min(b + 64, 255);
+        }
+
+        const hexColor = `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
+        return hexColor;
+    },
+
+    getInfoCardData(user) {
+        return [
+            {
+                icon: "mail",
+                label: "Email",
+                value: user.email,
+            },
+            {
+                icon: "people",
+                label: "Friends",
+                value: user.friends,
+            },
+            {
+                icon: "chatbubbles",
+                label: "Chats",
+                value: user.chats,
+            },
+        ]
+    },
 };

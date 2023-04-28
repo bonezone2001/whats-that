@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        borderColor: "#fff",
+        borderColor: "#eee",
         backgroundColor: "#aaa",
         textAlign: 'center',
     },
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         borderColor: colors.secondary,
     },
     text: {
-        color: "#fff",
+        color: "#eee",
         fontSize: 16,
         fontWeight: "bold",
     },

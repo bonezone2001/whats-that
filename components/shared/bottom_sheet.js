@@ -1,5 +1,5 @@
 // Note: the bottom sheet is a bit buggy on web so to fix that we only have one for the entire app and the content and snap points are changed dynamically
-// For now, its only for logout and settings
+// This sucks but it's the only way to make it work correctly on web
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
@@ -7,7 +7,6 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import { useStore } from "@store";
 import Animated, {
     useAnimatedStyle,
-    interpolateColor,
 } from "react-native-reanimated";
 import { colors } from '@styles';
 import Button from './button';
@@ -17,7 +16,6 @@ import api from '@api';
 
 const customBackground = ({
     style,
-    animatedIndex,
 }) => {
     const containerAnimatedStyle = useAnimatedStyle(() => ({
         backgroundColor: colors.modalBackground,
@@ -34,26 +32,28 @@ const customBackground = ({
 
 export default () => {
     const [currentRoute, setCurrentRoute] = useState(null);
+    const [parentRoute, setParentRoute] = useState(18);
     const [sheetSize, setSheetSize] = useState(18);
     const bottomSheetRef = useRef(null);
     const navigation = useNavigation();
     const store = useStore();
 
-    const snapPoints = useMemo(() => [Math.round((Dimensions.get('window').height * sheetSize) / 100) || "15%"], [sheetSize]);
-
-    useEffect(() => {
-        store.setBottomSheet(bottomSheetRef);
-    }, [bottomSheetRef]);
+    const snapPoints = useMemo(() => [Math.round((Dimensions.get('window').height * sheetSize) / 100) || "18%"], [sheetSize]);
+    useEffect(() => store.setBottomSheet(bottomSheetRef), [bottomSheetRef]);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('state', (e) => {
             if (!e.data.state) return;
+            
             const state = e.data.state;
-            let currentRoute = state.routes[state.index];
+            let parentRoute = state.routes[state.index];
+            let currentRoute = parentRoute;
             while (currentRoute.state) currentRoute = currentRoute.state.routes[currentRoute.state.index];
+            
+            setParentRoute(parentRoute);
             setCurrentRoute(currentRoute);
 
-            if (currentRoute.name === "Profile")
+            if (parentRoute.name === "Profile")
                 setSheetSize(18);
             else if (currentRoute.name === "ViewChat") {
                 const params = currentRoute.params;
@@ -171,7 +171,7 @@ export default () => {
         >
             <View style={styles.contentContainer}>
                 {
-                    currentRoute?.name === "Profile" ? renderProfileElements() : renderChatElements()
+                    parentRoute?.name === "Profile" ? renderProfileElements() : renderChatElements()
                 }
             </View>
         </BottomSheet>
@@ -181,7 +181,8 @@ export default () => {
 const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
-        padding: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
     },
     button: {
         backgroundColor: "transparent",

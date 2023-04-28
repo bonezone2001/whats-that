@@ -67,9 +67,11 @@ const styles = StyleSheet.create({
     },
     primary: {
         backgroundColor: colors.primary,
+        borderColor: colors.primary,
     },
     secondary: {
         backgroundColor: colors.secondary,
+        borderColor: colors.secondary,
     },
     ghost: {
         borderWidth: 1,

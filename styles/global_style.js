@@ -18,7 +18,7 @@ export const colors = {
     modalBackground: '#101010',
   
     inputPlaceholder: '#666',
-    text: "#fff",
+    text: "#eee",
 
     tabIconDefault: '#868686',
     tabIconSelected: '#52c443',

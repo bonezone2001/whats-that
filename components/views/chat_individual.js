@@ -6,7 +6,7 @@ import Button from '@components/shared/button';
 import { colors, globalStyle } from '@styles';
 import { useStore } from '@store';
 import api from '@api';
-import { apiUtils } from '@utils';
+import { apiUtils, appUtils } from '@utils';
 
 export default ({ route }) => {
     const { chat } = route.params;
@@ -18,19 +18,6 @@ export default ({ route }) => {
 
     const navigation = useNavigation();
     const store = useStore();
-
-    const colours = [
-        '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
-        '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
-        '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-        '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
-        '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-        '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
-        '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-        '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
-        '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
-    ];
 
     useEffect(() => {
         navigation.setOptions({
@@ -109,7 +96,7 @@ export default ({ route }) => {
                 ]}
             >
                 {!isSameAuthorAsNext && !isMe && (
-                    <Text style={[styles.authorName, { color: colours[item.author.user_id % colours.length] }, { alignSelf: isMe ? 'flex-end' : 'flex-start'}]}>{item.author.first_name} </Text>
+                    <Text style={[styles.authorName, { color: appUtils.strToColor(item.author.email) }, { alignSelf: isMe ? 'flex-end' : 'flex-start'}]}>{item.author.first_name} </Text>
                 )}
                 <View style={[styles.bubble,
                 isMe

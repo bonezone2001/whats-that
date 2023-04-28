@@ -4,21 +4,17 @@ import { useNavigation } from "@react-navigation/native";
 import InfoCard from "@components/shared/info_card";
 import Button from "@components/shared/button";
 import Avatar from "@components/shared/avatar";
-import { Ionicons } from "@expo/vector-icons";
 import { globalStyle } from "@styles";
 import { useStore } from "@store";
+import { appUtils } from "@utils";
 
 export default () => {
     const navigation = useNavigation();
     const store = useStore();
 
-    const onEditProfile = () => {
-        navigation.navigate("Edit");
-    };
-
-    const onHamburgerPress = () => {
-        store.bottomSheet.current?.expand();
-    };
+    const infoCards = useMemo(() => appUtils.getInfoCardData(store.user), [store.user]);
+    const onHamburgerPress = () => store.bottomSheet.current?.expand();
+    const onEditProfile = () => navigation.navigate("Edit");
 
     useEffect(() => {
         navigation.setOptions({
@@ -27,16 +23,15 @@ export default () => {
                     onPress={onHamburgerPress}
                     style={globalStyle.transparent}
                     size="small"
-                >
-                    <Ionicons name="menu" size={38} color="#fff" />
-                </Button>
+                    icon="menu"
+                    iconLibrary="ionicons"
+                    iconSize={38}
+                />
             ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>Profile</Text>
-            ),
+            headerTitle: () => <Text numberOfLines={1} style={globalStyle.headerTitle}>Profile</Text>,
         });
     }, [store.bottomSheet]);
-    
+
     return (
         <View style={globalStyle.container}>
             <ScrollView style={globalStyle.contentContainer}>
@@ -55,27 +50,19 @@ export default () => {
                 </View>
 
                 <View style={styles.profileContent}>
-                    <InfoCard
-                        type="secondary"
-                        shape="rounded"
-                        icon="mail"
-                        label="Email"
-                        value={store.user.email}
-                    />
-                    <InfoCard
-                        type="secondary"
-                        shape="rounded"
-                        icon="people"
-                        label="Friends"
-                        value={store.user.friends}
-                    />
-                    <InfoCard
-                        type="secondary"
-                        shape="rounded"
-                        icon="chatbubbles"
-                        label="Chats"
-                        value={store.user.chats}
-                    />
+                    {
+                        infoCards.map((item, index) => (
+                            <InfoCard
+                                key={index}
+                                type="secondary"
+                                icon={item.icon}
+                                label={item.label}
+                                value={item.value}
+                                textColor="#eee"
+                                style={styles.infoCard}
+                            />
+                        ))
+                    }
                 </View>
             </ScrollView>
         </View>
@@ -103,5 +90,8 @@ const styles = StyleSheet.create({
     profileContent: {
         marginTop: 20,
     },
-    
+    infoCard: {
+        backgroundColor: "transparent",
+        borderBottomWidth: 1,
+    }
 });

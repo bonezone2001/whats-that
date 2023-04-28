@@ -124,9 +124,7 @@ export default () => {
                     <View style={styles.inputs}>
                         <Text style={styles.label}>First Name</Text>
                         <TextInput
-                            shape="rounded"
                             style={styles.input}
-                            textColor="black"
                             value={firstName}
                             onChangeText={(name) => setFirstName(entryUtils.sanitizeAndTrim(name))}
                             onValidate={() => entryUtils.validateName(firstName)}
@@ -134,9 +132,7 @@ export default () => {
 
                         <Text style={styles.label}>Last Name</Text>
                         <TextInput
-                            shape="rounded"
                             style={styles.input}
-                            textColor="black"
                             value={lastName}
                             onChangeText={(name) => setLastName(entryUtils.sanitizeAndTrim(name))}
                             onValidate={() => entryUtils.validateName(lastName)}
@@ -144,10 +140,8 @@ export default () => {
 
                         <Text style={styles.label}>Email</Text>
                         <TextInput
-                            shape="rounded"
                             type="email-address"
                             style={styles.input}
-                            textColor="black"
                             value={email}
                             onChangeText={(email) => setEmail(entryUtils.sanitizeEmail(email))}
                             onValidate={() => entryUtils.validateEmail(email)}
@@ -162,7 +156,8 @@ export default () => {
 
 const styles = StyleSheet.create({
     input: {
-        backgroundColor: "#fff",
+        backgroundColor: "transparent",
+        borderBottomWidth: 1,
         marginTop: 10,
     },
     profileHeader: {
@@ -173,23 +168,21 @@ const styles = StyleSheet.create({
         borderColor: "#fff",
     },
     changeAvatar: {
-        color: colors.primary,
+        color: "#fff",
         marginTop: 10,
         textAlign: "center",
         fontSize: 16,
     },
     profileContent: {
         marginTop: 20,
-        justifyContent: "center",
         alignItems: "center",
     },
     label: {
-        color: colors.primary,
+        color: '#fff',
         fontSize: 16,
         marginTop: 10,
-        marginLeft: 8,
     },
     inputs: {
-        width: "80%",
+        width: "90%",
     },
 });
