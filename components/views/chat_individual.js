@@ -69,8 +69,9 @@ export default ({ route }) => {
 
     const handleSend = async () => {
         try {
-            if (message.trim() === '') return;
-            await api.sendMessage(chat.chat_id, message.trim());
+            const trimmedMessage = message.split('\n').map((line) => line.trim()).join('\n');
+            if (trimmedMessage === '') return;
+            await api.sendMessage(chat.chat_id, trimmedMessage);
             await fetchMessages();
             setMessage('');
             setTimeout(() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 }), 250);
