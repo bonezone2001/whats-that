@@ -1,16 +1,22 @@
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import {
+    View, Text, StyleSheet, FlatList, ActivityIndicator, Platform,
+} from 'react-native';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import ChatBubble from '@components/shared/chat_bubble';
 import TextInput from '@components/shared/text_input';
 import Button from '@components/shared/button';
-import { colors, globalStyle } from '@styles';
-import { useStore } from '@store';
-import api from '@api';
+import { globalStyle } from '@styles';
 import { apiUtils, appUtils } from '@utils';
+import { useStore } from '@store';
+import PropTypes from 'prop-types';
+import api from '@api';
 
-export default ({ route }) => {
+export default function ChatIndividual({ route }) {
     const { chat } = route.params;
 
+    const [editMessageContent, setEditMessageContent] = useState('');
+    const [editMessage, setEditMessage] = useState(null);
     const [chatMessages, setChatMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
@@ -19,6 +25,55 @@ export default ({ route }) => {
     const navigation = useNavigation();
     const store = useStore();
 
+    const fetchMessages = async (silent = false) => {
+        if (!silent) setLoading(true);
+        const { messages } = (await api.getChatDetails(chat.chat_id)).data;
+        if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) { setChatMessages(messages); }
+        if (!silent) setLoading(false);
+    };
+
+    const handleSend = async () => {
+        try {
+            const trimmedMessage = appUtils.multilineTrim(message);
+            if (trimmedMessage === '') return;
+            await api.sendMessage(chat.chat_id, trimmedMessage);
+            await fetchMessages();
+            setMessage('');
+            setTimeout(() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 }), 250);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleEdit = async () => {
+        try {
+            const trimmedMessage = appUtils.multilineTrim(editMessageContent);
+            if (trimmedMessage === '') return;
+            await api.editMessage(chat.chat_id, editMessage.message_id, trimmedMessage);
+            await fetchMessages();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setEditMessage(null);
+            setEditMessageContent('');
+        }
+    };
+
+    const onDeletePress = async (item) => {
+        if (editMessage?.message_id === item.message_id) setEditMessage(null);
+        try {
+            await api.deleteMessage(chat.chat_id, item.message_id);
+            fetchMessages();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const onEditPress = async (item) => {
+        setEditMessage(item);
+        setEditMessageContent(item.message);
+    };
+
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
@@ -26,25 +81,19 @@ export default ({ route }) => {
                     onPress={() => {
                         // Move this from here since the back button is not always what is used to go back
                         apiUtils.updateChats();
-                        navigation.navigate("View")
+                        navigation.navigate('View');
                     }}
-                    style={globalStyle.transparent}
-                    size="small"
+                    mode="text"
                     icon="chevron-left"
-                    iconLibrary="Feather"
-                    iconSize={40}
-                    textColor="#fff"
+                    prefixSize={38}
                 />
             ),
             headerRight: () => (
                 <Button
+                    mode="text"
                     onPress={() => store.bottomSheet.current?.expand()}
-                    style={globalStyle.transparent}
-                    size="small"
                     icon="more-vertical"
-                    iconLibrary="Feather"
-                    iconSize={28}
-                    textColor="#fff"
+                    prefixSize={28}
                 />
             ),
             headerTitle: () => (
@@ -59,54 +108,19 @@ export default ({ route }) => {
         return () => clearInterval(interval);
     }, []);
 
-    const fetchMessages = async (silent = false) => {
-        if (!silent) setLoading(true);
-        const { messages } = (await api.getChatDetails(chat.chat_id)).data;
-        if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) 
-            setChatMessages(messages);
-        if (!silent) setLoading(false);
-    };
-
-    const handleSend = async () => {
-        try {
-            const trimmedMessage = message.split('\n').map((line) => line.trim()).join('\n');
-            if (trimmedMessage === '') return;
-            await api.sendMessage(chat.chat_id, trimmedMessage);
-            await fetchMessages();
-            setMessage('');
-            setTimeout(() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 }), 250);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     const rendermessageBox = ({ item, index }) => {
         const isMe = item.author.user_id === store.user.user_id;
-        const isSameAuthorAsNext =
-            index < chatMessages.length - 1 &&
-            item.author.user_id === chatMessages[index + 1].author.user_id;
-
+        const isSameAuthorAsNext = index < chatMessages.length - 1
+            && item.author.user_id === chatMessages[index + 1].author.user_id;
         return (
-            <View
+            <ChatBubble
                 key={item.message_id}
-                style={[
-                    styles.messageBox,
-                    isMe
-                        ? { alignSelf: 'flex-end'}
-                        : { alignSelf: 'flex-start' },
-                ]}
-            >
-                {!isSameAuthorAsNext && !isMe && (
-                    <Text style={[styles.authorName, { color: appUtils.strToColor(item.author.email) }, { alignSelf: isMe ? 'flex-end' : 'flex-start'}]}>{item.author.first_name} </Text>
-                )}
-                <View style={[styles.bubble,
-                isMe
-                    ? styles.meBubble
-                    : styles.otherBubble,
-                ]}>
-                    <Text style={[styles.chatText, { color: isMe ? '#000' : '#fff' }]}>{item.message}</Text>
-                </View>
-            </View>
+                item={item}
+                isMe={isMe}
+                isSameAuthorAsNext={isSameAuthorAsNext}
+                onDeletePress={onDeletePress}
+                onEditPress={onEditPress}
+            />
         );
     };
 
@@ -119,32 +133,31 @@ export default ({ route }) => {
                 renderItem={rendermessageBox}
                 contentContainerStyle={styles.chatContainer}
                 ListFooterComponent={loading && <ActivityIndicator />}
+                initialNumToRender={20}
                 inverted
             />
 
             <View style={styles.inputContainer}>
                 <TextInput
-                    style={styles.input}
-                    value={message}
-                    multiline={true}
-                    onChangeText={setMessage}
-                    placeholder="Type your message here"
+                    value={editMessage ? editMessageContent : message}
+                    multiline
+                    onChangeText={editMessage ? setEditMessageContent : setMessage}
+                    placeholder="Type a message..."
+                    label={editMessage ? 'Editting message' : ''}
                     block={80}
+                    onSubmitEditing={editMessage ? handleEdit : handleSend}
+                    blurOnSubmit={Platform.OS === 'web'}
                 />
                 <Button
-                    style={globalStyle.transparent}
-                    shape="circle"
-                    onPress={handleSend}
-                    size="small"
+                    mode="text"
+                    onPress={editMessage ? handleEdit : handleSend}
                     icon="send"
-                    textColor="#fff"
-                    iconLibrary="Feather"
-                    iconSize={25}
+                    prefixSize={25}
                 />
             </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     chatList: {
@@ -161,7 +174,7 @@ const styles = StyleSheet.create({
     },
     bubble: {
         borderRadius: 20,
-        padding: 15,        
+        padding: 15,
     },
     meBubble: {
         backgroundColor: '#c8a48c',
@@ -187,7 +200,6 @@ const styles = StyleSheet.create({
         borderTopColor: '#d8d8d822',
     },
     input: {
-        backgroundColor: 'transparent',
         paddingHorizontal: 12,
         marginRight: 8,
     },
@@ -208,3 +220,14 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
 });
+
+ChatIndividual.propTypes = {
+    route: PropTypes.shape({
+        params: PropTypes.shape({
+            chat: PropTypes.shape({
+                chat_id: PropTypes.number,
+                name: PropTypes.string,
+            }),
+        }),
+    }).isRequired,
+};

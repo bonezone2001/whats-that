@@ -1,13 +1,15 @@
-import { useNavigation } from "@react-navigation/native";
-import Button from "@components/shared/button";
-import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { contactStyle, globalStyle } from "@styles";
-import { useEffect, useState } from "react";
+import { useNavigation } from '@react-navigation/native';
+import Button from '@components/shared/button';
+import React, { useEffect } from 'react';
+import {
+    View, Text, Image, StyleSheet, FlatList, TouchableOpacity,
+} from 'react-native';
+import { contactStyle, globalStyle } from '@styles';
+import { useStore } from '@store';
 
 import noResultsImage from '@assets/images/no_results.png';
-import { useStore } from "@store";
 
-export default () => {
+export default function ChatView() {
     const navigation = useNavigation();
     const store = useStore();
 
@@ -15,13 +17,10 @@ export default () => {
         navigation.setOptions({
             headerRight: () => (
                 <Button
-                    onPress={() => navigation.navigate("Create")}
-                    style={globalStyle.transparent}
-                    size="small"
+                    mode="text"
                     icon="plus"
-                    iconLibrary="Feather"
-                    iconSize={30}
-                    textColor="#fff"
+                    prefixSize={30}
+                    href="Create"
                 />
             ),
             headerTitle: () => (
@@ -36,10 +35,9 @@ export default () => {
 
     const renderLastMessage = (item) => {
         if (!Object.keys(item.last_message).length) {
-            const creator = item.creator;
+            const { creator } = item;
             const placeholder = `created chat "${item.name}"`;
-            if (creator.user_id === store.user.user_id)
-                return `You ${placeholder}`;
+            if (creator.user_id === store.user.user_id) return `You ${placeholder}`;
             return `${creator.first_name} ${creator.last_name} ${placeholder}`;
         }
         return `${item.last_message.author.first_name}: ${item.last_message.message}`;
@@ -54,7 +52,7 @@ export default () => {
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={styles.chat}
-                            onPress={() => navigation.navigate("ViewChat", { chat: item })}
+                            onPress={() => navigation.navigate('ViewChat', { chat: item })}
                         >
                             <View style={styles.infoContainer}>
                                 <Text numberOfLines={1} style={styles.name}>{item.name}</Text>
