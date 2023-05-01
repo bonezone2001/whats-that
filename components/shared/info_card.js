@@ -1,81 +1,63 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 import { colors } from '@styles';
+import React from 'react';
 
-export default ({
+export default function InfoCard({
     icon,
     label,
     value,
-    type,
-    iconSize = 25,
-    ghost = false,
-    textColor = "#000",
-    iconColor = null,
+    iconSize,
+    textColor,
+    iconColor,
     block,
-    shape,
-    style
-}) => {
-    const getCardStyle = () => {
-        const bStyle = {
-            base: [styles.card],
-            shape: {
-                rounded: styles.rounded,
-            },
-            type: {
-                primary: styles.primary,
-                secondary: styles.secondary,
-            },
-            block: block > 0 ? { width: `${block}%` } : null,
-            ghost: ghost ? styles.ghost : null,
-        };
-
-        return [
-            ...bStyle.base,
-            bStyle["shape"][shape],
-            bStyle["type"][type],
-            bStyle["block"],
-            bStyle["ghost"],
-            style,
-        ];
-    }
+    style,
+}) {
+    const styles = StyleSheet.create({
+        ...staticStyles,
+        card: {
+            ...staticStyles.card,
+            borderRadius: block ? 10 : 0,
+            width: block ? `${block}%` : 'auto',
+            borderColor: iconColor || textColor,
+            borderWidth: iconColor ? 1 : 0,
+            ...style,
+        },
+        label: {
+            ...staticStyles.label,
+            color: textColor,
+        },
+        value: {
+            ...staticStyles.value,
+            color: textColor,
+        },
+    });
 
     return (
-        <View style={getCardStyle()}>
-            {icon ? (
+        <View style={styles.card}>
+            {icon && (
                 <View style={styles.icon}>
                     <Ionicons name={icon} size={iconSize} color={iconColor || textColor} />
                 </View>
-            ) : null}
+            )}
             <View style={styles.content}>
-                <Text style={[styles.label, { color: textColor }]}>{label}</Text>
-                <Text style={[styles.value, { color: textColor }]}>{value}</Text>
+                <Text style={styles.label}>{label}</Text>
+                <Text style={styles.value}>{value}</Text>
             </View>
         </View>
     );
-};
+}
 
-const styles = StyleSheet.create({
+const staticStyles = StyleSheet.create({
     card: {
+        borderWidth: 1,
+        borderColor: colors.primary,
         marginVertical: 5,
         marginHorizontal: 20,
         flexDirection: 'row',
         padding: 10,
-        backgroundColor: "#aaa",
-    },
-    rounded: {
-        borderRadius: 10,
-    },
-    primary: {
-        backgroundColor: colors.primary,
-        borderColor: colors.primary,
-    },
-    secondary: {
-        backgroundColor: colors.secondary,
-        borderColor: colors.secondary,
-    },
-    ghost: {
-        borderWidth: 1,
-        backgroundColor: 'transparent',
+        backgroundColor: '#aaa',
     },
     icon: {
         justifyContent: 'center',
@@ -83,6 +65,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
     },
     content: {
+        flex: 1,
     },
     label: {
         fontSize: 16,
@@ -92,3 +75,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
+
+InfoCard.propTypes = {
+    icon: PropTypes.string,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]).isRequired,
+    iconSize: PropTypes.number,
+    textColor: PropTypes.string,
+    iconColor: PropTypes.string,
+    block: PropTypes.number,
+    style: PropTypes.object,
+};
+
+InfoCard.defaultProps = {
+    icon: null,
+    iconSize: 24,
+    textColor: colors.text,
+    iconColor: null,
+    block: 0,
+    style: {},
+};

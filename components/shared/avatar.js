@@ -1,40 +1,44 @@
-// Avatar component (circle with image inside)
-import {
-    StyleSheet,
-    Image,
-} from "react-native";
+import { StyleSheet, Image } from 'react-native';
+import { colors } from '@styles/global_style';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import defaultAvatar from '@assets/images/default_avatar.jpg';
-import { colors } from "@styles/global_style";
-import React from "react";
-
-// Properties:
-// - source: object - Image source
-// - size: number - Size of the avatar
-// - style: object - Style to apply to avatar image conmponent
-// - onPress: function - Called when is pressed
-// - shape: circle, square, rounded - Shape of the avatar
-
-export default ({
+export default function Avatar({
     source,
-    size = 50,
+    size,
     style,
-    shape = "circle", // circle, square, rounded
-}) => {
+    shape,
+}) {
     const styles = StyleSheet.create({
         container: {
             width: size,
             height: size,
-            borderRadius: shape === "circle" ? size : shape === "rounded" ? 10 : 0,
+            borderRadius: shape === 'circle' ? size : shape === 'rounded' ? 10 : 0,
             backgroundColor: colors.background,
-            overflow: "hidden",
+            overflow: 'hidden',
         },
     });
 
     return (
         <Image
-            source={source ? source : defaultAvatar}
+            source={source}
             style={[styles.container, style]}
         />
     );
+}
+
+Avatar.propTypes = {
+    source: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.object,
+    ]).isRequired,
+    size: PropTypes.number,
+    shape: PropTypes.oneOf(['box', 'rounded', 'circle']),
+    style: PropTypes.object,
+};
+
+Avatar.defaultProps = {
+    size: 50,
+    shape: 'circle',
+    style: {},
 };
