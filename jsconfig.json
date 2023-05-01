@@ -1,25 +1,24 @@
 {
-  "compilerOptions": {
-      "baseUrl": "./",
-      "jsx": "react",
-      "target": "es6",
-      "module": "commonjs",
-      "paths": {
-        "@utils": ["./utils/index"],
-        "@styles": ["./styles/index"],
-        "@locales": ["./locales/index"],
-        "@store": ["./store/index"],
-        "@api": ["./api/index"],
-        
-        "@components/*": ["./components/*"],
-        "@navigator/*": ["./navigator/*"],
-        "@utils/*": ["./utils/*"],
-        "@assets/*": ["./assets/*"],
-        "@styles/*": ["./styles/*"],
-        "@locales/*": ["./locales/*"],
-        "@store/*": ["./store/*"],
-        "@api/*": ["./api/*"],
-      }
+    "compilerOptions": {
+        "baseUrl": "./",
+        "jsx": "react",
+        "target": "es6",
+        "module": "commonjs",
+        "paths": {
+            "@utils": ["./utils/index"],
+            "@styles": ["./styles/index"],
+            "@locales": ["./locales/index"],
+            "@store": ["./store/index"],
+            "@api": ["./api/index"],
+            "@components/*": ["./components/*"],
+            "@navigator/*": ["./navigator/*"],
+            "@utils/*": ["./utils/*"],
+            "@assets/*": ["./assets/*"],
+            "@styles/*": ["./styles/*"],
+            "@locales/*": ["./locales/*"],
+            "@store/*": ["./store/*"],
+            "@api/*": ["./api/*"],
+        }
     },
     "exclude": ["node_modules"]
-  }
+}

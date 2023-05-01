@@ -1,185 +1,172 @@
+import { useNavigation } from '@react-navigation/native';
+import React, { useMemo } from 'react';
 import {
-  TouchableOpacity,
-  Text,
-  View,
-  ActivityIndicator,
-  StyleSheet,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { colors } from "@styles";
-import React from "react";
-import { appUtils } from "@utils";
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    ActivityIndicator,
+} from 'react-native';
+import PropTypes from 'prop-types';
+import { appUtils } from '@utils';
+import { colors } from '@styles';
 
-// Properties:
-// - onClick: function - called when the button is pressed
-// - size: small, medium, large - Size of the button
-// - shape: rounded, circle - Shape of the button
-// - loading: boolean - Set to true to show a loading indicator
-// - icon: string - Icon to show on the button
-// - href: string - Navigate to a screen when the button is pressed
-// - textColor: string - Color of the text
-// - disabled: boolean - Set to true to disable the button
-// - type: primary, secondary - Type of button (color)
-// - ghost: boolean - Set to true to make the button transparent with a border
-// - block: number - Set to a number between 0 and 100 to make the button fill the screens width by that percentage
-// - children: string - What to show on the button
-// - style: object - Style to apply to the button
-
-export default ({
-    onPress,
-    size = "medium",
-    textAlign = "center",
+// Its at times like these I wish I could use TypeScript
+export default function Button({
     shape,
-    loading = false,
+    mode,
+    loading,
     icon,
-    iconSize = 20,
-    iconLibrary = "Ionicons",
     href,
-    textColor = null,
-    disabled = false,
-    type,
-    ghost = false,
-    block = 0,
-    children,
-    style,
+    iconLibrary,
+    textColor,
+    buttonColor,
+    prefixColor,
+    prefixSize,
+    block,
+    disabled,
+    onPress,
     prefixStyle,
-}) => {
-    // Handle click and navigation
-    const navigation = href ? useNavigation() : null;
-    function onClick() {
-        if (href) return navigation.navigate(href);
-        if (onPress) onPress();
-    }
+    textStyle,
+    style,
+    children,
+    ...props
+}) {
+    const IconLibrary = appUtils.getIconLibrary(iconLibrary);
+    const navigation = useNavigation();
 
-    // What should we show on the button?
-    // If loading, show a loading indicator, otherwise show a combination of the icon and the children (text) or just the children
-    function renderChildren() {
-        let child = children;
-        if (loading) return <ActivityIndicator color={textColor || colors.text} />;
-        if (typeof children === "string") {
-            style = { };
-            if (textColor) style.color = textColor;
-            child = <Text style={[styles.text, style]}>{children}</Text>;
-        }
-        if (icon) {
-            const IconLibrary = appUtils.getIconLibrary(iconLibrary);
-            child = (
-                <View style={styles.iconContainer}>
-                    <IconLibrary style={[styles.icon, !child ? {marginRight: 0} : null, prefixStyle]} name={icon} size={iconSize} color={textColor || colors.text} />
-                    {child}
-                </View>
-            );
-        }
-        return child;
-    }
+    // Extract fontSize before passing style to useMemo
+    const { fontSize, color, ...containerStyle } = style;
+    // eslint-disable-next-line no-param-reassign
+    if (!prefixColor) prefixColor = color || textColor;
 
-    // Switches all the different button styles and combines them
-    function getButtonStyles() {
-        const alignLookup = {
-            center: "center",
-            left: "flex-start",
-            right: "flex-end",
-        };
-        
-        const bStyle = {
-            base: [styles.button],
-            size: {
-                small: styles.small,
-                medium: styles.medium,
-                large: styles.large,
+    const styles = useMemo(
+        () => StyleSheet.create({
+            ...staticStyles,
+            buttonContainer: {
+                ...staticStyles.buttonContainer,
+                borderColor: colors.inputBorder,
+                borderWidth: mode === 'outlined' ? 1 : 0,
+                borderRadius: shape === 'rounded' ? 8 : shape === 'circle' ? 100 : 0,
+                backgroundColor: mode === 'contained' ? buttonColor : 'transparent',
+                width: block > 0 ? `${block}%` : null,
+                opacity: disabled ? 0.5 : 1,
+                ...containerStyle,
             },
-            shape: {
-                rounded: styles.rounded,
-                circle: styles.circle,
+            buttonText: {
+                ...staticStyles.buttonText,
+                color: color || textColor,
+                marginLeft: icon ? 8 : 0,
+                fontSize: fontSize || 16,
+                ...textStyle,
             },
-            type: {
-                primary: styles.primary,
-                secondary: styles.secondary,
+            icon: {
+                marginRight: children ? 8 : 0,
             },
-            block: block > 0 ? { width: `${block}%` } : null,
-            ghost: ghost ? styles.ghost : null,
-            disabled: disabled && styles.disabled,
-            align: { justifyContent: alignLookup[textAlign] },
-        };
+        }),
+        [block, buttonColor, children, disabled, icon, mode, shape, style, textColor, textStyle],
+    );
 
-        return [
-            ...bStyle.base,
-            bStyle["size"][size],
-            bStyle["shape"][shape],
-            bStyle["type"][type],
-            bStyle["block"],
-            bStyle["ghost"],
-            bStyle["disabled"],
-            bStyle["align"],
-            style,
-        ];
-    }
+    const internalOnPress = () => {
+        if (href) navigation.navigate(href);
+        else onPress();
+    };
 
     return (
         <TouchableOpacity
-            style={getButtonStyles()}
-            onPress={onClick}
-            activeOpacity={0.7}
-            disabled={disabled || loading}
+            style={styles.buttonContainer}
+            onPress={internalOnPress}
+            disabled={disabled}
+            {...props}
         >
-            {renderChildren()}
+            {loading
+                ? (
+                    <ActivityIndicator
+                        style={prefixStyle}
+                        color={prefixColor}
+                        size={prefixSize}
+                    />
+                )
+                : (
+                    <>
+                        {icon
+                        && (
+                            <IconLibrary
+                                style={[styles.icon, prefixStyle]}
+                                name={icon}
+                                size={prefixSize}
+                                color={prefixColor}
+                            />
+                        )}
+                        {children && (
+                            typeof children === 'string'
+                                ? <Text style={styles.buttonText}>{children}</Text>
+                                : children
+                        )}
+                    </>
+                )}
         </TouchableOpacity>
     );
-};
+}
 
-const styles = StyleSheet.create({
-    button: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        borderColor: "#eee",
-        backgroundColor: "#aaa",
-        textAlign: 'center',
-    },
-    small: {
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-    },
-    medium: {
+const staticStyles = StyleSheet.create({
+    buttonContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
         paddingVertical: 12,
         paddingHorizontal: 16,
     },
-    large: {
-        paddingVertical: 16,
-        paddingHorizontal: 20,
-    },
-    rounded: {
-        borderRadius: 10,
-    },
-    circle: {
-        width: 50,
-        height: 50,
-        borderRadius: 100,
-        padding: 0,
-    },
-    primary: {
-        backgroundColor: colors.primary,
-        borderColor: colors.primary,
-    },
-    secondary: {
-        backgroundColor: colors.secondary,
-        borderColor: colors.secondary,
-    },
-    text: {
-        color: "#eee",
+    buttonText: {
         fontSize: 16,
-        fontWeight: "bold",
-    },
-    iconContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    icon: {
-        marginRight: 8,
-    },
-    ghost: {
-        backgroundColor: "transparent",
-        borderWidth: 1,
+        fontWeight: 'bold',
     },
 });
+
+Button.propTypes = {
+    shape: PropTypes.oneOf(['box', 'rounded', 'circle']),
+    mode: PropTypes.oneOf(['contained', 'outlined', 'text']),
+    loading: PropTypes.bool,
+    icon: PropTypes.string,
+    href: PropTypes.string,
+    iconLibrary: PropTypes.string,
+    textColor: PropTypes.string,
+    buttonColor: PropTypes.string,
+    prefixColor: PropTypes.string,
+    prefixSize: PropTypes.number,
+    block: PropTypes.number,
+    disabled: PropTypes.bool,
+    onPress: PropTypes.func,
+    prefixStyle: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object,
+    ]),
+    textStyle: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object,
+    ]),
+    style: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.object,
+    ]),
+    children: PropTypes.node,
+};
+
+Button.defaultProps = {
+    shape: 'box',
+    mode: 'contained',
+    loading: false,
+    icon: null,
+    href: null,
+    iconLibrary: 'feather',
+    textColor: colors.text,
+    buttonColor: colors.primary,
+    prefixColor: '',
+    prefixSize: 16,
+    block: 0,
+    disabled: false,
+    onPress: () => {},
+    prefixStyle: {},
+    textStyle: {},
+    style: {},
+    children: null,
+};

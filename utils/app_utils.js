@@ -1,14 +1,22 @@
-import { Ionicons, Feather, FontAwesome5, Entypo } from '@expo/vector-icons';
-import { Platform } from "react-native"
+import {
+    Ionicons, Feather, FontAwesome5, Entypo,
+} from '@expo/vector-icons';
+import { Platform } from 'react-native';
 import { Buffer } from 'buffer';
 
 export const appUtils = {
     // https://github.com/software-mansion/react-native-reanimated/issues/3355
-    // Seems like expo is using an older version of reanimated, but updating it makes expo complain about a version mismatch
-    // So this is a temporary fix for a bug that doesn't affect the android app but breaks the web app
+    // Temporary fix for an issue with expo and reanimated version mismatch
+    // Expo uses an older version of reanimated, updating it causes expo to complain
+    // This bug only affects the web app, android app is not affected
     fixReanimated() {
-        if (Platform.OS === 'web')
-            window._frameTimestamp = null;
+        // eslint-disable-next-line no-underscore-dangle
+        if (Platform.OS === 'web') window._frameTimestamp = null;
+    },
+
+    // Remove web context menu so long press can be used
+    disableContextMenu() {
+        if (Platform.OS === 'web') document.addEventListener('contextmenu', (e) => e.preventDefault());
     },
 
     // Make sure icons are loaded before using them (prevent boxy icons)
@@ -38,24 +46,24 @@ export const appUtils = {
     },
 
     getIconLibrary(library) {
-        library = library.toLowerCase();
-        switch (library) {
-            case "ionicons":
-                return Ionicons;
-            case "feather":
-                return Feather;
-            case "fa5":
-                return FontAwesome5;
-            case "entypo":
-                return Entypo;
-            default:
-                return Ionicons;
+        const lower = library.toLowerCase();
+        switch (lower) {
+        case 'ionicons':
+            return Ionicons;
+        case 'feather':
+            return Feather;
+        case 'fa5':
+            return FontAwesome5;
+        case 'entypo':
+            return Entypo;
+        default:
+            return Ionicons;
         }
     },
 
     debounce(func, wait) {
         let timeout;
-        return function (...args) {
+        return (...args) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(this, args), wait);
         };
@@ -63,10 +71,10 @@ export const appUtils = {
 
     debounceLeading(func, wait) {
         let timeout;
-        return function (...args) {
+        return (...args) => {
             if (!timeout) func.apply(this, args);
             clearTimeout(timeout);
-            timeout = setTimeout(() => timeout = null, wait);
+            timeout = setTimeout(() => { timeout = null; }, wait);
         };
     },
 
@@ -89,27 +97,40 @@ export const appUtils = {
             b = Math.min(b + 64, 255);
         }
 
-        const hexColor = `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
+        const hexColor = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
         return hexColor;
     },
 
-    getInfoCardData(user) {
+    getInfoCardData(user, contacts, chats) {
         return [
             {
-                icon: "mail",
-                label: "Email",
-                value: user.email,
+                icon: 'mail',
+                label: 'Email',
+                value: user?.email,
             },
             {
-                icon: "people",
-                label: "Friends",
-                value: user.friends,
+                icon: 'people',
+                label: 'Friends',
+                value: contacts?.length,
             },
             {
-                icon: "chatbubbles",
-                label: "Chats",
-                value: user.chats,
+                icon: 'chatbubbles',
+                label: 'Chats',
+                value: chats?.length,
             },
-        ]
+        ];
+    },
+
+    getEntriesWithPrefix(obj, prefix) {
+        const filteredKeys = Object.keys(obj).filter((key) => key.startsWith(prefix));
+        const result = filteredKeys.reduce((res, key) => {
+            res[key] = obj[key];
+            return res;
+        }, {});
+        return result;
+    },
+
+    multilineTrim(str) {
+        return str.split('\n').map((line) => line.trim()).join('\n');
     },
 };

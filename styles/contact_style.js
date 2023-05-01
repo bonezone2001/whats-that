@@ -1,28 +1,28 @@
-import { colors, globalStyle } from "./global_style";
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
+import { globalStyle } from './global_style';
 
 export const contactStyle = StyleSheet.create({
     container: {
         ...globalStyle.container,
-        alignItems: "flex-start",
+        alignItems: 'flex-start',
     },
     contactList: {
-        width: "100%"
+        width: '100%',
     },
     searchBar: {
         flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'flex-start',
     },
     searchBarText: {
-        color: "#fff",
+        color: '#fff',
         fontSize: 18,
         backgroundColor: 'transparent',
     },
     contact: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#333',
@@ -34,8 +34,8 @@ export const contactStyle = StyleSheet.create({
         flex: 1,
     },
     actionsContainer: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     actionButton: {
         backgroundColor: 'transparent',
