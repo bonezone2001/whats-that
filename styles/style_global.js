@@ -27,6 +27,13 @@ export const colors = {
     tabIconDefault: '#868686',
     tabIconSelected: '#52c443',
     tabBar: '#242424',
+
+    meBubble: '#c8a48c',
+    otherBubble: '#372d2b',
+    meText: '#000',
+    otherText: '#fff',
+    holdMenuBackground: '#372d2b',
+    holdMenuText: '#fff',
 };
 
 colors.tabIconSelected = colors.secondary;

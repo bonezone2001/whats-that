@@ -1,3 +1,5 @@
+// Chat bubble component for use in conversation screens.
+
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { appUtils } from '@utils';
@@ -8,6 +10,7 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+import { colors } from '@styles';
 
 export default function ChatBubble({
     item,
@@ -16,41 +19,31 @@ export default function ChatBubble({
     onDeletePress,
     onEditPress,
 }) {
+    // Switch between elements and styles depending on if message is current user or not
+    const bubbleStyle = isMe ? styles.meBubble : styles.otherBubble;
+    const showAuthorName = !isSameAuthorAsNext && !isMe;
+    const alignment = isMe ? 'flex-end' : 'flex-start';
+    const textColor = isMe ? colors.meText : colors.otherText;
     const Container = isMe ? MenuTrigger : View;
     const Wrapper = isMe ? Menu : View;
 
     return (
-        <Wrapper
-            style={[
-                styles.messageBox,
-                isMe ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' },
-            ]}
-        >
-            {!isSameAuthorAsNext && !isMe && (
+        <Wrapper style={[styles.messageBox, { alignSelf: alignment }]}>
+            {showAuthorName && (
                 <Text
-                    style={[
-                        styles.authorName,
+                    style={[styles.authorName,
                         { color: appUtils.strToColor(item.author.email) },
-                        { alignSelf: isMe ? 'flex-end' : 'flex-start' },
+                        { alignSelf: alignment },
                     ]}
                 >
                     {item.author.first_name}
-                    {' '}
                 </Text>
             )}
             <Container
                 triggerOnLongPress
-                style={[
-                    styles.bubble,
-                    isMe ? styles.meBubble : styles.otherBubble,
-                ]}
+                style={[styles.bubble, bubbleStyle]}
             >
-                <Text
-                    style={[
-                        styles.chatText,
-                        { color: isMe ? '#000' : '#fff' },
-                    ]}
-                >
+                <Text style={[styles.chatText, { color: textColor }]}>
                     {item.message}
                 </Text>
             </Container>
@@ -66,26 +59,13 @@ export default function ChatBubble({
     );
 }
 
-ChatBubble.propTypes = {
-    item: PropTypes.object.isRequired,
-    isMe: PropTypes.bool.isRequired,
-    isSameAuthorAsNext: PropTypes.bool.isRequired,
-    onDeletePress: PropTypes.func,
-    onEditPress: PropTypes.func,
-};
-
-ChatBubble.defaultProps = {
-    onDeletePress: () => {},
-    onEditPress: () => {},
-};
-
 const menuStyles = {
     optionsContainer: {
-        backgroundColor: '#372d2b',
+        backgroundColor: colors.holdMenuBackground,
         borderRadius: 8,
     },
     optionText: {
-        color: '#fff',
+        color: colors.holdMenuText,
         fontSize: 16,
         padding: 8,
     },
@@ -101,17 +81,16 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     meBubble: {
-        backgroundColor: '#c8a48c',
+        backgroundColor: colors.meBubble,
         borderBottomRightRadius: 0,
     },
     otherBubble: {
-        backgroundColor: '#372d2b',
+        backgroundColor: colors.otherBubble,
         borderBottomLeftRadius: 0,
     },
     chatText: {
         fontSize: 16,
         lineHeight: 20,
-        color: '#333',
     },
     authorName: {
         fontSize: 14,
@@ -120,3 +99,16 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
 });
+
+ChatBubble.propTypes = {
+    item: PropTypes.object.isRequired,
+    isMe: PropTypes.bool.isRequired,
+    isSameAuthorAsNext: PropTypes.bool.isRequired,
+    onDeletePress: PropTypes.func,
+    onEditPress: PropTypes.func,
+};
+
+ChatBubble.defaultProps = {
+    onDeletePress: () => {},
+    onEditPress: () => {},
+};
