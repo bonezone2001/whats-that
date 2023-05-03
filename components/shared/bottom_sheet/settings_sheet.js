@@ -1,8 +1,8 @@
 import Button from '@components/shared/button';
-import React from 'react';
-import { entryUtils } from '@utils';
 import { globalStyle } from '@styles';
+import { entryUtils } from '@utils';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 export const settings = {
     parentRouteName: 'Profile',
