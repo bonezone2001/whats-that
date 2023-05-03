@@ -92,7 +92,7 @@ export default function TextInput({
 
     // Filter out style props that are reserved for the label, prefix and input
     const getContainerStyleProp = useCallback(() => {
-        const toExtract = ['height', 'fontSize', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'marginVertical', 'marginHorizontal'];
+        const toExtract = ['width', 'height', 'fontSize', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'marginVertical', 'marginHorizontal'];
         const styleProp = {};
         Object.keys(style).forEach((key) => {
             if (!toExtract.includes(key)) {
@@ -139,7 +139,7 @@ export default function TextInput({
         ...staticStyles,
         container: {
             ...staticStyles.container,
-            width: block > 0 ? `${block}%` : undefined,
+            width: block > 0 ? `${block}%` : (style?.width || undefined),
             ...appUtils.getEntriesWithPrefix(style, 'margin'),
         },
         inputContainer: {
