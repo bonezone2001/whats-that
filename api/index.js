@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
+
+// Handle all api related stuff here.
+// Since most of the api is stateless (we don't store any data in the api itself)
+// we don't need react hooks, just use an object and import the store for the single state (token)
+
 import { appUtils } from '@utils/utils_app';
 import Constants from 'expo-constants';
 import { useStore } from '@store';
 import axios from 'axios';
-
-// Since most of the api is stateless (we don't store any data in the api itself)
-// we don't need react hooks, just use an object and import the store for the single state (token)
 
 const { API_BASE_URL } = Constants.manifest.extra;
 
