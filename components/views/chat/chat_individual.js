@@ -36,7 +36,9 @@ export default function ChatIndividual({ route }) {
     const fetchMessages = async (silent = false) => {
         if (!silent) setLoading(true);
         const { messages } = (await api.getChatDetails(chat.chat_id)).data;
-        if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) { setChatMessages(messages); }
+        if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) {
+            setChatMessages(messages);
+        }
         if (!silent) setLoading(false);
     };
 
@@ -47,7 +49,10 @@ export default function ChatIndividual({ route }) {
             await api.sendMessage(chat.chat_id, trimmedMessage);
             await fetchMessages();
             setMessage('');
-            setTimeout(() => flatListRef.current.scrollToOffset({ animated: true, offset: 0 }), 250);
+            setTimeout(() => flatListRef.current.scrollToOffset({
+                animated: true,
+                offset: 0,
+            }), 250);
         } catch (error) {
             console.log(error);
         }
@@ -87,7 +92,7 @@ export default function ChatIndividual({ route }) {
             headerLeft: () => (
                 <Button
                     onPress={() => {
-                        // Move this from here since the back button is not always what is used to go back
+                        // TODO: Need to move this since back button is not always used to go back
                         apiUtils.updateChats();
                         navigation.navigate('View');
                     }}
@@ -110,7 +115,7 @@ export default function ChatIndividual({ route }) {
         });
         fetchMessages();
 
-        // Update messages every 2.5 seconds, since to my knowledge, there is no way to know new messages exist
+        // Update messages every 2.5 seconds, there is no way to know new messages exist
         // There is no polling or websocket systems in place.
         const interval = setInterval(() => fetchMessages(true), 4000);
         return () => clearInterval(interval);
@@ -176,27 +181,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 8,
     },
-    messageBox: {
-        maxWidth: '80%',
-        marginBottom: 8,
-    },
-    bubble: {
-        borderRadius: 20,
-        padding: 15,
-    },
-    meBubble: {
-        backgroundColor: '#c8a48c',
-        borderBottomRightRadius: 0,
-    },
-    otherBubble: {
-        backgroundColor: '#372d2b',
-        borderBottomLeftRadius: 0,
-    },
-    chatText: {
-        fontSize: 16,
-        lineHeight: 20,
-        color: '#333',
-    },
     inputContainer: {
         width: '100%',
         flexDirection: 'row',
@@ -206,26 +190,6 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         borderTopWidth: 1,
         borderTopColor: '#d8d8d822',
-    },
-    input: {
-        paddingHorizontal: 12,
-        marginRight: 8,
-    },
-    sendButton: {
-        marginLeft: 8,
-        height: 45,
-    },
-    sendButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        lineHeight: 20,
-        fontWeight: 'bold',
-    },
-    authorName: {
-        fontSize: 14,
-        lineHeight: 16,
-        fontWeight: 'bold',
-        marginBottom: 4,
     },
 });
 

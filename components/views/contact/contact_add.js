@@ -35,10 +35,15 @@ export default function ContactView() {
         try {
             const response = await api.searchUsers(query);
             const contacts = response.data.filter((user) => user.user_id !== store.userId);
+
+            // Get avatars for each contact
+            const avatarPromises = contacts.map((user) => api.getUserPhoto(user.user_id));
+            const avatarData = await Promise.all(avatarPromises);
+
+            // Update all to appropriate format
             for (let i = 0; i < contacts.length; i++) {
                 const user = contacts[i];
-                const avatarData = await api.getUserPhoto(user.user_id);
-                user.avatar = avatarData;
+                user.avatar = avatarData[i];
 
                 // Remap given_name and family_name to first_name and last_name
                 user.first_name = user.given_name;
@@ -47,8 +52,11 @@ export default function ContactView() {
                 delete user.family_name;
 
                 // Search if array of objects includes users with matching user_id
-                if (store.contacts) user.isContact = store.contacts.some((contact) => contact.user_id === user.user_id);
-                if (store.blocked) user.isBlocked = store.blocked.some((blocked) => blocked.user_id === user.user_id);
+                if (store.contacts)
+                    user.isContact = store.contacts.some((contact) => contact.user_id === user.user_id);
+
+                if (store.blocked)
+                    user.isBlocked = store.blocked.some((blocked) => blocked.user_id === user.user_id);
             }
             setSearchResults(contacts);
         } catch (error) {
