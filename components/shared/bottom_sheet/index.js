@@ -14,6 +14,8 @@ import { colors } from '@styles';
 import * as SettingsSheet from './settings_sheet';
 import * as ChatSheet from './chat_sheet';
 
+const sheets = [SettingsSheet, ChatSheet];
+
 export default function AppBottomSheet() {
     const [activeSheet, setActiveSheet] = useState(SettingsSheet);
     const [activeRoute, setActiveRoute] = useState(null);
@@ -21,15 +23,15 @@ export default function AppBottomSheet() {
     const sheetRef = useRef(null);
     const store = useStore();
 
-    const sheets = [SettingsSheet, ChatSheet];
+    // Snap points are dynamically set based on the active sheet and height of the screen
     const snapPoints = useMemo(() => {
-        const percent = activeSheet?.settings?.sheetPercent;
-        if (typeof percent === 'function') {
-            return [Math.round((Dimensions.get('window').height * percent(activeRoute)) / 100)];
-        }
-        return [Math.round((Dimensions.get('window').height * (percent || 18)) / 100)];
+        const { height } = Dimensions.get('window');
+        let percent = activeSheet?.settings?.sheetPercent;
+        if (typeof percent === 'function') percent = percent(activeRoute);
+        return [Math.round((height * (percent || 18)) / 100)];
     }, [activeSheet, activeRoute]);
 
+    // Hold reference to the bottom sheet in the store
     useEffect(() => {
         store.setBottomSheet(sheetRef);
         store.bottomSheet = sheetRef;
@@ -37,26 +39,26 @@ export default function AppBottomSheet() {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('state', (e) => {
+            if (!e.data.state) return;
             sheetRef.current?.close();
 
-            if (!e.data.state) return;
             const { state } = e.data;
             const parentRoute = state.routes[state.index];
             let currentRoute = parentRoute;
+
+            // Recursively find the deepest (active) route
             while (currentRoute.state) {
                 currentRoute = currentRoute.state.routes[currentRoute.state.index];
             }
 
+            // Set the active route and set sheet according to that route
             setActiveRoute(currentRoute);
-            for (let i = 0; i < sheets.length; i++) {
-                const sheet = sheets[i];
-                if (sheet.settings.parentRouteName
-                    && sheet.settings.parentRouteName !== parentRoute.name) continue;
-                if (sheet.settings.currentRouteName
-                    && sheet.settings.currentRouteName !== currentRoute.name) continue;
-                setActiveSheet(sheet);
-                break;
-            }
+            const curSheet = sheets.find((sheet) => {
+                const { parentRouteName, currentRouteName } = sheet.settings;
+                return (!parentRouteName || parentRouteName === parentRoute.name)
+                  && (!currentRouteName || currentRouteName === currentRoute.name);
+            });
+            if (curSheet) setActiveSheet(curSheet);
         });
         return unsubscribe;
     }, [navigation, store.bottomSheet]);

@@ -64,7 +64,7 @@ export default function ProfileView() {
                                 key={item.label}
                                 icon={item.icon}
                                 label={item.label}
-                                value={item.value || 'N/A'}
+                                value={item.value}
                                 textColor="#eee"
                                 style={profileStyle.infoCard}
                             />

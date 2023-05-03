@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@store';
 
 import React from 'react';
-import { colors } from './global_style';
+import { colors } from './style_global';
 
 export const screenOptions = {
     headerShown: false,

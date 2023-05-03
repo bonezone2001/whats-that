@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
-import { createChatSlice } from './modules/chat';
-import { createUserSlice } from './modules/user';
-import { createAppSlice } from './modules/app';
+import { createChatSlice } from './modules/store_chat';
+import { createUserSlice } from './modules/store_user';
+import { createAppSlice } from './modules/store_app';
 
 export const useStore = create((set, get) => ({
     ...createUserSlice(set, get),

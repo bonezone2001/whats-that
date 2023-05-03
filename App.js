@@ -1,12 +1,12 @@
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import AuthorizedTabs from '@navigator/bottom/authorized_bottom_tab';
+import AuthorizedTabs from '@navigator/bottom/bottom_authorized';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useCallback, useState } from 'react';
 import BottomSheet from '@components/shared/bottom_sheet';
 import { apiUtils, appUtils, entryUtils } from '@utils';
 import { MenuProvider } from 'react-native-popup-menu';
-import AuthStack from '@navigator/stack/auth_stack';
+import AuthStack from '@navigator/stack/stack_auth';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { globalStyle } from '@styles';

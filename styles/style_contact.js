@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { globalStyle } from './global_style';
+import { globalStyle } from './style_global';
 
 export const contactStyle = StyleSheet.create({
     container: {
