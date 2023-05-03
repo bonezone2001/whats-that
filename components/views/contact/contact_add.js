@@ -20,7 +20,7 @@ import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
 
-export default function ContactView() {
+export default function ContactAddScreen() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(false);

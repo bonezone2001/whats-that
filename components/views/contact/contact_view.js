@@ -15,7 +15,7 @@ import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
 
-export default function ContactView() {
+export default function ContactViewScreen() {
     const [contacts, setContacts] = useState([]);
     const store = useStore();
 

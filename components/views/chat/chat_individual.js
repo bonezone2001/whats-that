@@ -34,12 +34,17 @@ export default function ChatIndividual({ route }) {
     const store = useStore();
 
     const fetchMessages = async (silent = false) => {
-        if (!silent) setLoading(true);
-        const { messages } = (await api.getChatDetails(chat.chat_id)).data;
-        if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) {
-            setChatMessages(messages);
+        try {
+            if (!silent) setLoading(true);
+            const { messages } = (await api.getChatDetails(chat.chat_id)).data;
+            if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) {
+                setChatMessages(messages);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            if (!silent) setLoading(false);
         }
-        if (!silent) setLoading(false);
     };
 
     const handleSend = async () => {

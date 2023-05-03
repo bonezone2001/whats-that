@@ -30,7 +30,7 @@ api.interceptors.request.use(
     },
 );
 
-export default {
+const client = {
     // Auth
     login: async (email, password) => {
         const response = await api.post('/login', { email, password });
@@ -150,4 +150,16 @@ export default {
         const response = await api.delete(`/chat/${chatId}/message/${messageId}`);
         return response;
     },
+
+    // With photo alternatives
+    // searchUsersWithPhoto: async (query, search_in = 'all', limit = 20, offset = 0) => {
+    //     const users = await client.searchUsers(query, search_in, limit, offset);
+    //     return Promise.allSettled(users.data.map(async (user) => {
+    //         const avatar = await client.getUserPhoto(user.user_id);
+    //         return { ...user, avatar };
+    //     }));
+    // },
+
 };
+
+export default client;

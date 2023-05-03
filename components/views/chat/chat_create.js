@@ -14,16 +14,16 @@ import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
 import Button from '@components/shared/button';
 import { colors, globalStyle } from '@styles';
-import { useStore } from '@store';
 import { apiUtils } from '@utils';
+import { useStore } from '@store';
 import api from '@api';
 
-// Create chat screen
 export default function ChatCreate() {
     const [selectedContacts, setSelectedContacts] = useState([]);
     const [creating, setCreating] = useState(false);
     const [contacts, setContacts] = useState([]);
     const [chatName, setChatName] = useState('');
+
     const navigation = useNavigation();
     const store = useStore();
 
@@ -39,16 +39,23 @@ export default function ChatCreate() {
             ));
 
             // Navigate to new chat
-            const chatDetails = (await api.getChatDetails(chat.chat_id)).data;
-            chatDetails.chat_id = chat.chat_id;
-            navigation.navigate('ViewChat', { chat: chatDetails });
+            navigation.navigate('ViewChat', { chat_id: chat.chat_id });
         } catch (error) {
             console.log(error);
         } finally {
             setCreating(false);
-            await apiUtils.updateChats();
+            apiUtils.updateChats();
         }
     };
+
+    useEffect(() => {
+        Promise.all(store.contacts?.map(async (contact) => {
+            const avatarData = await api.getUserPhoto(contact.user_id);
+            return { ...contact, avatar: avatarData };
+        })).then((results) => {
+            setContacts(results);
+        });
+    }, [store.contacts]);
 
     useEffect(() => {
         navigation.setOptions({
@@ -76,15 +83,6 @@ export default function ChatCreate() {
             ),
         });
     }, [chatName, selectedContacts]);
-
-    useEffect(() => {
-        Promise.all(store.contacts?.map(async (contact) => {
-            const avatarData = await api.getUserPhoto(contact.user_id);
-            return { ...contact, avatar: avatarData };
-        })).then((results) => {
-            setContacts(results);
-        });
-    }, [store.contacts]);
 
     return (
         <View style={globalStyle.container}>

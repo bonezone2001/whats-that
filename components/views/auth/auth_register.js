@@ -18,7 +18,7 @@ import api from '@api';
 import bgImageMobile from '@assets/images/register_bg.png';
 import bgImageWeb from '@assets/images/register_bg.svg';
 
-export default function Login() {
+export default function RegisterScreen() {
     const [triggerValidation, setTriggerValidation] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [bgImage, setBgImage] = useState(bgImageMobile);

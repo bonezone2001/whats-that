@@ -19,7 +19,7 @@ import api from '@api';
 import bgImageMobile from '@assets/images/login_bg.png';
 import bgImageWeb from '@assets/images/login_bg.svg';
 
-export default function Login() {
+export default function LoginScreen() {
     const [triggerValidation, setTriggerValidation] = useState(false);
     const [bgImage, setBgImage] = useState(bgImageMobile);
     const [majorError, setMajorError] = useState('');
@@ -55,8 +55,10 @@ export default function Login() {
             const { token, id } = response.data;
             await AsyncStorage.setItem('userId', id.toString());
             await store.setUserId(id);
+
             await AsyncStorage.setItem('token', token);
             await store.setToken(token);
+
             await entryUtils.loadUserData();
         } catch (error) {
             const errorMsg = error.response?.data || 'Something went wrong';

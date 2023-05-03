@@ -15,7 +15,7 @@ import Button from '@components/shared/button';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
 
-export default function ProfileView() {
+export default function ProfileViewScreen() {
     const navigation = useNavigation();
     const store = useStore();
 

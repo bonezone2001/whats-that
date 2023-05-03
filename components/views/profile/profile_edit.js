@@ -21,7 +21,7 @@ import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
 
-export default function ProfileView() {
+export default function ProfileEditScreen() {
     const navigation = useNavigation();
     const store = useStore();
 

@@ -44,7 +44,7 @@ export default function InfoCard({
                     <Ionicons name={icon} size={iconSize} color={iconColor || textColor} />
                 </View>
             )}
-            <View style={styles.content}>
+            <View style={{ flex: 1 }}>
                 <Text style={styles.label}>{label}</Text>
                 <Text style={styles.value}>{value}</Text>
             </View>
@@ -66,9 +66,6 @@ const staticStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20,
-    },
-    content: {
-        flex: 1,
     },
     label: {
         fontSize: 16,
