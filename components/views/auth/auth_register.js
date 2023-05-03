@@ -84,7 +84,6 @@ export default function Login() {
                 {/* Login form */}
                 <TextInput
                     label="First Name"
-                    block={80}
                     value={firstName}
                     onChangeText={setFirstName}
                     forceValidation={triggerValidation}
@@ -93,7 +92,6 @@ export default function Login() {
                 />
                 <TextInput
                     label="Last Name"
-                    block={80}
                     value={lastName}
                     onChangeText={setLastName}
                     forceValidation={triggerValidation}
@@ -103,7 +101,6 @@ export default function Login() {
                 <TextInput
                     contentType="email-address"
                     label="Email"
-                    block={80}
                     value={email}
                     onChangeText={setEmail}
                     forceValidation={triggerValidation}
@@ -112,7 +109,6 @@ export default function Login() {
                 />
                 <TextInput
                     label="Password"
-                    block={80}
                     value={password}
                     onChangeText={setPassword}
                     forceValidation={triggerValidation}
@@ -122,7 +118,6 @@ export default function Login() {
                 />
                 <TextInput
                     label="Confirm Password"
-                    block={80}
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
                     forceValidation={triggerValidation}
@@ -131,7 +126,6 @@ export default function Login() {
                     secureTextEntry
                 />
                 <Button
-                    block={80}
                     onPress={handleRegister}
                     style={entryStyle.formElement}
                     loading={loading}

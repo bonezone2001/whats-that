@@ -49,7 +49,9 @@ export default function ChatMembers({ route }) {
                 const userContacts = store.contacts;
                 const { members } = (await api.getChatDetails(chat.chat_id)).data;
                 const toDisplay = isAdd
-                    ? userContacts.filter((contact) => !members.some((member) => member.user_id === contact.user_id))
+                    ? userContacts.filter(
+                        (contact) => !members.some((member) => member.user_id === contact.user_id),
+                    )
                     : members.filter((member) => member.user_id !== store.user.user_id);
                 // Get avatars for all contacts
                 Promise.all(toDisplay?.map(async (contact) => {

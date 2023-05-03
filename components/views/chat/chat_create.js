@@ -21,8 +21,8 @@ import api from '@api';
 // Create chat screen
 export default function ChatCreate() {
     const [selectedContacts, setSelectedContacts] = useState([]);
-    const [contacts, setContacts] = useState([]);
     const [creating, setCreating] = useState(false);
+    const [contacts, setContacts] = useState([]);
     const [chatName, setChatName] = useState('');
     const navigation = useNavigation();
     const store = useStore();

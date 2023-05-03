@@ -7,6 +7,7 @@ export const entryStyle = StyleSheet.create({
     container: {
         ...globalStyle.container,
         backgroundColor: 'transparent',
+        width: '80%',
     },
     title: {
         fontFamily: 'Montserrat_Regular',
@@ -33,8 +34,11 @@ export const entryStyle = StyleSheet.create({
         width: '100%',
         resizeMode: 'cover',
         backgroundColor: colors.background,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     formElement: {
+        width: '100%',
         marginBottom: 10,
         color: '#000',
     },

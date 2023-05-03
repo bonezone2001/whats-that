@@ -37,10 +37,6 @@ export default function ChatView() {
         });
     }, []);
 
-    // useEffect(() => {
-    //     console.log(store.chats);
-    // }, [store.chats]);
-
     const renderLastMessage = (item) => {
         if (!Object.keys(item.last_message).length) {
             const { creator } = item;
@@ -62,9 +58,13 @@ export default function ChatView() {
                             style={styles.chat}
                             onPress={() => navigation.navigate('ViewChat', { chat: item })}
                         >
-                            <View style={styles.infoContainer}>
-                                <Text numberOfLines={1} style={styles.name}>{item.name}</Text>
-                                <Text numberOfLines={1} style={styles.lastMessage}>{renderLastMessage(item)}</Text>
+                            <View style={{ flex: 1 }}>
+                                <Text numberOfLines={1} style={styles.name}>
+                                    {item.name}
+                                </Text>
+                                <Text numberOfLines={1} style={styles.lastMessage}>
+                                    {renderLastMessage(item)}
+                                </Text>
                             </View>
                         </TouchableOpacity>
                     )}
@@ -87,10 +87,6 @@ const styles = StyleSheet.create({
         padding: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#333',
-    },
-    // Prevent text from overflowing
-    infoContainer: {
-        flex: 1,
     },
     name: {
         fontSize: 18,
