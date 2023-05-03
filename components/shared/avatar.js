@@ -1,5 +1,5 @@
 import { StyleSheet, Image } from 'react-native';
-import { colors } from '@styles/global_style';
+import { colors } from '@styles/style_global';
 import PropTypes from 'prop-types';
 import React from 'react';
 

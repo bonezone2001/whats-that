@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ProfileStack from '@navigator/stack/profile_stack';
-import ContactStack from '@navigator/stack/contact_stack';
-import ChatStack from '@navigator/stack/chat_stack';
+import ProfileStack from '@navigator/stack/stack_profile';
+import ContactStack from '@navigator/stack/stack_contact';
+import ChatStack from '@navigator/stack/stack_chat';
 import { tabBarOptions } from '@styles';
 import React from 'react';
 

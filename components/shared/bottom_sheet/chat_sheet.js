@@ -1,11 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import Button from '@components/shared/button';
-import { useStore } from '@store';
 import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
+import { useStore } from '@store';
+import { apiUtils } from '@utils';
 import React from 'react';
 import api from '@api';
-import { useNavigation } from '@react-navigation/native';
-import { apiUtils } from '@utils';
 
 export const settings = {
     parentRouteName: 'Chat',

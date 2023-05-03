@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
-import { appUtils } from '@utils/app_utils';
+import { appUtils } from '@utils/utils_app';
 import Constants from 'expo-constants';
 import { useStore } from '@store';
 import axios from 'axios';
