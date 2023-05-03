@@ -1,15 +1,23 @@
+// Chat conversation screen.
+// Allows users to seen and send/edit/delete messages to the group chat.
+
 import {
-    View, Text, StyleSheet, FlatList, ActivityIndicator, Platform,
+    View,
+    Text,
+    StyleSheet,
+    FlatList,
+    ActivityIndicator,
+    Platform,
 } from 'react-native';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ChatBubble from '@components/shared/chat_bubble';
 import TextInput from '@components/shared/text_input';
 import Button from '@components/shared/button';
-import { globalStyle } from '@styles';
 import { apiUtils, appUtils } from '@utils';
-import { useStore } from '@store';
+import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
+import { useStore } from '@store';
 import api from '@api';
 
 export default function ChatIndividual({ route }) {

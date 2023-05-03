@@ -1,5 +1,10 @@
+// Utility functions for general use.
+
 import {
-    Ionicons, Feather, FontAwesome5, Entypo,
+    Ionicons,
+    Feather,
+    FontAwesome5,
+    Entypo,
 } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import { Buffer } from 'buffer';

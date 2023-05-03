@@ -1,3 +1,5 @@
+// Bottoms tabs that are only available when the user is logged in.
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileStack from '@navigator/stack/stack_profile';
 import ContactStack from '@navigator/stack/stack_contact';

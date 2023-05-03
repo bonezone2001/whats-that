@@ -1,3 +1,5 @@
+// Styles for the contact related elements.
+
 import { StyleSheet } from 'react-native';
 import { globalStyle } from './style_global';
 

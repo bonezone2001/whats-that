@@ -1,3 +1,6 @@
+// Utility functions for the api wrapper.
+// Mainly used to automatically update the store after an api call.
+
 import { useStore } from '@store';
 import api from '@api';
 

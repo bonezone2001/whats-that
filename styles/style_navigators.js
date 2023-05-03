@@ -1,8 +1,11 @@
+// Styles and settings relating to the react navigation.
+// i.e. stack and tab navigators.
+
 import Avatar from '@components/shared/avatar';
 import { Ionicons } from '@expo/vector-icons';
 import { useStore } from '@store';
-
 import React from 'react';
+
 import { colors } from './style_global';
 
 export const screenOptions = {

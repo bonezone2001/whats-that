@@ -1,16 +1,17 @@
-// Chat bubble component for use in conversation screens.
+// Chat bubble component for use in conversations.
+// Will display on left or right and with different information based on context.
 
-import { View, Text, StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
-import { appUtils } from '@utils';
-import React from 'react';
 import {
     Menu,
     MenuOptions,
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
+import { appUtils } from '@utils';
 import { colors } from '@styles';
+import React from 'react';
 
 export default function ChatBubble({
     item,
@@ -21,9 +22,9 @@ export default function ChatBubble({
 }) {
     // Switch between elements and styles depending on if message is current user or not
     const bubbleStyle = isMe ? styles.meBubble : styles.otherBubble;
+    const textColor = isMe ? colors.meText : colors.otherText;
     const showAuthorName = !isSameAuthorAsNext && !isMe;
     const alignment = isMe ? 'flex-end' : 'flex-start';
-    const textColor = isMe ? colors.meText : colors.otherText;
     const Container = isMe ? MenuTrigger : View;
     const Wrapper = isMe ? Menu : View;
 

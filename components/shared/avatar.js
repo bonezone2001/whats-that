@@ -1,3 +1,5 @@
+// Displays an image in the typical styles associated with an avatar.
+
 import { StyleSheet, Image } from 'react-native';
 import { colors } from '@styles/style_global';
 import PropTypes from 'prop-types';

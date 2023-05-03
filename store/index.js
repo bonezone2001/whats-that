@@ -1,3 +1,5 @@
+// Global zustand store for the application
+
 import { create } from 'zustand';
 
 import { createChatSlice } from './modules/store_chat';

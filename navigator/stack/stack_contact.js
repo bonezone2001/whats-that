@@ -1,4 +1,5 @@
-/* eslint-disable react/no-unstable-nested-components */
+// Stack of screens when user has contact tab selected.
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ContactBlock from '@components/views/contact/contact_blocked';
 import ContactView from '@components/views/contact/contact_view';
@@ -6,10 +7,9 @@ import ContactAdd from '@components/views/contact/contact_add';
 import { headerOptions, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import { apiUtils, appUtils } from '@utils';
-import PropTypes from 'prop-types';
-
 import { Text, View } from 'react-native';
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const ContactStack = createNativeStackNavigator();
 

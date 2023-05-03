@@ -1,3 +1,5 @@
+// Registration screen, presented when navigated to from login.
+
 import {
     View,
     Text,

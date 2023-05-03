@@ -1,3 +1,5 @@
+// Login screen, presented when no token is present in storage.
+
 import {
     View,
     Text,

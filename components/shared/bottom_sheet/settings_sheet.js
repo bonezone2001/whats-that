@@ -1,3 +1,6 @@
+// Bottom sheet displayed on profile page.
+// Allows for logging out and accessing settings (NI).
+
 import Button from '@components/shared/button';
 import { globalStyle } from '@styles';
 import { entryUtils } from '@utils';

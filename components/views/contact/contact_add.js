@@ -1,3 +1,6 @@
+// Add contact screen.
+// Allow user to search for and add/block contacts.
+
 import {
     View,
     Text,
@@ -6,16 +9,16 @@ import {
     Platform,
 } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
+import ContactCard from '@components/shared/contact_card';
+import { useNavigation } from '@react-navigation/native';
+import TextInput from '@components/shared/text_input';
+import Button from '@components/shared/button';
 import { contactStyle } from '@styles';
+import { appUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
-import ContactCard from '@components/shared/contact_card';
-import { appUtils } from '@utils';
-import Button from '@components/shared/button';
-import TextInput from '@components/shared/text_input';
-import { useNavigation } from '@react-navigation/native';
 
 export default function ContactView() {
     const [searchResults, setSearchResults] = useState([]);

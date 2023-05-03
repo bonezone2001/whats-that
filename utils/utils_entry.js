@@ -1,4 +1,5 @@
 // Utility functions for the entry screens (login, register, etc.)
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dimensions, Platform } from 'react-native';
 import emailValidator from 'email-validator';

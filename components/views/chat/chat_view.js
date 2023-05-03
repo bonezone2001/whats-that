@@ -1,10 +1,18 @@
+// View chat list screen.
+// Show the list of chats the user is in, navigation to create chat + individual chat.
+
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    FlatList,
+    TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { contactStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import React, { useEffect } from 'react';
-import {
-    View, Text, Image, StyleSheet, FlatList, TouchableOpacity,
-} from 'react-native';
-import { contactStyle, globalStyle } from '@styles';
 import { useStore } from '@store';
 
 import noResultsImage from '@assets/images/no_results.png';

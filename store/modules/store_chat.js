@@ -1,4 +1,5 @@
-// Zustand module for chat state management
+// Zustand module for chat state management.
+
 export const createChatSlice = (set) => ({
     chats: null,
     setChats: (chats) => set({ chats }),

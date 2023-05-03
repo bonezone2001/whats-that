@@ -1,3 +1,6 @@
+// Edit profile screen.
+// Allow editing of user email, first name, last name, and avatar.
+
 import {
     View,
     Text,

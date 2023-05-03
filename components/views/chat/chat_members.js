@@ -1,14 +1,20 @@
-import ContactSelectionBox from '@components/shared/contact_box';
+// Chat modify members screen.
+// Allow chat creator to add or remove members from a chat.
+
 import {
-    View, StyleSheet, ScrollView, Dimensions, Text,
+    View,
+    ScrollView,
+    Dimensions,
+    Text,
 } from 'react-native';
-import { colors, globalStyle } from '@styles';
+import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
-import Button from '@components/shared/button';
 import React, { useEffect, useState } from 'react';
+import Button from '@components/shared/button';
+import { colors, globalStyle } from '@styles';
 import PropTypes from 'prop-types';
-import api from '@api';
 import { useStore } from '@store';
+import api from '@api';
 
 export default function ChatMembers({ route }) {
     const { chat, isAdd } = route.params;
@@ -23,13 +29,10 @@ export default function ChatMembers({ route }) {
     const handleModifyMembers = async () => {
         try {
             setUpdating(true);
-            if (isAdd) {
-                // Add all selected contacts to the chat asynchronously
-                await Promise.allSettled(selectedContacts.map(async (contact) => await api.addUserToChat(chat.chat_id, contact.user_id)));
-            } else {
-                // Remove all selected contacts from the chat asynchronously
-                await Promise.allSettled(selectedContacts.map(async (contact) => await api.removeUserFromChat(chat.chat_id, contact.user_id)));
-            }
+            const operationFunc = isAdd ? api.addUserToChat : api.removeUserFromChat;
+            await Promise.allSettled(selectedContacts.map(
+                async (contact) => operationFunc(chat.chat_id, contact.user_id),
+            ));
             navigation.navigate('View');
         } catch (error) {
             console.log(error);
@@ -38,9 +41,7 @@ export default function ChatMembers({ route }) {
         }
     };
 
-    const verifySelectedContacts = () => {
-        return true;
-    };
+    const verifySelectedContacts = () => true;
 
     useEffect(() => {
         (async () => {
@@ -92,7 +93,7 @@ export default function ChatMembers({ route }) {
 
     return (
         <View style={globalStyle.container}>
-            <View style={styles.contentContainer}>
+            <View style={{ width: '90%' }}>
                 {/* Box to limit size of contact view, set as remaining height */}
                 <ScrollView style={{ maxHeight: Dimensions.get('window').height * 0.6 }}>
                     <ContactSelectionBox
@@ -105,12 +106,6 @@ export default function ChatMembers({ route }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    contentContainer: {
-        width: '90%',
-    },
-});
 
 ChatMembers.propTypes = {
     route: PropTypes.shape({

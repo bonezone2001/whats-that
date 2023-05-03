@@ -1,3 +1,6 @@
+// Blocked contact screen.
+// Allow user to view and unblock blocked contacts.
+
 import {
     View,
     Text,

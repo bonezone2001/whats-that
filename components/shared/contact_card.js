@@ -1,3 +1,6 @@
+// Card for controlling and displaying a contact.
+// Information includes avatar, name, email, and buttons for adding/removing/blocking.
+
 import Avatar from '@components/shared/avatar';
 import { colors, contactStyle } from '@styles';
 import { View, Text } from 'react-native';
@@ -5,9 +8,16 @@ import PropTypes from 'prop-types';
 import { apiUtils } from '@utils';
 import React from 'react';
 import api from '@api';
+
 import Button from './button';
 
-export default function ContactCard({ type, contact, avatarSize, displayEmail, style }) {
+export default function ContactCard({
+    type,
+    contact,
+    avatarSize,
+    displayEmail,
+    style,
+}) {
     const handleBlock = async () => {
         try {
             if (contact.isBlocked) {

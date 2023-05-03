@@ -1,3 +1,6 @@
+// View profile screen.
+// Show user their details and allow navigation to edit profile.
+
 import {
     View,
     Text,

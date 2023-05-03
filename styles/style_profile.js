@@ -1,3 +1,5 @@
+// Styles for the profile related screens.
+
 import { StyleSheet } from 'react-native';
 
 export const profileStyle = StyleSheet.create({

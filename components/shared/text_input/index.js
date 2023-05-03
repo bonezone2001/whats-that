@@ -1,10 +1,9 @@
 // Chunky but extensive text input component.
 // Although it being chunky makes it harder to read.
-// -- Kyle Pelham
 
 import {
     View,
-    TextInput as RNTextInput,
+    TextInput as RNTextInput, // Avoid name collision
     ActivityIndicator,
     StyleSheet,
     TouchableWithoutFeedback,
@@ -13,7 +12,11 @@ import {
     Animated,
 } from 'react-native';
 import React, {
-    useEffect, useRef, useState, useMemo, useCallback,
+    useEffect,
+    useRef,
+    useState,
+    useMemo,
+    useCallback,
 } from 'react';
 import { colors } from '@styles';
 import { appUtils } from '@utils';

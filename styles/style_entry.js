@@ -1,3 +1,5 @@
+// Styles for the login and register screens.
+
 import { StyleSheet } from 'react-native';
 import { colors, globalStyle } from './style_global';
 

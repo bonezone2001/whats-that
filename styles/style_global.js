@@ -1,6 +1,7 @@
+// Colours and styles used globally throughout the app without particular context.
+
 import { StyleSheet } from 'react-native';
 
-// Export all styles variables (eg. colors, fonts, etc.)
 export const colors = {
     primary: '#FF6B6B',
     primaryDark: '#300000',

@@ -1,3 +1,5 @@
+// Stack of screens when user is not logged in.
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Register from '@components/views/auth/auth_register';
 import Login from '@components/views/auth/auth_login';

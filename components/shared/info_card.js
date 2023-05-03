@@ -1,3 +1,6 @@
+// Card for displaying general information.
+// Can include an icon and some text.
+
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';

@@ -1,3 +1,5 @@
+// Stack of screens when user has profile tab selected.
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileView from '@components/views/profile/profile_view';
 import ProfileEdit from '@components/views/profile/profile_edit';

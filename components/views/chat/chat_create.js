@@ -1,15 +1,23 @@
-import ContactSelectionBox from '@components/shared/contact_box';
+// Create chat screen.
+// Allows users to create a chat w or w/o contacts selected.
+// Takes user to the new chat after creation.
+
 import {
-    View, Text, StyleSheet, ScrollView, Dimensions,
+    View,
+    Text,
+    StyleSheet,
+    ScrollView,
+    Dimensions,
 } from 'react-native';
-import { colors, globalStyle } from '@styles';
+import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
-import Button from '@components/shared/button';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
+import Button from '@components/shared/button';
+import { colors, globalStyle } from '@styles';
 import { useStore } from '@store';
-import api from '@api';
 import { apiUtils } from '@utils';
+import api from '@api';
 
 // Create chat screen
 export default function ChatCreate() {
@@ -27,7 +35,9 @@ export default function ChatCreate() {
             const chat = (await api.createChat(chatName)).data;
 
             // Add all selected contacts to the chat asynchronously
-            await Promise.allSettled(selectedContacts.map(async (contact) => await api.addUserToChat(chat.chat_id, contact.user_id)));
+            await Promise.allSettled(selectedContacts.map(
+                async (contact) => api.addUserToChat(chat.chat_id, contact.user_id),
+            ));
 
             // Navigate to new chat
             const chatDetails = (await api.getChatDetails(chat.chat_id)).data;

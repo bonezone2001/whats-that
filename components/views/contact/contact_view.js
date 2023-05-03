@@ -1,16 +1,19 @@
+// View contact list screen.
+// Show all contacts and allow block/remove contact.
+
 import {
     View,
     Text,
     FlatList,
     Image,
 } from 'react-native';
+import ContactCard from '@components/shared/contact_card';
 import React, { useEffect, useState } from 'react';
 import { contactStyle } from '@styles';
 import { useStore } from '@store';
 import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
-import ContactCard from '@components/shared/contact_card';
 
 export default function ContactView() {
     const [contacts, setContacts] = useState([]);

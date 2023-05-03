@@ -1,9 +1,11 @@
+// List of contact card elements that can be selected and deselected.
+
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
 import PropTypes from 'prop-types';
+import { colors } from '@styles';
+import React from 'react';
 
 import ContactCard from './contact_card';
-import { colors } from '@styles';
 
 export default function ContactSelectionBox({
     contacts,
@@ -37,7 +39,8 @@ export default function ContactSelectionBox({
                         displayEmail={false}
                         style={[
                             styles.contact,
-                            selectedContacts.some((c) => c.user_id === contact.user_id) && styles.selectedContact,
+                            selectedContacts.some((c) => c.user_id === contact.user_id)
+                                && styles.selectedContact,
                         ]}
                     />
                 </TouchableOpacity>

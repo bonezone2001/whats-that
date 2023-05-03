@@ -1,14 +1,15 @@
-import {
-    View, StyleSheet, Text,
-} from 'react-native';
-import { colors, globalStyle } from '@styles';
+// Chat modify screen.
+// Allow chat creator to modify chat name.
+
 import { useNavigation } from '@react-navigation/native';
-import Button from '@components/shared/button';
+import { View, StyleSheet, Text } from 'react-native';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
+import Button from '@components/shared/button';
+import { colors, globalStyle } from '@styles';
 import PropTypes from 'prop-types';
-import api from '@api';
 import { apiUtils } from '@utils';
+import api from '@api';
 
 export default function ChatModify({ route }) {
     const { chat } = route.params;

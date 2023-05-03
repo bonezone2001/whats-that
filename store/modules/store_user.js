@@ -1,4 +1,5 @@
-// Zustand module for user state management (includes auth token)
+// Zustand module for user state management (includes auth token).
+
 export const createUserSlice = (set) => ({
     user: null,
     userId: null,

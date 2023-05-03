@@ -1,11 +1,14 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useMemo } from 'react';
+// Chunky but extensive button component.
+// Although it being chunky makes it harder to read.
+
 import {
     Text,
     StyleSheet,
     TouchableOpacity,
     ActivityIndicator,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { appUtils } from '@utils';
 import { colors } from '@styles';

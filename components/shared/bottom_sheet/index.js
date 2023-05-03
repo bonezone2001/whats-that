@@ -1,3 +1,6 @@
+// Global app bottom sheet (since it breaks if more than one is instantiated on web).
+// Will switch between different sheets based on active route.
+
 import React, {
     useEffect,
     useMemo,

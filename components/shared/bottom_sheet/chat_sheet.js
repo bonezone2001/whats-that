@@ -1,3 +1,6 @@
+// Bottom sheet displayed on chats.
+// Allows for modifying chats, adding members, and leaving chats.
+
 import { useNavigation } from '@react-navigation/native';
 import Button from '@components/shared/button';
 import { globalStyle } from '@styles';

@@ -1,4 +1,5 @@
-/* eslint-disable react/no-unstable-nested-components */
+// Stack of screens when user has chat tab selected.
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChatIndividual from '@components/views/chat/chat_individual';
 import ChatMembers from '@components/views/chat/chat_members';
