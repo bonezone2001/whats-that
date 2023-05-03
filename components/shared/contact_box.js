@@ -15,13 +15,12 @@ export default function ContactSelectionBox({
 }) {
     const toggleContactSelection = (contact) => {
         const index = selectedContacts.findIndex((c) => c.user_id === contact.user_id);
-        if (index > -1) {
-            // Contact is already selected, so remove it from the list
-            setSelectedContacts(selectedContacts.filter((c) => c.user_id !== contact.user_id));
-        } else {
-            // Contact is not yet selected, so add it to the list
-            setSelectedContacts([...selectedContacts, contact]);
-        }
+        // Add or remove contact from selected contacts
+        setSelectedContacts(
+            index > -1
+                ? selectedContacts.filter((c) => c.user_id !== contact.user_id)
+                : [...selectedContacts, contact],
+        );
         if (onContactSelection) onContactSelection(contact);
     };
 

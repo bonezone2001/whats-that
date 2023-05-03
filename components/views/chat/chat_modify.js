@@ -2,11 +2,11 @@
 // Allow chat creator to modify chat name.
 
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet, Text } from 'react-native';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
 import Button from '@components/shared/button';
 import { colors, globalStyle } from '@styles';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { apiUtils } from '@utils';
 import api from '@api';
@@ -60,7 +60,7 @@ export default function ChatModify({ route }) {
 
     return (
         <View style={globalStyle.container}>
-            <View style={styles.contentContainer}>
+            <View style={{ width: '90%' }}>
                 <TextInput
                     label="New name of chat"
                     value={chatName}
@@ -70,12 +70,6 @@ export default function ChatModify({ route }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    contentContainer: {
-        width: '90%',
-    },
-});
 
 ChatModify.propTypes = {
     route: PropTypes.shape({

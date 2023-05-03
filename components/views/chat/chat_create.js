@@ -5,7 +5,6 @@
 import {
     View,
     Text,
-    StyleSheet,
     ScrollView,
     Dimensions,
 } from 'react-native';
@@ -21,12 +20,12 @@ import api from '@api';
 
 // Create chat screen
 export default function ChatCreate() {
+    const [selectedContacts, setSelectedContacts] = useState([]);
+    const [contacts, setContacts] = useState([]);
+    const [creating, setCreating] = useState(false);
+    const [chatName, setChatName] = useState('');
     const navigation = useNavigation();
     const store = useStore();
-    const [contacts, setContacts] = useState([]);
-    const [selectedContacts, setSelectedContacts] = useState([]);
-    const [chatName, setChatName] = useState('');
-    const [creating, setCreating] = useState(false);
 
     const handleCreateChat = async () => {
         try {
@@ -89,7 +88,7 @@ export default function ChatCreate() {
 
     return (
         <View style={globalStyle.container}>
-            <View style={styles.contentContainer}>
+            <View style={{ width: '90%' }}>
                 <TextInput
                     label="Name of chat"
                     value={chatName}
@@ -108,30 +107,3 @@ export default function ChatCreate() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    contentContainer: {
-        width: '90%',
-    },
-    title: {
-        fontSize: 40,
-        fontWeight: 'bold',
-        color: '#fff',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    subtitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#fff',
-        textAlign: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-    },
-    label: {
-        color: '#fff',
-        fontSize: 16,
-        marginBottom: 10,
-        marginLeft: 8,
-    },
-});
