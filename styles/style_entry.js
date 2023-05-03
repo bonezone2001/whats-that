@@ -34,4 +34,12 @@ export const entryStyle = StyleSheet.create({
         resizeMode: 'cover',
         backgroundColor: colors.background,
     },
+    formElement: {
+        marginBottom: 10,
+        color: '#000',
+    },
+    subtitle: {
+        fontSize: 12,
+        color: '#555',
+    },
 });

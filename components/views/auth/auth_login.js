@@ -5,7 +5,6 @@ import {
     Text,
     ImageBackground,
     Dimensions,
-    StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { entryStyle, colors, globalStyle } from '@styles';
@@ -29,6 +28,7 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const store = useStore();
 
+    // Update background image on dimension change
     useEffect(() => {
         const updateBgImage = () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile);
         updateBgImage();
@@ -83,7 +83,7 @@ export default function Login() {
                     onChangeText={setEmail}
                     forceValidation={triggerValidation}
                     validation={() => entryUtils.validateEmail(email)}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                 />
                 <TextInput
                     label="Password"
@@ -92,13 +92,13 @@ export default function Login() {
                     onChangeText={setPassword}
                     forceValidation={triggerValidation}
                     validation={() => (password.length === 0 ? 'Password is required' : '')}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                     secureTextEntry
                 />
                 <Button
                     block={80}
                     onPress={handleLogin}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                     loading={loading}
                 >
                     Login
@@ -116,7 +116,7 @@ export default function Login() {
                     mode="text"
                     block={80}
                     href="Register"
-                    style={styles.subtitle}
+                    style={entryStyle.subtitle}
                 >
                     Don&apos;t have an account? Register
                 </Button>
@@ -124,14 +124,3 @@ export default function Login() {
         </ImageBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    formElement: {
-        marginBottom: 10,
-        color: '#000',
-    },
-    subtitle: {
-        fontSize: 12,
-        color: '#555',
-    },
-});

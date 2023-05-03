@@ -5,7 +5,6 @@ import {
     Text,
     ImageBackground,
     Dimensions,
-    StyleSheet,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '@components/shared/text_input';
@@ -31,6 +30,7 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const navigation = useNavigation();
 
+    // Update background image on dimension change
     useEffect(() => {
         const updateBgImage = () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile);
         updateBgImage();
@@ -56,9 +56,12 @@ export default function Login() {
             setTriggerValidation(true);
             return;
         }
+
+        // Trim all fields in case of unnecessary whitespace
         const fields = [firstName, lastName, email];
         const setFields = [setFirstName, setLastName, setEmail];
         fields.forEach((field, index) => setFields[index](field.trim()));
+
         setLoading(true);
         try {
             await api.register(firstName, lastName, email, password);
@@ -86,7 +89,7 @@ export default function Login() {
                     onChangeText={setFirstName}
                     forceValidation={triggerValidation}
                     validation={() => entryUtils.validateName(firstName)}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                 />
                 <TextInput
                     label="Last Name"
@@ -95,7 +98,7 @@ export default function Login() {
                     onChangeText={setLastName}
                     forceValidation={triggerValidation}
                     validation={() => entryUtils.validateName(lastName)}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                 />
                 <TextInput
                     contentType="email-address"
@@ -105,7 +108,7 @@ export default function Login() {
                     onChangeText={setEmail}
                     forceValidation={triggerValidation}
                     validation={() => entryUtils.validateEmail(email)}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                 />
                 <TextInput
                     label="Password"
@@ -114,7 +117,7 @@ export default function Login() {
                     onChangeText={setPassword}
                     forceValidation={triggerValidation}
                     validation={() => entryUtils.validatePassword(password)}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                     secureTextEntry
                 />
                 <TextInput
@@ -124,13 +127,13 @@ export default function Login() {
                     onChangeText={setConfirmPassword}
                     forceValidation={triggerValidation}
                     validation={() => entryUtils.validateConfirmPassword(password, confirmPassword)}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                     secureTextEntry
                 />
                 <Button
                     block={80}
                     onPress={handleRegister}
-                    style={styles.formElement}
+                    style={entryStyle.formElement}
                     loading={loading}
                 >
                     Login
@@ -148,7 +151,7 @@ export default function Login() {
                     mode="text"
                     block={80}
                     href="Login"
-                    style={styles.subtitle}
+                    style={entryStyle.subtitle}
                 >
                     Already have an account? Login
                 </Button>
@@ -156,13 +159,3 @@ export default function Login() {
         </ImageBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    formElement: {
-        marginBottom: 10,
-    },
-    subtitle: {
-        fontSize: 12,
-        color: '#555',
-    },
-});
