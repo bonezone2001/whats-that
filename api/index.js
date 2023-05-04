@@ -151,15 +151,14 @@ const client = {
         return response;
     },
 
-    // With photo alternatives
-    // searchUsersWithPhoto: async (query, search_in = 'all', limit = 20, offset = 0) => {
-    //     const users = await client.searchUsers(query, search_in, limit, offset);
-    //     return Promise.allSettled(users.data.map(async (user) => {
-    //         const avatar = await client.getUserPhoto(user.user_id);
-    //         return { ...user, avatar };
-    //     }));
-    // },
-
+    // Bulk operations
+    getAccompanyingPhotos: async (contacts) => Promise.allSettled(contacts.map(async (contact) => {
+        const avatar = await client.getUserPhoto(contact.user_id);
+        return { ...contact, avatar };
+    })),
+    addUsersToChat: async (chatId, userIds) => Promise.allSettled(userIds.map(
+        async (userId) => client.addUserToChat(chatId, userId),
+    )),
 };
 
 export default client;
