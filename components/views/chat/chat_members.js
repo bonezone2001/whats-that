@@ -6,6 +6,7 @@ import {
     ScrollView,
     Dimensions,
 } from 'react-native';
+import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
@@ -13,7 +14,6 @@ import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
 import api from '@api';
-import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 
 export default function ChatMembers({ route }) {
     const { chat, isAdd } = route.params;

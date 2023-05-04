@@ -4,11 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ContactBlock from '@components/views/contact/contact_blocked';
 import ContactView from '@components/views/contact/contact_view';
 import ContactAdd from '@components/views/contact/contact_add';
-import { headerOptions, globalStyle } from '@styles';
+import { HeaderTitle } from '@components/shared/headers';
 import Button from '@components/shared/button';
 import { apiUtils, appUtils } from '@utils';
-import { Text, View } from 'react-native';
 import React, { useEffect } from 'react';
+import { headerOptions } from '@styles';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
 const ContactStack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ const ContactStack = createNativeStackNavigator();
 export default function ContactNav({ navigation }) {
     const viewHeaderOptions = {
         ...headerOptions,
+        headerTitle: () => <HeaderTitle title="Contacts" />,
         headerRight: () => (
             <View style={{ flexDirection: 'row' }}>
                 <Button
@@ -31,9 +33,6 @@ export default function ContactNav({ navigation }) {
                     href="Add"
                 />
             </View>
-        ),
-        headerTitle: () => (
-            <Text numberOfLines={1} style={globalStyle.headerTitle}>Contacts</Text>
         ),
     };
 

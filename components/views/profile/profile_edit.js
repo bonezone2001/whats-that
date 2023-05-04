@@ -9,9 +9,10 @@ import {
     StyleSheet,
     Dimensions,
 } from 'react-native';
-import { profileStyle, colors, globalStyle } from '@styles';
+import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '@components/shared/text_input';
+import { profileStyle, globalStyle } from '@styles';
 import React, { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Avatar from '@components/shared/avatar';
@@ -20,7 +21,6 @@ import * as Camera from 'expo-camera';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
-import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 
 export default function ProfileEditScreen() {
     const navigation = useNavigation();
@@ -82,7 +82,7 @@ export default function ProfileEditScreen() {
             setAvatar(
                 result.base64.startsWith('data:')
                     ? result.base64
-                    : `data:image/png;base64,${result.base64}`
+                    : `data:image/png;base64,${result.base64}`,
             );
             setCameraMode(-1);
             setModalVisible(false);

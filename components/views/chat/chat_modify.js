@@ -1,6 +1,7 @@
 // Chat modify screen.
 // Allow chat creator to modify chat name.
 
+import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
@@ -10,7 +11,6 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { apiUtils } from '@utils';
 import api from '@api';
-import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 
 export default function ChatModify({ route }) {
     const { chat } = route.params;
