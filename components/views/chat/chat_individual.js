@@ -97,7 +97,8 @@ export default function ChatIndividual({ route }) {
             headerLeft: () => (
                 <Button
                     onPress={() => {
-                        // TODO: Need to move this since back button is not always used to go back
+                        // Need to move this since back button is not always used to go back
+                        // Low priority though
                         apiUtils.updateChats();
                         navigation.navigate('View');
                     }}
@@ -118,10 +119,10 @@ export default function ChatIndividual({ route }) {
                 <Text numberOfLines={1} style={globalStyle.headerTitle}>{chat.name}</Text>
             ),
         });
-        fetchMessages();
 
-        // Update messages every 2.5 seconds, there is no way to know new messages exist
+        // Update messages + every 2.5 seconds, there is no way to know new messages exist
         // There is no polling or websocket systems in place.
+        fetchMessages();
         const interval = setInterval(() => fetchMessages(true), 4000);
         return () => clearInterval(interval);
     }, []);

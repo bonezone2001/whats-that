@@ -29,17 +29,17 @@ export default function ChatCreate() {
 
     const handleCreateChat = async () => {
         try {
-            if (!chatName.trim()) return;
+            const trimmedName = chatName.trim();
+            if (!trimmedName) return;
             setCreating(true);
+
             const chat = (await api.createChat(chatName)).data;
+            api.addUsersToChat(chat.chat_id, selectedContacts.map((contact) => contact.user_id));
 
-            // Add all selected contacts to the chat asynchronously
-            await Promise.allSettled(selectedContacts.map(
-                async (contact) => api.addUserToChat(chat.chat_id, contact.user_id),
-            ));
-
-            // Navigate to new chat
-            navigation.navigate('ViewChat', { chat_id: chat.chat_id });
+            const chatDetails = (await api.getChatDetails(chat.chat_id)).data;
+            navigation.navigate('ViewChat', {
+                chat: { ...chatDetails, chat_id: chat.chat_id },
+            });
         } catch (error) {
             console.log(error);
         } finally {
@@ -49,12 +49,10 @@ export default function ChatCreate() {
     };
 
     useEffect(() => {
-        Promise.all(store.contacts?.map(async (contact) => {
-            const avatarData = await api.getUserPhoto(contact.user_id);
-            return { ...contact, avatar: avatarData };
-        })).then((results) => {
-            setContacts(results);
-        });
+        api.getAccompanyingPhotos(store.contacts)
+            .then((results) => {
+                setContacts(results);
+            });
     }, [store.contacts]);
 
     useEffect(() => {

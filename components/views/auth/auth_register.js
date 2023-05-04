@@ -30,7 +30,7 @@ export default function RegisterScreen() {
     const [email, setEmail] = useState('');
     const navigation = useNavigation();
 
-    // Update background image on dimension change
+    // Update background image on screen size change
     useEffect(() => {
         const updateBgImage = () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile);
         updateBgImage();

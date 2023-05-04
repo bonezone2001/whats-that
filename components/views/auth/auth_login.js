@@ -28,7 +28,7 @@ export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const store = useStore();
 
-    // Update background image on dimension change
+    // Update background image on screen size change
     useEffect(() => {
         const updateBgImage = () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile);
         updateBgImage();

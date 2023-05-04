@@ -69,7 +69,7 @@ export default function ContactCard({
                     </Text>
                 ) : null}
             </View>
-            {/* If type is none, don't render actions */}
+            {/* If type is none, don't allow actions */}
             {
                 type === 'none' ? null : (
                     <View style={contactStyle.actionsContainer}>
