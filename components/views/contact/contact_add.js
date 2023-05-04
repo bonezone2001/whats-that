@@ -27,6 +27,27 @@ export default function ContactAddScreen() {
     const navigation = useNavigation();
     const store = useStore();
 
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => <BackButton href="View" />,
+            headerTitle: () => (
+                <View style={contactStyle.searchBar}>
+                    <TextInput
+                        placeholder="Search"
+                        icon="search"
+                        loading={loading}
+                        onChangeText={(text) => {
+                            setSearchQuery(text);
+                            search(text);
+                        }}
+                        style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
+                        value={searchQuery}
+                    />
+                </View>
+            ),
+        });
+    }, [setSearchResults, store, loading, searchQuery]);
+
     const searchForContact = async (query) => {
         if (query.length === 0) {
             setSearchResults([]);
@@ -82,27 +103,6 @@ export default function ContactAddScreen() {
         },
         [debouncedSearch],
     );
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerTitle: () => (
-                <View style={contactStyle.searchBar}>
-                    <TextInput
-                        placeholder="Search"
-                        icon="search"
-                        loading={loading}
-                        onChangeText={(text) => {
-                            setSearchQuery(text);
-                            search(text);
-                        }}
-                        style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
-                        value={searchQuery}
-                    />
-                </View>
-            ),
-        });
-    }, [setSearchResults, store, loading, searchQuery]);
 
     return (
         <View style={contactStyle.container}>

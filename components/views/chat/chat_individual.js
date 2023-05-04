@@ -33,6 +33,34 @@ export default function ChatIndividual({ route }) {
     const navigation = useNavigation();
     const store = useStore();
 
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <BackButton
+                    onPress={() => {
+                        apiUtils.updateChats();
+                        navigation.navigate('View');
+                    }}
+                />
+            ),
+            headerTitle: () => <HeaderTitle title={chat.name} />,
+            headerRight: () => (
+                <Button
+                    mode="text"
+                    onPress={() => store.bottomSheet.current?.expand()}
+                    icon="more-vertical"
+                    prefixSize={28}
+                />
+            ),
+        });
+
+        // Update messages + every 2.5 seconds, there is no way to know new messages exist
+        // There is no polling or websocket systems in place.
+        fetchMessages();
+        const interval = setInterval(() => fetchMessages(true), 4000);
+        return () => clearInterval(interval);
+    }, []);
+
     const fetchMessages = async (silent = false) => {
         try {
             if (!silent) setLoading(true);
@@ -91,34 +119,6 @@ export default function ChatIndividual({ route }) {
         setEditMessage(item);
         setEditMessageContent(item.message);
     };
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <BackButton
-                    onPress={() => {
-                        apiUtils.updateChats();
-                        navigation.navigate('View');
-                    }}
-                />
-            ),
-            headerTitle: () => <HeaderTitle title={chat.name} />,
-            headerRight: () => (
-                <Button
-                    mode="text"
-                    onPress={() => store.bottomSheet.current?.expand()}
-                    icon="more-vertical"
-                    prefixSize={28}
-                />
-            ),
-        });
-
-        // Update messages + every 2.5 seconds, there is no way to know new messages exist
-        // There is no polling or websocket systems in place.
-        fetchMessages();
-        const interval = setInterval(() => fetchMessages(true), 4000);
-        return () => clearInterval(interval);
-    }, []);
 
     const rendermessageBox = ({ item, index }) => {
         const isMe = item.author.user_id === store.user.user_id;

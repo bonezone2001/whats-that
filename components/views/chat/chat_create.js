@@ -26,44 +26,6 @@ export default function ChatCreate() {
     const navigation = useNavigation();
     const store = useStore();
 
-    const handleCreateChat = async () => {
-        try {
-            const trimmedName = chatName.trim();
-            if (!trimmedName) return;
-            setCreating(true);
-
-            const chat = (await api.createChat(chatName)).data;
-            await Promise.allSettled(selectedContacts.map(
-                async (contact) => api.addUserToChat(chat.chat_id, contact.user_id),
-            ));
-
-            // Navigate to new chat
-            const chatDetails = (await api.getChatDetails(chat.chat_id)).data;
-            navigation.navigate('ViewChat', {
-                chat: { ...chatDetails, chat_id: chat.chat_id },
-            });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setCreating(false);
-            apiUtils.updateChats();
-        }
-    };
-
-    useEffect(() => {
-        // api.getAccompanyingPhotos(store.contacts)
-        //     .then((results) => {
-        //         setContacts(results);
-        //     });
-        // setContacts(results);
-        Promise.all(store.contacts?.map(async (contact) => {
-            const avatarData = await api.getUserPhoto(contact.user_id);
-            return { ...contact, avatar: avatarData };
-        })).then((results) => {
-            setContacts(results);
-        });
-    }, [store.contacts]);
-
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => <BackButton href="View" />,
@@ -77,6 +39,36 @@ export default function ChatCreate() {
             ),
         });
     }, [chatName, selectedContacts]);
+
+    useEffect(() => {
+        api.getAccompanyingPhotos(store.contacts)
+            .then(setContacts);
+    }, [store.contacts]);
+
+    const handleCreateChat = async () => {
+        try {
+            const trimmedName = chatName.trim();
+            if (!trimmedName) return;
+            setCreating(true);
+
+            const chat = (await api.createChat(chatName)).data;
+            await api.addUsersToChat(
+                chat.chat_id,
+                selectedContacts.map((contact) => contact.user_id),
+            );
+
+            // Navigate to new chat
+            const chatDetails = (await api.getChatDetails(chat.chat_id)).data;
+            navigation.navigate('ViewChat', {
+                chat: { ...chatDetails, chat_id: chat.chat_id },
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setCreating(false);
+            apiUtils.updateChats();
+        }
+    };
 
     return (
         <View style={globalStyle.container}>

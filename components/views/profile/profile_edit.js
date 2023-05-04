@@ -36,6 +36,14 @@ export default function ProfileEditScreen() {
     const [majorError, setMajorError] = useState('');
     const [updating, setUpdating] = useState(false);
 
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => <BackButton href="View" />,
+            headerRight: () => <CheckLoad onPress={submitChanges} loading={updating} />,
+            headerTitle: () => <HeaderTitle title="Edit Profile" />,
+        });
+    }, [firstName, lastName, email, avatar, updating]);
+
     const submitChanges = async () => {
         setMajorError('');
         const errors = entryUtils.validateUpdateDetails(firstName, lastName, email);
@@ -103,14 +111,6 @@ export default function ProfileEditScreen() {
         }
         setModalVisible(false);
     };
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerRight: () => <CheckLoad onPress={submitChanges} loading={updating} />,
-            headerTitle: () => <HeaderTitle title="Edit Profile" />,
-        });
-    }, [firstName, lastName, email, avatar, updating]);
 
     return (
         <View style={globalStyle.container}>

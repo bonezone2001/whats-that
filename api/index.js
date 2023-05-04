@@ -152,13 +152,27 @@ const client = {
     },
 
     // Bulk operations
-    getAccompanyingPhotos: async (contacts) => Promise.allSettled(contacts.map(async (contact) => {
-        const avatar = await client.getUserPhoto(contact.user_id);
-        return { ...contact, avatar };
-    })),
-    addUsersToChat: async (chatId, userIds) => Promise.allSettled(userIds.map(
-        async (userId) => client.addUserToChat(chatId, userId),
-    )),
+    async getAccompanyingPhotos(contacts) {
+        const result = await Promise.allSettled(
+            contacts.map(async (contact) => {
+                const avatar = await client.getUserPhoto(contact.user_id);
+                return { ...contact, avatar };
+            }),
+        );
+        return result.map(({ value }) => value);
+    },
+    async addUsersToChat(chatId, userIds) {
+        const result = await Promise.allSettled(
+            userIds.map(async (userId) => client.addUserToChat(chatId, userId)),
+        );
+        return result.map(({ value }) => value);
+    },
+    async removeUsersFromChat(chatId, userIds) {
+        const result = await Promise.allSettled(
+            userIds.map(async (userId) => client.removeUserFromChat(chatId, userId)),
+        );
+        return result.map(({ value }) => value);
+    }
 };
 
 export default client;

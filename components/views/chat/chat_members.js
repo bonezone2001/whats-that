@@ -24,6 +24,20 @@ export default function ChatMembers({ route }) {
     const [selectedContacts, setSelectedContacts] = useState([]);
     const [updating, setUpdating] = useState(false);
 
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => <BackButton href="View" />,
+            headerTitle: () => <HeaderTitle title={isAdd ? 'Add Members' : 'Kick Members'} />,
+            headerRight: () => (
+                <CheckLoad
+                    loading={updating}
+                    disabled={!selectedContacts.length}
+                    onPress={handleModifyMembers}
+                />
+            ),
+        });
+    }, [contacts, selectedContacts]);
+
     // If isAdd is true, add contacts to chat, otherwise remove contacts from chat
     const handleModifyMembers = async () => {
         try {
@@ -62,20 +76,6 @@ export default function ChatMembers({ route }) {
             }
         })();
     }, [isAdd]);
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerTitle: () => <HeaderTitle title={isAdd ? 'Add Members' : 'Kick Members'} />,
-            headerRight: () => (
-                <CheckLoad
-                    loading={updating}
-                    disabled={!selectedContacts.length}
-                    onPress={handleModifyMembers}
-                />
-            ),
-        });
-    }, [contacts, selectedContacts]);
 
     return (
         <View style={globalStyle.container}>

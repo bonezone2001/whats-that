@@ -19,19 +19,6 @@ export default function ChatModify({ route }) {
     const [chatName, setChatName] = useState(chat.name);
     const [updating, setUpdating] = useState(false);
 
-    const handleModifyChat = async () => {
-        try {
-            setUpdating(true);
-            await api.updateChat(chat.chat_id, chatName);
-            apiUtils.updateChats();
-            navigation.navigate('View');
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setUpdating(false);
-        }
-    };
-
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => <BackButton href="View" />,
@@ -45,6 +32,19 @@ export default function ChatModify({ route }) {
             ),
         });
     }, [chatName, updating]);
+
+    const handleModifyChat = async () => {
+        try {
+            setUpdating(true);
+            await api.updateChat(chat.chat_id, chatName);
+            apiUtils.updateChats();
+            navigation.navigate('View');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setUpdating(false);
+        }
+    };
 
     return (
         <View style={globalStyle.container}>
