@@ -20,6 +20,7 @@ import * as Camera from 'expo-camera';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
+import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 
 export default function ProfileEditScreen() {
     const navigation = useNavigation();
@@ -105,28 +106,9 @@ export default function ProfileEditScreen() {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <Button
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={38}
-                    href="View"
-                />
-            ),
-            headerRight: () => (
-                <Button
-                    mode="text"
-                    onPress={submitChanges}
-                    prefixSize={updating ? 34 : 38}
-                    prefixColor={colors.secondary}
-                    loading={updating}
-                    disabled={updating}
-                    icon="check"
-                />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>Edit Profile</Text>
-            ),
+            headerLeft: () => <BackButton href="View" />,
+            headerRight: () => <CheckLoad onPress={submitChanges} loading={updating} />,
+            headerTitle: () => <HeaderTitle title="Edit Profile" />,
         });
     }, [firstName, lastName, email, avatar, updating]);
 

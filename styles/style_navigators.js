@@ -18,6 +18,7 @@ export const headerOptions = {
     ...screenOptions,
     headerShown: true,
     headerShadowVisible: false,
+    headerBackVisible: false,
     headerStyle: {
         backgroundColor: colors.background,
         borderBottomColor: 'transparent',

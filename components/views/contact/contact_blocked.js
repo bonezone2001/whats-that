@@ -10,12 +10,12 @@ import {
 import ContactCard from '@components/shared/contact_card';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { contactStyle, globalStyle } from '@styles';
-import Button from '@components/shared/button';
+import { contactStyle } from '@styles';
 import { useStore } from '@store';
 import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
+import { BackButton, HeaderTitle } from '@components/shared/headers';
 
 export default function ContactBlockedScreen() {
     const [blocked, setBlocked] = useState([]);
@@ -24,17 +24,8 @@ export default function ContactBlockedScreen() {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <Button
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={40}
-                    href="View"
-                />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>Blocked</Text>
-            ),
+            headerLeft: () => <BackButton href="View" />,
+            headerTitle: () => <HeaderTitle title="Blocked" />,
         });
     }, []);
 

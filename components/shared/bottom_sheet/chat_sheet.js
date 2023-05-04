@@ -52,7 +52,7 @@ export function sheet({ route }) {
                             });
                         }}
                     >
-                        Add Member
+                        Add Members
                     </Button>
                     <Button
                         mode="text"
@@ -65,7 +65,7 @@ export function sheet({ route }) {
                             });
                         }}
                     >
-                        Remove Member
+                        Kick Members
                     </Button>
                 </>
             )}

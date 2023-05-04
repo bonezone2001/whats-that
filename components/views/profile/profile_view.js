@@ -14,6 +14,7 @@ import Avatar from '@components/shared/avatar';
 import Button from '@components/shared/button';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
+import { HeaderTitle } from '@components/shared/headers';
 
 export default function ProfileViewScreen() {
     const navigation = useNavigation();
@@ -24,6 +25,7 @@ export default function ProfileViewScreen() {
 
     useEffect(() => {
         navigation.setOptions({
+            headerTitle: () => <HeaderTitle title="Profile" />,
             headerRight: () => (
                 <Button
                     mode="text"
@@ -32,9 +34,6 @@ export default function ProfileViewScreen() {
                     iconLibrary="ionicons"
                     prefixSize={38}
                 />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>Profile</Text>
             ),
         });
     }, []);

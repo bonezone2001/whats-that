@@ -12,13 +12,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import ContactCard from '@components/shared/contact_card';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '@components/shared/text_input';
-import Button from '@components/shared/button';
 import { contactStyle } from '@styles';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
+import { BackButton } from '@components/shared/headers';
 
 export default function ContactAddScreen() {
     const [searchResults, setSearchResults] = useState([]);
@@ -85,14 +85,7 @@ export default function ContactAddScreen() {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <Button
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={40}
-                    href="View"
-                />
-            ),
+            headerLeft: () => <BackButton href="View" />,
             headerTitle: () => (
                 <View style={contactStyle.searchBar}>
                     <TextInput
@@ -103,9 +96,7 @@ export default function ContactAddScreen() {
                             setSearchQuery(text);
                             search(text);
                         }}
-                        style={{
-                            width: Platform.OS === 'android' ? '90%' : '100%',
-                        }}
+                        style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
                         value={searchQuery}
                     />
                 </View>

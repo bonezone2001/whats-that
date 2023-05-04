@@ -10,6 +10,7 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { apiUtils } from '@utils';
 import api from '@api';
+import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 
 export default function ChatModify({ route }) {
     const { chat } = route.params;
@@ -33,27 +34,14 @@ export default function ChatModify({ route }) {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <Button
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={38}
-                    href="View"
-                />
-            ),
+            headerLeft: () => <BackButton href="View" />,
+            headerTitle: () => <HeaderTitle title="Modify Chat" />,
             headerRight: () => (
-                <Button
-                    mode="text"
-                    onPress={handleModifyChat}
-                    prefixSize={updating ? 34 : 38}
-                    prefixColor={colors.secondary}
+                <CheckLoad
                     loading={updating}
-                    icon="check"
-                    disabled={updating || !chatName.length}
+                    onPress={handleModifyChat}
+                    disabled={!chatName.length}
                 />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>Modify Chat</Text>
             ),
         });
     }, [chatName, updating]);

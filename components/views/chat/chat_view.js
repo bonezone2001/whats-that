@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { HeaderTitle } from '@components/shared/headers';
 import { contactStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import React, { useEffect } from 'react';
@@ -23,6 +24,7 @@ export default function ChatView() {
 
     useEffect(() => {
         navigation.setOptions({
+            headerTitle: () => <HeaderTitle title="Chats" />,
             headerRight: () => (
                 <Button
                     mode="text"
@@ -30,9 +32,6 @@ export default function ChatView() {
                     prefixSize={30}
                     href="Create"
                 />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>Chats</Text>
             ),
         });
     }, []);

@@ -4,16 +4,15 @@
 
 import {
     View,
-    Text,
     ScrollView,
     Dimensions,
 } from 'react-native';
+import { CheckLoad, BackButton, HeaderTitle } from '@components/shared/headers';
 import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
-import Button from '@components/shared/button';
-import { colors, globalStyle } from '@styles';
+import { globalStyle } from '@styles';
 import { apiUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
@@ -34,8 +33,11 @@ export default function ChatCreate() {
             setCreating(true);
 
             const chat = (await api.createChat(chatName)).data;
-            api.addUsersToChat(chat.chat_id, selectedContacts.map((contact) => contact.user_id));
+            await Promise.allSettled(selectedContacts.map(
+                async (contact) => api.addUserToChat(chat.chat_id, contact.user_id),
+            ));
 
+            // Navigate to new chat
             const chatDetails = (await api.getChatDetails(chat.chat_id)).data;
             navigation.navigate('ViewChat', {
                 chat: { ...chatDetails, chat_id: chat.chat_id },
@@ -49,35 +51,29 @@ export default function ChatCreate() {
     };
 
     useEffect(() => {
-        api.getAccompanyingPhotos(store.contacts)
-            .then((results) => {
-                setContacts(results);
-            });
+        // api.getAccompanyingPhotos(store.contacts)
+        //     .then((results) => {
+        //         setContacts(results);
+        //     });
+        // setContacts(results);
+        Promise.all(store.contacts?.map(async (contact) => {
+            const avatarData = await api.getUserPhoto(contact.user_id);
+            return { ...contact, avatar: avatarData };
+        })).then((results) => {
+            setContacts(results);
+        });
     }, [store.contacts]);
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <Button
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={38}
-                    href="View"
-                />
-            ),
+            headerLeft: () => <BackButton href="View" />,
+            headerTitle: () => <HeaderTitle title="New Chat" />,
             headerRight: () => (
-                <Button
-                    mode="text"
+                <CheckLoad
                     onPress={handleCreateChat}
-                    prefixSize={creating ? 34 : 38}
-                    prefixColor={colors.secondary}
                     loading={creating}
-                    icon="check"
-                    disabled={creating || !chatName.trim()}
+                    disabled={!chatName.trim()}
                 />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>New Chat</Text>
             ),
         });
     }, [chatName, selectedContacts]);

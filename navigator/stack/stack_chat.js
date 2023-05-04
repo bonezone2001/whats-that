@@ -15,10 +15,6 @@ const ChatStack = createNativeStackNavigator();
 export default function ChatNav() {
     const viewHeaderOptions = {
         ...headerOptions,
-        headerRight: () => (
-            <View style={{ flexDirection: 'row' }} />
-        ),
-        headerLeft: () => null,
     };
 
     return (

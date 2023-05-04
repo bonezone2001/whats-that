@@ -3,12 +3,12 @@
 
 import {
     View,
-    Text,
     StyleSheet,
     FlatList,
     ActivityIndicator,
     Platform,
 } from 'react-native';
+import { BackButton, HeaderTitle } from '@components/shared/headers';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ChatBubble from '@components/shared/chat_bubble';
@@ -95,18 +95,14 @@ export default function ChatIndividual({ route }) {
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <Button
+                <BackButton
                     onPress={() => {
-                        // Need to move this since back button is not always used to go back
-                        // Low priority though
                         apiUtils.updateChats();
                         navigation.navigate('View');
                     }}
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={38}
                 />
             ),
+            headerTitle: () => <HeaderTitle title={chat.name} />,
             headerRight: () => (
                 <Button
                     mode="text"
@@ -114,9 +110,6 @@ export default function ChatIndividual({ route }) {
                     icon="more-vertical"
                     prefixSize={28}
                 />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>{chat.name}</Text>
             ),
         });
 

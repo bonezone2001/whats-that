@@ -5,16 +5,15 @@ import {
     View,
     ScrollView,
     Dimensions,
-    Text,
 } from 'react-native';
 import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import Button from '@components/shared/button';
-import { colors, globalStyle } from '@styles';
+import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
 import api from '@api';
+import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 
 export default function ChatMembers({ route }) {
     const { chat, isAdd } = route.params;
@@ -41,8 +40,6 @@ export default function ChatMembers({ route }) {
         }
     };
 
-    const verifySelectedContacts = () => true;
-
     useEffect(() => {
         (async () => {
             try {
@@ -68,27 +65,14 @@ export default function ChatMembers({ route }) {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <Button
-                    mode="text"
-                    icon="chevron-left"
-                    prefixSize={38}
-                    href="View"
-                />
-            ),
+            headerLeft: () => <BackButton href="View" />,
+            headerTitle: () => <HeaderTitle title={isAdd ? 'Add Members' : 'Kick Members'} />,
             headerRight: () => (
-                <Button
-                    mode="text"
-                    onPress={handleModifyMembers}
-                    prefixSize={updating ? 34 : 38}
-                    prefixColor={colors.secondary}
+                <CheckLoad
                     loading={updating}
-                    icon="check"
-                    disabled={updating || !verifySelectedContacts()}
+                    disabled={!selectedContacts.length}
+                    onPress={handleModifyMembers}
                 />
-            ),
-            headerTitle: () => (
-                <Text numberOfLines={1} style={globalStyle.headerTitle}>{isAdd ? 'Add Members' : 'Kick Members'}</Text>
             ),
         });
     }, [contacts, selectedContacts]);
