@@ -7,6 +7,7 @@ import {
     ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { HeaderTitle } from '@components/shared/headers';
 import { globalStyle, profileStyle } from '@styles';
 import InfoCard from '@components/shared/info_card';
 import React, { useEffect, useMemo } from 'react';
@@ -14,13 +15,17 @@ import Avatar from '@components/shared/avatar';
 import Button from '@components/shared/button';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
-import { HeaderTitle } from '@components/shared/headers';
 
 export default function ProfileViewScreen() {
     const navigation = useNavigation();
     const store = useStore();
 
-    const infoCards = useMemo(() => appUtils.getInfoCardData(store.user, store.contacts, store.chats), [store.user, store.contacts, store.chats]);
+    const infoCards = useMemo(() => appUtils
+        .getInfoCardData(
+            store.user,
+            store.contacts,
+            store.chats,
+        ), [store.user, store.contacts, store.chats]);
     const onHamburgerPress = () => store.bottomSheet?.current?.expand();
 
     useEffect(() => {

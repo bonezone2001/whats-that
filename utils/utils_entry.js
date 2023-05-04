@@ -116,17 +116,6 @@ export const entryUtils = {
             console.log(error);
         }
         return false;
-
-        // const store = useStore.getState();
-        // const userData = {
-        //     first_name: "John",
-        //     last_name: "Doe",
-        //     email: "test@test.com",
-        //     friends: 123,
-        //     chats: 456
-        // };
-        // store.setUser(userData);
-        // return true;
     },
 
     async logout() {
