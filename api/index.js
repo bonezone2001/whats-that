@@ -172,7 +172,7 @@ const client = {
             userIds.map(async (userId) => client.removeUserFromChat(chatId, userId)),
         );
         return result.map(({ value }) => value);
-    }
+    },
 };
 
 export default client;

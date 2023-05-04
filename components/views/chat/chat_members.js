@@ -18,11 +18,11 @@ import api from '@api';
 export default function ChatMembers({ route }) {
     const { chat, isAdd } = route.params;
 
-    const store = useStore();
-    const navigation = useNavigation();
     const [contacts, setContacts] = useState([]);
     const [selectedContacts, setSelectedContacts] = useState([]);
     const [updating, setUpdating] = useState(false);
+    const navigation = useNavigation();
+    const store = useStore();
 
     useEffect(() => {
         navigation.setOptions({
@@ -42,10 +42,11 @@ export default function ChatMembers({ route }) {
     const handleModifyMembers = async () => {
         try {
             setUpdating(true);
-            const operationFunc = isAdd ? api.addUserToChat : api.removeUserFromChat;
-            await Promise.allSettled(selectedContacts.map(
-                async (contact) => operationFunc(chat.chat_id, contact.user_id),
-            ));
+            const operationFunc = isAdd ? api.addUsersToChat : api.removeUsersFromChat;
+            await operationFunc(
+                chat.chat_id,
+                selectedContacts.map((contact) => contact.user_id),
+            );
             navigation.navigate('View');
         } catch (error) {
             console.log(error);
@@ -59,16 +60,15 @@ export default function ChatMembers({ route }) {
             try {
                 const userContacts = store.contacts;
                 const { members } = (await api.getChatDetails(chat.chat_id)).data;
-                const toDisplay = isAdd
+
+                // Filter out contacts that are already in the chat if adding members
+                const contactsToDisplay = isAdd
                     ? userContacts.filter(
                         (contact) => !members.some((member) => member.user_id === contact.user_id),
                     )
                     : members.filter((member) => member.user_id !== store.user.user_id);
-                // Get avatars for all contacts
-                Promise.all(toDisplay?.map(async (contact) => {
-                    const avatarData = await api.getUserPhoto(contact.user_id);
-                    return { ...contact, avatar: avatarData };
-                })).then((results) => {
+
+                api.getAccompanyingPhotos(contactsToDisplay).then((results) => {
                     setContacts(results);
                 });
             } catch (error) {
