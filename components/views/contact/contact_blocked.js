@@ -31,11 +31,8 @@ export default function ContactBlockedScreen() {
 
     useEffect(() => {
         if (store.blocked?.length === 0) return;
-        Promise.all(store.blocked?.map(async (contact) => {
-            const avatarData = await api.getUserPhoto(contact.user_id);
-            return { ...contact, avatar: avatarData, isBlocked: true };
-        }) || []).then((results) => {
-            setBlocked(results);
+        api.getAccompanyingPhotos(store.blocked).then((results) => {
+            setBlocked(results.map((result) => ({ ...result, isBlocked: true })));
         });
     }, [store.blocked]);
 

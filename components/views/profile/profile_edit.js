@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Avatar from '@components/shared/avatar';
 import Button from '@components/shared/button';
-import * as Camera from 'expo-camera';
+import { Camera } from 'expo-camera';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
@@ -69,6 +69,7 @@ export default function ProfileEditScreen() {
                 email,
                 avatar,
             });
+
             navigation.navigate('View');
         } catch (error) {
             if (error?.response?.data) {
@@ -86,7 +87,6 @@ export default function ProfileEditScreen() {
                 quality: 1,
                 exif: false,
             });
-            // Add data:image/png;base64, prefix to base64 string IF its not already there
             setAvatar(
                 result.base64.startsWith('data:')
                     ? result.base64
@@ -106,7 +106,7 @@ export default function ProfileEditScreen() {
             exif: false,
         });
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
             setAvatar(`data:image/png;base64,${result.assets[0].base64}`);
         }
         setModalVisible(false);
@@ -158,6 +158,7 @@ export default function ProfileEditScreen() {
                     }
                 </View>
 
+                {/* TODO: This needs a complete refactor */}
                 <Modal
                     animationType="fade"
                     transparent
@@ -174,7 +175,9 @@ export default function ProfileEditScreen() {
                                     <View style={profileStyle.modalButtonContainer}>
                                         <Button
                                             mode="text"
-                                            onPress={() => setCameraMode(Camera.Camera.Constants.Type.back)}
+                                            onPress={() => {
+                                                setCameraMode(Camera.Constants.Type.back);
+                                            }}
                                             style={profileStyle.modalButton}
                                         >
                                             Take Photo
@@ -198,8 +201,7 @@ export default function ProfileEditScreen() {
                                     </View>
                                 )
                                 : (
-                                    <Camera.Camera
-                                        // Take up full width of screen, then set height to match width to make 1:1 ratio
+                                    <Camera
                                         style={[styles.camera, { height: Dimensions.get('window').width }]}
                                         type={cameraMode}
                                         ratio="1:1"
@@ -215,7 +217,13 @@ export default function ProfileEditScreen() {
                                             </Button>
                                             <Button
                                                 mode="text"
-                                                onPress={() => setCameraMode(cameraMode === Camera.Camera.Constants.Type.back ? Camera.Camera.Constants.Type.front : Camera.Camera.Constants.Type.back)}
+                                                onPress={() => {
+                                                    setCameraMode(
+                                                        cameraMode === Camera.Constants.Type.back
+                                                            ? Camera.Constants.Type.front
+                                                            : Camera.Constants.Type.back,
+                                                    );
+                                                }}
                                                 style={profileStyle.cameraButton}
                                             >
                                                 Flip
@@ -228,7 +236,7 @@ export default function ProfileEditScreen() {
                                                 Take Photo
                                             </Button>
                                         </View>
-                                    </Camera.Camera>
+                                    </Camera>
                                 )
                         }
                     </View>

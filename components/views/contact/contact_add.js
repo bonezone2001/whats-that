@@ -11,6 +11,7 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import ContactCard from '@components/shared/contact_card';
 import { useNavigation } from '@react-navigation/native';
+import { BackButton } from '@components/shared/headers';
 import TextInput from '@components/shared/text_input';
 import { contactStyle } from '@styles';
 import { appUtils } from '@utils';
@@ -18,7 +19,6 @@ import { useStore } from '@store';
 import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
-import { BackButton } from '@components/shared/headers';
 
 export default function ContactAddScreen() {
     const [searchResults, setSearchResults] = useState([]);
@@ -55,16 +55,12 @@ export default function ContactAddScreen() {
         }
         try {
             const response = await api.searchUsers(query);
-            const contacts = response.data.filter((user) => user.user_id !== store.userId);
-
-            // Get avatars for each contact
-            const avatarPromises = contacts.map((user) => api.getUserPhoto(user.user_id));
-            const avatarData = await Promise.all(avatarPromises);
+            const contactsTemp = response.data.filter((user) => user.user_id !== store.userId);
+            const contacts = await api.getAccompanyingPhotos(contactsTemp);
 
             // Update all to appropriate format
             for (let i = 0; i < contacts.length; i++) {
                 const user = contacts[i];
-                user.avatar = avatarData[i];
 
                 // Remap given_name and family_name to first_name and last_name
                 user.first_name = user.given_name;
@@ -73,11 +69,17 @@ export default function ContactAddScreen() {
                 delete user.family_name;
 
                 // Search if array of objects includes users with matching user_id
-                if (store.contacts)
-                    user.isContact = store.contacts.some((contact) => contact.user_id === user.user_id);
+                if (store.contacts) {
+                    user.isContact = store.contacts.some(
+                        (contact) => contact.user_id === user.user_id,
+                    );
+                }
 
-                if (store.blocked)
-                    user.isBlocked = store.blocked.some((blocked) => blocked.user_id === user.user_id);
+                if (store.blocked) {
+                    user.isBlocked = store.blocked.some(
+                        (blocked) => blocked.user_id === user.user_id,
+                    );
+                }
             }
             setSearchResults(contacts);
         } catch (error) {
@@ -86,13 +88,12 @@ export default function ContactAddScreen() {
     };
 
     // Delay calling searchForContact to prevent spamming the server with incomplete queries
-    // useCallback is used to prevent the debounce function from being recreated on every render (due to the loading update)
     const debouncedSearch = useCallback(
         appUtils.debounce(async (query) => {
             searchForContact(query);
             setLoading(false);
         }, 250),
-        []
+        [],
     );
 
     // Show loading indicator while waiting for debounce and search

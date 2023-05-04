@@ -20,11 +20,9 @@ export default function ContactViewScreen() {
     const store = useStore();
 
     useEffect(() => {
-        Promise.all(store.contacts?.map(async (contact) => {
-            const avatarData = await api.getUserPhoto(contact.user_id);
-            return { ...contact, avatar: avatarData, isContact: true };
-        }) || [])
-            .then((result) => setContacts(result));
+        api.getAccompanyingPhotos(store.contacts).then((results) => {
+            setContacts(results.map((result) => ({ ...result, isContact: true })));
+        });
     }, [store.contacts]);
 
     return (
