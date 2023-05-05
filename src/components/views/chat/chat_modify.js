@@ -4,6 +4,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { CheckLoad } from '@components/shared/headers';
 import TextInput from '@components/shared/text_input';
+import Toast from 'react-native-toast-message';
 import { useScreenHeader } from '@hooks';
 import React, { useState } from 'react';
 import { globalStyle } from '@styles';
@@ -26,7 +27,11 @@ export default function ChatModify({ route }) {
             apiUtils.updateChats();
             navigation.navigate('View');
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Failed to modify chat',
+            });
         } finally {
             setUpdating(false);
         }

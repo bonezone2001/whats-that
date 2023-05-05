@@ -11,6 +11,7 @@ import {
 import ContactCard from '@components/shared/contact_card';
 import TextInput from '@components/shared/text_input';
 import React, { useCallback, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import { useScreenHeader } from '@hooks';
 import { contactStyle } from '@styles';
 import { appUtils } from '@utils';
@@ -79,7 +80,11 @@ export default function ContactAddScreen() {
             }
             setSearchResults(contacts);
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.message,
+            });
         }
     };
 

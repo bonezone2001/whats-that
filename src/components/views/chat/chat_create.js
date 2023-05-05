@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CheckLoad } from '@components/shared/headers';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import { useScreenHeader } from '@hooks';
 import { globalStyle } from '@styles';
 import { apiUtils } from '@utils';
@@ -42,7 +43,11 @@ export default function ChatCreate() {
                 },
             });
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                text1: 'Error creating chat',
+                text2: error.message,
+                type: 'error',
+            });
         } finally {
             setCreating(false);
             apiUtils.updateChats();

@@ -1,8 +1,7 @@
-import {
-    useState,
-} from 'react';
-import api from '@api';
+import Toast from 'react-native-toast-message';
 import { appUtils } from '@utils';
+import { useState } from 'react';
+import api from '@api';
 
 export const useChat = ({
     chat,
@@ -36,7 +35,11 @@ export const useChat = ({
                 if (!wasDelete) onNewMessages();
             }
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Could not fetch messages',
+            });
         } finally {
             if (!silent) setChatLoading(false);
         }
@@ -49,7 +52,11 @@ export const useChat = ({
             await api.sendMessage(chat.chat_id, trimmedMsg);
             await fetchMessages();
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Could not send message',
+            });
         }
     };
 
@@ -65,7 +72,11 @@ export const useChat = ({
             }
             await fetchMessages();
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Could not send message',
+            });
         } finally {
             clearMessageFields();
         }
@@ -79,7 +90,11 @@ export const useChat = ({
             onMessageEdit(messageId);
             await fetchMessages();
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Could not edit message',
+            });
         }
     };
 
@@ -89,7 +104,11 @@ export const useChat = ({
             onMessageDelete(messageId);
             await fetchMessages();
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Could not delete message',
+            });
         }
     };
 

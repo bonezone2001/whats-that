@@ -98,7 +98,9 @@ export const entryUtils = {
                 await AsyncStorage.removeItem('token');
                 await AsyncStorage.removeItem('userId');
                 store.setToken(null);
-            } else { console.log(error); }
+            } else {
+                throw error;
+            }
         }
         return false;
     },
@@ -106,16 +108,10 @@ export const entryUtils = {
     // Gather user data and put it in the store
     async loadUserData() {
         const store = useStore.getState();
-        try {
-            const userData = (await api.getUserInfo(store.userId)).data;
-            const avatarData = await api.getUserPhoto(store.userId);
-            userData.avatar = avatarData;
-            store.setUser(userData);
-            return true;
-        } catch (error) {
-            console.log(error);
-        }
-        return false;
+        const userData = (await api.getUserInfo(store.userId)).data;
+        const avatarData = await api.getUserPhoto(store.userId);
+        userData.avatar = avatarData;
+        store.setUser(userData);
     },
 
     async logout() {

@@ -10,6 +10,7 @@ import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
 import { CheckLoad } from '@components/shared/headers';
 import React, { useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import { useScreenHeader } from '@hooks';
 import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
@@ -36,7 +37,11 @@ export default function ChatMembers({ route }) {
             );
             navigation.navigate('View');
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Unable to modify members',
+            });
         } finally {
             setUpdating(false);
         }
@@ -71,7 +76,11 @@ export default function ChatMembers({ route }) {
                     setContacts(results);
                 });
             } catch (error) {
-                console.log(error);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: 'Unable to load contacts',
+                });
             }
         })();
     }, [isAdd]);

@@ -7,9 +7,10 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { useLoadFonts, useLoadApiData } from '@hooks';
 import AuthStack from '@navigator/stack/stack_auth';
 import * as SplashScreen from 'expo-splash-screen';
+import { globalStyle, toastConfig } from '@styles';
+import Toast from 'react-native-toast-message';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback } from 'react';
-import { globalStyle } from '@styles';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
 
@@ -42,6 +43,7 @@ export default function App() {
                         <NavigationContainer style={globalStyle.root}>
                             {store.token ? <AuthorizedTabs /> : <AuthStack />}
                             <BottomSheet />
+                            <Toast config={toastConfig} />
                         </NavigationContainer>
                     </SafeAreaView>
                 </MenuProvider>

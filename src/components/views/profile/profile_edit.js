@@ -15,6 +15,7 @@ import TextInput from '@components/shared/text_input';
 import { profileStyle, globalStyle } from '@styles';
 import * as ImagePicker from 'expo-image-picker';
 import Avatar from '@components/shared/avatar';
+import Toast from 'react-native-toast-message';
 import Button from '@components/shared/button';
 import React, { useState } from 'react';
 import { useScreenHeader } from '@hooks';
@@ -34,16 +35,11 @@ export default function ProfileEditScreen() {
     const [email, setEmail] = useState(store.user.email);
     const [cameraMode, setCameraMode] = useState(-1);
     const [cameraRef, setCameraRef] = useState(null);
-    const [majorError, setMajorError] = useState('');
     const [updating, setUpdating] = useState(false);
 
     const submitChanges = async () => {
-        setMajorError('');
         const errors = entryUtils.validateUpdateDetails(firstName, lastName, email);
-        if (errors) {
-            setMajorError('Please provide valid details!');
-            return;
-        }
+        if (errors) return;
 
         setUpdating(true);
         try {
@@ -66,7 +62,11 @@ export default function ProfileEditScreen() {
             navigation.navigate('View');
         } catch (error) {
             if (error?.response?.data) {
-                setMajorError(error.response.data);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: error.response.data.message,
+                });
             }
         } finally {
             setUpdating(false);
@@ -75,7 +75,13 @@ export default function ProfileEditScreen() {
 
     useScreenHeader({
         title: 'Edit Profile',
-        right: <CheckLoad onPress={submitChanges} loading={updating} />,
+        right: (
+            <CheckLoad
+                onPress={submitChanges}
+                loading={updating}
+                disabled={entryUtils.validateUpdateDetails(firstName, lastName, email) !== null}
+            />
+        ),
         args: [firstName, lastName, email, avatar, updating],
     });
 
@@ -134,6 +140,7 @@ export default function ProfileEditScreen() {
                         value={firstName}
                         onChangeText={setFirstName}
                         style={profileStyle.formElement}
+                        validation={() => entryUtils.validateName(firstName)}
                         block={90}
                     />
                     <TextInput
@@ -141,6 +148,7 @@ export default function ProfileEditScreen() {
                         value={lastName}
                         onChangeText={setLastName}
                         style={profileStyle.formElement}
+                        validation={() => entryUtils.validateName(firstName)}
                         block={90}
                     />
                     <TextInput
@@ -150,11 +158,6 @@ export default function ProfileEditScreen() {
                         style={profileStyle.formElement}
                         block={90}
                     />
-                    {
-                        majorError
-                            ? <Text style={globalStyle.infoText}>{majorError}</Text>
-                            : null
-                    }
                 </View>
 
                 {/* TODO: This needs a complete refactor */}
