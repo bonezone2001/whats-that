@@ -3,6 +3,7 @@
 
 import { useNavigation } from '@react-navigation/native';
 import Button from '@components/shared/button';
+import Toast from 'react-native-toast-message';
 import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
@@ -82,7 +83,11 @@ export function sheet({ route }) {
                         apiUtils.updateChats();
                         navigation.navigate('View');
                     } catch (error) {
-                        console.log(error);
+                        Toast.show({
+                            type: 'error',
+                            text1: 'Error',
+                            text2: 'Failed to leave chat',
+                        });
                     }
                 }}
             >

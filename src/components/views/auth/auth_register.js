@@ -1,16 +1,12 @@
 // Registration screen, presented when navigated to from login.
 
-import {
-    View,
-    Text,
-    ImageBackground,
-    Dimensions,
-} from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
 import { entryStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
+import { useAuthBackground } from '@hooks';
 import { entryUtils } from '@utils';
 import api from '@api';
 
@@ -21,7 +17,6 @@ import bgImageWeb from '@assets/images/register_bg.svg';
 export default function RegisterScreen() {
     const [triggerValidation, setTriggerValidation] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [bgImage, setBgImage] = useState(bgImageMobile);
     const [majorError, setMajorError] = useState('');
     const [firstName, setFirstName] = useState('');
     const [loading, setLoading] = useState(false);
@@ -31,12 +26,7 @@ export default function RegisterScreen() {
     const navigation = useNavigation();
 
     // Update background image on screen size change
-    useEffect(() => {
-        const updateBgImage = () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile);
-        updateBgImage();
-        const subscription = Dimensions.addEventListener('change', updateBgImage);
-        return () => subscription.remove();
-    }, []);
+    const { bgImage } = useAuthBackground(bgImageWeb, bgImageMobile);
 
     // Reset trigger validation when it has chance to run
     useEffect(() => {
@@ -139,7 +129,6 @@ export default function RegisterScreen() {
 
                 <Button
                     mode="text"
-                    block={80}
                     href="Login"
                     style={entryStyle.subtitle}
                 >

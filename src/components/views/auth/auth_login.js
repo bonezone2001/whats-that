@@ -1,16 +1,12 @@
 // Login screen, presented when no token is present in storage.
 
-import {
-    View,
-    Text,
-    ImageBackground,
-    Dimensions,
-} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, ImageBackground } from 'react-native';
 import { entryStyle, colors, globalStyle } from '@styles';
 import TextInput from '@components/shared/text_input';
 import React, { useEffect, useState } from 'react';
 import Button from '@components/shared/button';
+import { useAuthBackground } from '@hooks';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
@@ -21,7 +17,6 @@ import bgImageWeb from '@assets/images/login_bg.svg';
 
 export default function LoginScreen() {
     const [triggerValidation, setTriggerValidation] = useState(false);
-    const [bgImage, setBgImage] = useState(bgImageMobile);
     const [majorError, setMajorError] = useState('');
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
@@ -29,12 +24,7 @@ export default function LoginScreen() {
     const store = useStore();
 
     // Update background image on screen size change
-    useEffect(() => {
-        const updateBgImage = () => entryUtils.updateBgImage(setBgImage, bgImageWeb, bgImageMobile);
-        updateBgImage();
-        const subscription = Dimensions.addEventListener('change', updateBgImage);
-        return () => subscription.remove();
-    }, []);
+    const { bgImage } = useAuthBackground(bgImageWeb, bgImageMobile);
 
     // Reset trigger validation when it has chance to run
     useEffect(() => {
@@ -109,7 +99,6 @@ export default function LoginScreen() {
 
                 <Button
                     mode="text"
-                    block={80}
                     href="Register"
                     style={entryStyle.subtitle}
                 >

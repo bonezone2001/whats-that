@@ -1,3 +1,4 @@
+export * from './modules/useAuthBackground';
 export * from './modules/useScreenHeader';
 export * from './modules/useLoadApiData';
 export * from './modules/useLoadFonts';

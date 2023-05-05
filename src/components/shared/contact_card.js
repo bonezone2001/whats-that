@@ -1,6 +1,7 @@
 // Card for controlling and displaying a contact.
 // Information includes avatar, name, email, and buttons for adding/removing/blocking.
 
+import Toast from 'react-native-toast-message';
 import Avatar from '@components/shared/avatar';
 import { colors, contactStyle } from '@styles';
 import { View, Text } from 'react-native';
@@ -31,7 +32,11 @@ export default function ContactCard({
             contact.isContact = !contact.isBlocked;
             await apiUtils.updateContactsAndBlocked();
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                text1: 'Error blocking user',
+                text2: error.message,
+                type: 'error',
+            });
         }
     };
 
@@ -46,7 +51,11 @@ export default function ContactCard({
             contact.isContact = !contact.isContact;
             await apiUtils.updateContacts();
         } catch (error) {
-            console.log(error);
+            Toast.show({
+                text1: 'Error adding/removing contact',
+                text2: error.message,
+                type: 'error',
+            });
         }
     };
 
