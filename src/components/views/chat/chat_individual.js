@@ -3,135 +3,90 @@
 
 import {
     View,
-    StyleSheet,
     FlatList,
     ActivityIndicator,
     Platform,
 } from 'react-native';
-import { BackButton, HeaderTitle } from '@components/shared/headers';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { BackButton } from '@components/shared/headers';
 import ChatBubble from '@components/shared/chat_bubble';
 import TextInput from '@components/shared/text_input';
+import { useChat, useScreenHeader } from '@hooks';
+import { chatStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
-import { apiUtils, appUtils } from '@utils';
-import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
+import { apiUtils } from '@utils';
 import { useStore } from '@store';
-import api from '@api';
 
 export default function ChatIndividual({ route }) {
-    const { chat } = route.params;
-
     const [editMessageContent, setEditMessageContent] = useState('');
     const [editMessage, setEditMessage] = useState(null);
-    const [chatMessages, setChatMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const flatListRef = useRef(null);
 
+    const chatDetails = route.params.chat;
+    const chat = useChat({ chat: chatDetails });
     const navigation = useNavigation();
     const store = useStore();
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <BackButton
-                    onPress={() => {
-                        apiUtils.updateChats();
-                        navigation.navigate('View');
-                    }}
-                />
-            ),
-            headerTitle: () => <HeaderTitle title={chat.name} />,
-            headerRight: () => (
-                <Button
-                    mode="text"
-                    onPress={() => store.bottomSheet.current?.expand()}
-                    icon="more-vertical"
-                    prefixSize={28}
-                />
-            ),
-        });
+    // Refresh chat every 4 seconds
+    useEffect(() => chat.beginChatRefresher(4000), []);
 
-        // Update messages + every 2.5 seconds, there is no way to know new messages exist
-        // There is no polling or websocket systems in place.
-        fetchMessages();
-        const interval = setInterval(() => fetchMessages(true), 4000);
-        return () => clearInterval(interval);
-    }, []);
+    useScreenHeader({
+        left: (
+            <BackButton
+                onPress={() => {
+                    apiUtils.updateChats();
+                    navigation.navigate('View');
+                }}
+            />
+        ),
+        title: chatDetails.name,
+        right: (
+            <Button
+                mode="text"
+                onPress={() => store.bottomSheet.current?.expand()}
+                icon="more-vertical"
+                prefixSize={28}
+            />
+        ),
+        args: [chatDetails.name],
+    });
 
-    const fetchMessages = async (silent = false) => {
-        try {
-            if (!silent) setLoading(true);
-            const { messages } = (await api.getChatDetails(chat.chat_id)).data;
-            if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) {
-                setChatMessages(messages);
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            if (!silent) setLoading(false);
+    chat.setOnNewMessages(() => {
+        setTimeout(() => flatListRef.current.scrollToOffset({
+            animated: true,
+            offset: 0,
+        }), 250);
+    });
+
+    const onSendPress = () => {
+        if (editMessage) {
+            chat.handleEditMessage(editMessage.message_id, editMessageContent);
+        } else {
+            chat.handleSendMessage(message);
         }
-    };
-
-    const handleSend = async () => {
-        try {
-            const trimmedMessage = appUtils.multilineTrim(message);
-            if (trimmedMessage === '') return;
-            await api.sendMessage(chat.chat_id, trimmedMessage);
-            await fetchMessages();
-            setMessage('');
-            setTimeout(() => flatListRef.current.scrollToOffset({
-                animated: true,
-                offset: 0,
-            }), 250);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleEdit = async () => {
-        try {
-            const trimmedMessage = appUtils.multilineTrim(editMessageContent);
-            if (trimmedMessage === '') return;
-            await api.editMessage(chat.chat_id, editMessage.message_id, trimmedMessage);
-            await fetchMessages();
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setEditMessage(null);
-            setEditMessageContent('');
-        }
-    };
-
-    const onDeletePress = async (item) => {
-        if (editMessage?.message_id === item.message_id) setEditMessage(null);
-        try {
-            await api.deleteMessage(chat.chat_id, item.message_id);
-            fetchMessages();
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const onEditPress = async (item) => {
-        setEditMessage(item);
-        setEditMessageContent(item.message);
+        setEditMessageContent('');
+        setEditMessage(null);
+        setMessage('');
     };
 
     const rendermessageBox = ({ item, index }) => {
         const isMe = item.author.user_id === store.user.user_id;
-        const isSameAuthorAsNext = index < chatMessages.length - 1
-            && item.author.user_id === chatMessages[index + 1].author.user_id;
+        const isSameAuthorAsNext = index < chat.chatMessages.length - 1
+            && item.author.user_id === chat.chatMessages[index + 1].author.user_id;
         return (
             <ChatBubble
                 key={item.message_id}
                 item={item}
                 isMe={isMe}
                 isSameAuthorAsNext={isSameAuthorAsNext}
-                onDeletePress={onDeletePress}
-                onEditPress={onEditPress}
+                onDeletePress={() => chat.handleDeleteMessage(item)}
+                onEditPress={() => {
+                    setEditMessage(item);
+                    setEditMessageContent(item.message);
+                }}
             />
         );
     };
@@ -140,16 +95,16 @@ export default function ChatIndividual({ route }) {
         <View style={globalStyle.container}>
             <FlatList
                 ref={flatListRef}
-                style={styles.chatList}
-                data={chatMessages}
+                style={chatStyle.chatList}
+                data={chat.chatMessages}
                 renderItem={rendermessageBox}
-                contentContainerStyle={styles.chatContainer}
-                ListFooterComponent={loading && <ActivityIndicator />}
+                contentContainerStyle={chatStyle.chatContainer}
+                ListFooterComponent={chat.chatLoading && <ActivityIndicator />}
                 initialNumToRender={20}
                 inverted
             />
 
-            <View style={styles.inputContainer}>
+            <View style={chatStyle.inputContainer}>
                 <TextInput
                     value={editMessage ? editMessageContent : message}
                     multiline
@@ -157,12 +112,12 @@ export default function ChatIndividual({ route }) {
                     placeholder="Type a message..."
                     label={editMessage ? 'Editting message' : ''}
                     block={80}
-                    onSubmitEditing={editMessage ? handleEdit : handleSend}
+                    onSubmitEditing={onSendPress}
                     blurOnSubmit={Platform.OS === 'web'}
                 />
                 <Button
                     mode="text"
-                    onPress={editMessage ? handleEdit : handleSend}
+                    onPress={onSendPress}
                     icon="send"
                     prefixSize={25}
                 />
@@ -170,27 +125,6 @@ export default function ChatIndividual({ route }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    chatList: {
-        flex: 1,
-        width: '100%',
-    },
-    chatContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 8,
-    },
-    inputContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderTopWidth: 1,
-        borderTopColor: '#d8d8d822',
-    },
-});
 
 ChatIndividual.propTypes = {
     route: PropTypes.shape({

@@ -70,13 +70,11 @@ export default function LoginScreen() {
     return (
         <ImageBackground source={bgImage} style={entryStyle.backgroundImage}>
             <View style={entryStyle.container}>
-                {/* Title */}
                 <Text style={entryStyle.title}>
                     <Text style={{ color: colors.primary }}>Whats</Text>
                     <Text style={{ color: colors.secondary }}>That</Text>
                 </Text>
 
-                {/* Login form */}
                 <TextInput
                     contentType="email-address"
                     label="Email"
@@ -103,14 +101,12 @@ export default function LoginScreen() {
                     Login
                 </Button>
 
-                {/* Error text */}
                 {
                     majorError
                         ? <Text style={globalStyle.infoText}>{majorError}</Text>
                         : null
                 }
 
-                {/* Navigate to register */}
                 <Button
                     mode="text"
                     block={80}

@@ -43,7 +43,7 @@ export const appUtils = {
         });
     },
 
-    dataUrlToBuffer(base64) {
+    dataUriToBuffer(base64) {
         const type = base64.split(';')[0].split(':')[1];
         const data = base64.split(',')[1];
         const buffer = Buffer.from(data, 'base64');
@@ -51,19 +51,15 @@ export const appUtils = {
     },
 
     getIconLibrary(library) {
+        const libraries = {
+            ionicons: Ionicons,
+            feather: Feather,
+            fa5: FontAwesome5,
+            entypo: Entypo,
+        };
+
         const lower = library.toLowerCase();
-        switch (lower) {
-        case 'ionicons':
-            return Ionicons;
-        case 'feather':
-            return Feather;
-        case 'fa5':
-            return FontAwesome5;
-        case 'entypo':
-            return Entypo;
-        default:
-            return Ionicons;
-        }
+        return libraries[lower] || Ionicons;
     },
 
     debounce(func, wait) {
@@ -139,23 +135,23 @@ export const appUtils = {
         return str.split('\n').map((line) => line.trim()).join('\n');
     },
 
+    areSameDay(date1, date2) {
+        return date1.getDate() === date2.getDate()
+            && date1.getMonth() === date2.getMonth()
+            && date1.getFullYear() === date2.getFullYear();
+    },
+
     // Format timestamp as Today, Yesterday, or date along with time
     formatTimestamp(timestamp) {
-        const date = new Date(timestamp);
+        if (!timestamp) return '';
         const today = new Date();
         const yesterday = new Date(today);
         yesterday.setDate(yesterday.getDate() - 1);
 
-        const isToday = date.getDate() === today.getDate()
-            && date.getMonth() === today.getMonth()
-            && date.getFullYear() === today.getFullYear();
-
-        const isYesterday = date.getDate() === yesterday.getDate()
-            && date.getMonth() === yesterday.getMonth()
-            && date.getFullYear() === yesterday.getFullYear();
-
-        if (isToday) return `Today at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-        if (isYesterday) return `Yesterday at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        const date = new Date(timestamp);
+        const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (appUtils.areSameDay(date, today)) return `Today at ${time}`;
+        if (appUtils.areSameDay(date, yesterday)) return `Yesterday at ${time}`;
         return date.toLocaleDateString([], { month: '2-digit', day: '2-digit', year: 'numeric' });
     },
 };

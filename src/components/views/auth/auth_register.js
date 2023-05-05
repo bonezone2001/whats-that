@@ -76,12 +76,10 @@ export default function RegisterScreen() {
     return (
         <ImageBackground source={bgImage} style={entryStyle.backgroundImage}>
             <View style={entryStyle.container}>
-                {/* Title */}
                 <Text style={entryStyle.title}>
                     Register
                 </Text>
 
-                {/* Login form */}
                 <TextInput
                     label="First Name"
                     value={firstName}
@@ -133,14 +131,12 @@ export default function RegisterScreen() {
                     Login
                 </Button>
 
-                {/* Error text */}
                 {
                     majorError
                         ? <Text style={globalStyle.infoText}>{majorError}</Text>
                         : null
                 }
 
-                {/* Navigate to register */}
                 <Button
                     mode="text"
                     block={80}

@@ -5,13 +5,12 @@ import {
     View,
     Text,
     Image,
-    StyleSheet,
     FlatList,
     TouchableOpacity,
 } from 'react-native';
+import { chatStyle, contactStyle, globalStyle } from '@styles';
 import { useNavigation } from '@react-navigation/native';
 import { HeaderTitle } from '@components/shared/headers';
-import { contactStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
@@ -66,18 +65,18 @@ export default function ChatView() {
                     data={getSortedChats()}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            style={styles.chat}
+                            style={chatStyle.chat}
                             onPress={() => navigation.navigate('ViewChat', { chat: item })}
                         >
                             <View style={{ flex: 1 }}>
-                                <Text numberOfLines={1} style={styles.name}>
+                                <Text numberOfLines={1} style={chatStyle.name}>
                                     {item.name}
                                 </Text>
-                                <View style={styles.lastMessageContainer}>
-                                    <Text numberOfLines={1} style={styles.lastMessage}>
+                                <View style={chatStyle.lastMessageContainer}>
+                                    <Text numberOfLines={1} style={chatStyle.lastMessage}>
                                         {renderLastMessage(item)}
                                     </Text>
-                                    <Text style={styles.timestamp}>
+                                    <Text style={chatStyle.timestamp}>
                                         {appUtils.formatTimestamp(item.last_message.timestamp)}
                                     </Text>
                                 </View>
@@ -96,33 +95,3 @@ export default function ChatView() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    chat: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#333',
-    },
-    name: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    lastMessageContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    lastMessage: {
-        flex: 1,
-        fontSize: 14,
-        color: '#aaa',
-        marginRight: 5,
-    },
-    timestamp: {
-        fontSize: 12,
-        color: '#aaa',
-    },
-});

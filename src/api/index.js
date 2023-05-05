@@ -68,7 +68,7 @@ const client = {
     uploadUserPhoto: async (userId, photo) => {
         // Accept support for blob + base64 (base64 to a buffer)
         // Blob wouldn't work on android at all but buffer works on both
-        if (typeof photo === 'string') photo = appUtils.dataUrlToBuffer(photo);
+        if (typeof photo === 'string') photo = appUtils.dataUriToBuffer(photo);
         else photo = { buffer: photo, type: photo.type };
         const response = await api.post(`/user/${userId}/photo`, photo.buffer, {
             headers: { 'Content-Type': photo.type },
