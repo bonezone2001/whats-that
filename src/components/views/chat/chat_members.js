@@ -6,10 +6,11 @@ import {
     ScrollView,
     Dimensions,
 } from 'react-native';
-import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 import ContactSelectionBox from '@components/shared/contact_box';
 import { useNavigation } from '@react-navigation/native';
+import { CheckLoad } from '@components/shared/headers';
 import React, { useEffect, useState } from 'react';
+import { useScreenHeader } from '@hooks';
 import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
@@ -23,20 +24,6 @@ export default function ChatMembers({ route }) {
     const [updating, setUpdating] = useState(false);
     const navigation = useNavigation();
     const store = useStore();
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerTitle: () => <HeaderTitle title={isAdd ? 'Add Members' : 'Kick Members'} />,
-            headerRight: () => (
-                <CheckLoad
-                    loading={updating}
-                    disabled={!selectedContacts.length}
-                    onPress={handleModifyMembers}
-                />
-            ),
-        });
-    }, [contacts, selectedContacts]);
 
     // If isAdd is true, add contacts to chat, otherwise remove contacts from chat
     const handleModifyMembers = async () => {
@@ -54,6 +41,18 @@ export default function ChatMembers({ route }) {
             setUpdating(false);
         }
     };
+
+    useScreenHeader({
+        title: isAdd ? 'Add Members' : 'Kick Members',
+        right: (
+            <CheckLoad
+                loading={updating}
+                disabled={!selectedContacts.length}
+                onPress={handleModifyMembers}
+            />
+        ),
+        args: [selectedContacts],
+    });
 
     useEffect(() => {
         (async () => {

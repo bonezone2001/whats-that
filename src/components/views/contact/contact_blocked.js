@@ -7,10 +7,9 @@ import {
     FlatList,
     Image,
 } from 'react-native';
-import { BackButton, HeaderTitle } from '@components/shared/headers';
 import ContactCard from '@components/shared/contact_card';
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
+import { useScreenHeader } from '@hooks';
 import { contactStyle } from '@styles';
 import { useStore } from '@store';
 import api from '@api';
@@ -19,15 +18,9 @@ import noResultsImage from '@assets/images/no_results.png';
 
 export default function ContactBlockedScreen() {
     const [blocked, setBlocked] = useState([]);
-    const navigation = useNavigation();
     const store = useStore();
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerTitle: () => <HeaderTitle title="Blocked" />,
-        });
-    }, []);
+    useScreenHeader({ title: 'Blocked' });
 
     useEffect(() => {
         if (store.blocked?.length === 0) return;

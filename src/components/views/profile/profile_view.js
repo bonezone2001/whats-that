@@ -6,18 +6,16 @@ import {
     Text,
     ScrollView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { HeaderTitle } from '@components/shared/headers';
 import { globalStyle, profileStyle } from '@styles';
 import InfoCard from '@components/shared/info_card';
-import React, { useEffect, useMemo } from 'react';
 import Avatar from '@components/shared/avatar';
 import Button from '@components/shared/button';
+import { useScreenHeader } from '@hooks';
+import React, { useMemo } from 'react';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
 
 export default function ProfileViewScreen() {
-    const navigation = useNavigation();
     const store = useStore();
 
     const infoCards = useMemo(() => appUtils
@@ -27,20 +25,19 @@ export default function ProfileViewScreen() {
             store.chats,
         ), [store.user, store.contacts, store.chats]);
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerTitle: () => <HeaderTitle title="Profile" />,
-            headerRight: () => (
-                <Button
-                    mode="text"
-                    onPress={() => store.bottomSheet?.current?.expand()}
-                    icon="menu"
-                    iconLibrary="ionicons"
-                    prefixSize={38}
-                />
-            ),
-        });
-    }, []);
+    useScreenHeader({
+        left: null,
+        title: 'Profile',
+        right: (
+            <Button
+                mode="text"
+                icon="menu"
+                iconLibrary="ionicons"
+                prefixSize={38}
+                onPress={() => store.bottomSheet?.current?.expand()}
+            />
+        ),
+    });
 
     return (
         <View style={globalStyle.container}>

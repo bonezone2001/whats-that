@@ -9,14 +9,15 @@ import {
     StyleSheet,
     Dimensions,
 } from 'react-native';
-import { BackButton, CheckLoad, HeaderTitle } from '@components/shared/headers';
 import { useNavigation } from '@react-navigation/native';
+import { CheckLoad } from '@components/shared/headers';
 import TextInput from '@components/shared/text_input';
 import { profileStyle, globalStyle } from '@styles';
-import React, { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Avatar from '@components/shared/avatar';
 import Button from '@components/shared/button';
+import React, { useState } from 'react';
+import { useScreenHeader } from '@hooks';
 import { Camera } from 'expo-camera';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
@@ -35,14 +36,6 @@ export default function ProfileEditScreen() {
     const [cameraRef, setCameraRef] = useState(null);
     const [majorError, setMajorError] = useState('');
     const [updating, setUpdating] = useState(false);
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerRight: () => <CheckLoad onPress={submitChanges} loading={updating} />,
-            headerTitle: () => <HeaderTitle title="Edit Profile" />,
-        });
-    }, [firstName, lastName, email, avatar, updating]);
 
     const submitChanges = async () => {
         setMajorError('');
@@ -79,6 +72,12 @@ export default function ProfileEditScreen() {
             setUpdating(false);
         }
     };
+
+    useScreenHeader({
+        title: 'Edit Profile',
+        right: <CheckLoad onPress={submitChanges} loading={updating} />,
+        args: [firstName, lastName, email, avatar, updating],
+    });
 
     const takePhoto = async () => {
         if (cameraRef) {

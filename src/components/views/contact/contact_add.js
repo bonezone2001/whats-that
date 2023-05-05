@@ -8,11 +8,10 @@ import {
     Image,
     Platform,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
 import ContactCard from '@components/shared/contact_card';
-import { useNavigation } from '@react-navigation/native';
-import { BackButton } from '@components/shared/headers';
 import TextInput from '@components/shared/text_input';
+import React, { useCallback, useState } from 'react';
+import { useScreenHeader } from '@hooks';
 import { contactStyle } from '@styles';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
@@ -24,29 +23,26 @@ export default function ContactAddScreen() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigation = useNavigation();
     const store = useStore();
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => <BackButton href="View" />,
-            headerTitle: () => (
-                <View style={contactStyle.searchBar}>
-                    <TextInput
-                        placeholder="Search"
-                        icon="search"
-                        loading={loading}
-                        onChangeText={(text) => {
-                            setSearchQuery(text);
-                            search(text);
-                        }}
-                        style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
-                        value={searchQuery}
-                    />
-                </View>
-            ),
-        });
-    }, [setSearchResults, store, loading, searchQuery]);
+    useScreenHeader({
+        title: (
+            <View style={contactStyle.searchBar}>
+                <TextInput
+                    placeholder="Search"
+                    icon="search"
+                    loading={loading}
+                    onChangeText={(text) => {
+                        setSearchQuery(text);
+                        search(text);
+                    }}
+                    style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
+                    value={searchQuery}
+                />
+            </View>
+        ),
+        args: [setSearchResults, store, loading, searchQuery],
+    });
 
     const searchForContact = async (query) => {
         if (query.length === 0) {

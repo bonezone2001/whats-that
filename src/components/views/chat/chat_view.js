@@ -10,31 +10,30 @@ import {
 } from 'react-native';
 import { chatStyle, contactStyle, globalStyle } from '@styles';
 import { useNavigation } from '@react-navigation/native';
-import { HeaderTitle } from '@components/shared/headers';
 import Button from '@components/shared/button';
-import React, { useEffect } from 'react';
+import { useScreenHeader } from '@hooks';
+import { appUtils } from '@utils';
 import { useStore } from '@store';
+import React from 'react';
 
 import noResultsImage from '@assets/images/no_results.png';
-import { appUtils } from '@utils';
 
 export default function ChatView() {
     const navigation = useNavigation();
     const store = useStore();
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerTitle: () => <HeaderTitle title="Chats" />,
-            headerRight: () => (
-                <Button
-                    mode="text"
-                    icon="plus"
-                    prefixSize={30}
-                    href="Create"
-                />
-            ),
-        });
-    }, []);
+    useScreenHeader({
+        left: null,
+        title: 'Chats',
+        right: (
+            <Button
+                mode="text"
+                icon="plus"
+                prefixSize={30}
+                href="Create"
+            />
+        ),
+    });
 
     const renderLastMessage = (item) => {
         if (!Object.keys(item.last_message).length) {

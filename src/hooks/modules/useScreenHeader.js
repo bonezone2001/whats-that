@@ -5,15 +5,15 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 
 export const useScreenHeader = ({
-    left,
+    left = <BackButton href="View" />,
     title,
     right,
-    args,
+    args = [],
 }) => {
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => left || <BackButton href="View" />,
+            headerLeft: () => left,
             headerTitle: () => (typeof title === 'string' ? <HeaderTitle title={title} /> : title),
             headerRight: () => right,
         });
