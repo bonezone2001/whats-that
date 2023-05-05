@@ -7,12 +7,12 @@ import {
     ActivityIndicator,
     Platform,
 } from 'react-native';
-import React, { useEffect, useState, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { BackButton } from '@components/shared/headers';
 import ChatBubble from '@components/shared/chat_bubble';
 import TextInput from '@components/shared/text_input';
 import { useChat, useScreenHeader } from '@hooks';
+import React, { useEffect, useRef } from 'react';
 import { chatStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import PropTypes from 'prop-types';
@@ -20,18 +20,30 @@ import { apiUtils } from '@utils';
 import { useStore } from '@store';
 
 export default function ChatIndividual({ route }) {
-    const [editMessageContent, setEditMessageContent] = useState('');
-    const [editMessage, setEditMessage] = useState(null);
-    const [message, setMessage] = useState('');
-    const flatListRef = useRef(null);
-
     const chatDetails = route.params.chat;
     const chat = useChat({ chat: chatDetails });
     const navigation = useNavigation();
+    const flatListRef = useRef(null);
     const store = useStore();
 
     // Refresh chat every 4 seconds
-    useEffect(() => chat.beginChatRefresher(4000), []);
+    useEffect(() => { chat.fetchMessages(); }, []);
+    useEffect(() => chat.beginChatRefresher(4000), [chat.chatMessages]);
+
+    // Scroll to bottom when new messages are received
+    chat.setOnNewMessages(() => {
+        setTimeout(() => flatListRef.current.scrollToOffset({
+            animated: true,
+            offset: 0,
+        }), 250);
+    });
+
+    // Clear message inputs when message being edited is deleted
+    chat.setOnMessageDelete((messageId) => {
+        if (chat.editMessage?.message_id === messageId) {
+            chat.clearMessageFields();
+        }
+    });
 
     useScreenHeader({
         left: (
@@ -54,24 +66,6 @@ export default function ChatIndividual({ route }) {
         args: [chatDetails.name],
     });
 
-    chat.setOnNewMessages(() => {
-        setTimeout(() => flatListRef.current.scrollToOffset({
-            animated: true,
-            offset: 0,
-        }), 250);
-    });
-
-    const onSendPress = () => {
-        if (editMessage) {
-            chat.handleEditMessage(editMessage.message_id, editMessageContent);
-        } else {
-            chat.handleSendMessage(message);
-        }
-        setEditMessageContent('');
-        setEditMessage(null);
-        setMessage('');
-    };
-
     const rendermessageBox = ({ item, index }) => {
         const isMe = item.author.user_id === store.user.user_id;
         const isSameAuthorAsNext = index < chat.chatMessages.length - 1
@@ -82,10 +76,10 @@ export default function ChatIndividual({ route }) {
                 item={item}
                 isMe={isMe}
                 isSameAuthorAsNext={isSameAuthorAsNext}
-                onDeletePress={() => chat.handleDeleteMessage(item)}
+                onDeletePress={() => chat.handleDeleteMessage(item.message_id)}
                 onEditPress={() => {
-                    setEditMessage(item);
-                    setEditMessageContent(item.message);
+                    chat.setEditMessage(item);
+                    chat.setEditMessageContent(item.message);
                 }}
             />
         );
@@ -106,18 +100,18 @@ export default function ChatIndividual({ route }) {
 
             <View style={chatStyle.inputContainer}>
                 <TextInput
-                    value={editMessage ? editMessageContent : message}
+                    value={chat.editMessage ? chat.editMessageContent : chat.message}
                     multiline
-                    onChangeText={editMessage ? setEditMessageContent : setMessage}
+                    onChangeText={chat.editMessage ? chat.setEditMessageContent : chat.setMessage}
                     placeholder="Type a message..."
-                    label={editMessage ? 'Editting message' : ''}
+                    label={chat.editMessage ? 'Editting message' : ''}
                     block={80}
-                    onSubmitEditing={onSendPress}
+                    onSubmitEditing={chat.handleSendOrEditMessage}
                     blurOnSubmit={Platform.OS === 'web'}
                 />
                 <Button
                     mode="text"
-                    onPress={onSendPress}
+                    onPress={chat.handleSendOrEditMessage}
                     icon="send"
                     prefixSize={25}
                 />

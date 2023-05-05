@@ -8,8 +8,11 @@ export const useChat = ({
     chat,
     ...props
 }) => {
-    const [chatMessages, setChatMessages] = useState([]);
+    const [editMessageContent, setEditMessageContent] = useState('');
     const [chatLoading, setChatLoading] = useState(false);
+    const [chatMessages, setChatMessages] = useState([]);
+    const [editMessage, setEditMessage] = useState(null);
+    const [message, setMessage] = useState('');
 
     // Deconstructed here so they can be reasigned
     let {
@@ -19,7 +22,6 @@ export const useChat = ({
     } = props;
 
     const beginChatRefresher = (ms) => {
-        fetchMessages();
         const interval = setInterval(() => fetchMessages(true), ms);
         return () => clearInterval(interval);
     };
@@ -29,8 +31,9 @@ export const useChat = ({
             if (!silent) setChatLoading(true);
             const { messages } = (await api.getChatDetails(chat.chat_id)).data;
             if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) {
+                const wasDelete = chatMessages.length > messages.length;
                 setChatMessages(messages);
-                onNewMessages();
+                if (!wasDelete) onNewMessages();
             }
         } catch (error) {
             console.log(error);
@@ -39,7 +42,7 @@ export const useChat = ({
         }
     };
 
-    const handleSendMessage = async (message) => {
+    const handleSendMessage = async () => {
         try {
             const trimmedMsg = appUtils.multilineTrim(message);
             if (trimmedMsg === '') return;
@@ -50,12 +53,30 @@ export const useChat = ({
         }
     };
 
-    const handleEditMessage = async (messageId, message) => {
+    const handleSendOrEditMessage = async () => {
+        try {
+            const trimmedMsg = appUtils.multilineTrim(editMessageContent || message);
+            if (trimmedMsg === '') return;
+            if (editMessage) {
+                await api.editMessage(chat.chat_id, editMessage.message_id, trimmedMsg);
+                onMessageEdit(editMessage.message_id);
+            } else {
+                await api.sendMessage(chat.chat_id, trimmedMsg);
+            }
+            await fetchMessages();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            clearMessageFields();
+        }
+    };
+
+    const handleEditMessage = async (messageId) => {
         try {
             const trimmedMsg = appUtils.multilineTrim(message);
             if (trimmedMsg === '') return;
             await api.editMessage(chat.chat_id, messageId, trimmedMsg);
-            onMessageEdit();
+            onMessageEdit(messageId);
             await fetchMessages();
         } catch (error) {
             console.log(error);
@@ -65,11 +86,17 @@ export const useChat = ({
     const handleDeleteMessage = async (messageId) => {
         try {
             await api.deleteMessage(chat.chat_id, messageId);
-            onMessageDelete();
+            onMessageDelete(messageId);
             await fetchMessages();
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const clearMessageFields = () => {
+        setEditMessage(null);
+        setEditMessageContent('');
+        setMessage('');
     };
 
     const setOnNewMessages = (callback) => {
@@ -89,11 +116,19 @@ export const useChat = ({
         chatLoading,
         beginChatRefresher,
         handleSendMessage,
+        handleSendOrEditMessage,
         handleEditMessage,
         handleDeleteMessage,
         fetchMessages,
         setOnNewMessages,
         setOnMessageEdit,
         setOnMessageDelete,
+        clearMessageFields,
+        editMessage,
+        setEditMessage,
+        editMessageContent,
+        setEditMessageContent,
+        message,
+        setMessage,
     };
 };
