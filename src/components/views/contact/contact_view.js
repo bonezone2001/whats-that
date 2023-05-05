@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import ContactCard from '@components/shared/contact_card';
 import React, { useEffect, useState } from 'react';
+import Button from '@components/shared/button';
+import { useScreenHeader } from '@hooks';
 import { contactStyle } from '@styles';
 import { useStore } from '@store';
 import api from '@api';
@@ -18,6 +20,27 @@ import noResultsImage from '@assets/images/no_results.png';
 export default function ContactViewScreen() {
     const [contacts, setContacts] = useState([]);
     const store = useStore();
+
+    useScreenHeader({
+        left: null,
+        title: 'Contacts',
+        right: (
+            <View style={{ flexDirection: 'row' }}>
+                <Button
+                    mode="text"
+                    icon="x-circle"
+                    prefixSize={28}
+                    href="Blocked"
+                />
+                <Button
+                    mode="text"
+                    icon="user-plus"
+                    prefixSize={28}
+                    href="Add"
+                />
+            </View>
+        ),
+    });
 
     useEffect(() => {
         api.getAccompanyingPhotos(store.contacts).then((results) => {
