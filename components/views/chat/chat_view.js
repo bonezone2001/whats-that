@@ -17,6 +17,7 @@ import React, { useEffect } from 'react';
 import { useStore } from '@store';
 
 import noResultsImage from '@assets/images/no_results.png';
+import { appUtils } from '@utils';
 
 export default function ChatView() {
     const navigation = useNavigation();
@@ -46,12 +47,23 @@ export default function ChatView() {
         return `${item.last_message.author.first_name}: ${item.last_message.message}`;
     };
 
+    const getSortedChats = () => store.chats.sort((a, b) => {
+        const aHasMessage = Object.keys(a.last_message).length;
+        const bHasMessage = Object.keys(b.last_message).length;
+
+        if (!aHasMessage || !bHasMessage) {
+            if (!aHasMessage && !bHasMessage) return a.name.localeCompare(b.name);
+            return aHasMessage ? -1 : 1;
+        }
+        return b.last_message.timestamp - a.last_message.timestamp;
+    });
+
     return (
         <View style={globalStyle.container}>
             {store?.chats?.length > 0 ? (
                 <FlatList
                     style={contactStyle.contactList}
-                    data={store.chats}
+                    data={getSortedChats()}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={styles.chat}
@@ -61,11 +73,17 @@ export default function ChatView() {
                                 <Text numberOfLines={1} style={styles.name}>
                                     {item.name}
                                 </Text>
-                                <Text numberOfLines={1} style={styles.lastMessage}>
-                                    {renderLastMessage(item)}
-                                </Text>
+                                <View style={styles.lastMessageContainer}>
+                                    <Text numberOfLines={1} style={styles.lastMessage}>
+                                        {renderLastMessage(item)}
+                                    </Text>
+                                    <Text style={styles.timestamp}>
+                                        {appUtils.formatTimestamp(item.last_message.timestamp)}
+                                    </Text>
+                                </View>
                             </View>
                         </TouchableOpacity>
+
                     )}
                     keyExtractor={(item) => item.chat_id.toString()}
                 />
@@ -92,8 +110,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
+    lastMessageContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
     lastMessage: {
+        flex: 1,
         fontSize: 14,
+        color: '#aaa',
+        marginRight: 5,
+    },
+    timestamp: {
+        fontSize: 12,
         color: '#aaa',
     },
 });

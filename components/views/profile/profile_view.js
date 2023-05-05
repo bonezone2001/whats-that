@@ -26,7 +26,6 @@ export default function ProfileViewScreen() {
             store.contacts,
             store.chats,
         ), [store.user, store.contacts, store.chats]);
-    const onHamburgerPress = () => store.bottomSheet?.current?.expand();
 
     useEffect(() => {
         navigation.setOptions({
@@ -34,7 +33,7 @@ export default function ProfileViewScreen() {
             headerRight: () => (
                 <Button
                     mode="text"
-                    onPress={onHamburgerPress}
+                    onPress={() => store.bottomSheet?.current?.expand()}
                     icon="menu"
                     iconLibrary="ionicons"
                     prefixSize={38}

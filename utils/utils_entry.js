@@ -26,11 +26,11 @@ export const entryUtils = {
 
     // Validation of text inputs
     validateName(name) {
-        if (name.length >= 3) return '';
+        if (name.trim().length >= 3) return '';
         return 'Name too short';
     },
     validateEmail(email) {
-        if (emailValidator.validate(email)) return '';
+        if (emailValidator.validate(email.trim())) return '';
         return 'Invalid email address';
     },
     validatePassword(password) {

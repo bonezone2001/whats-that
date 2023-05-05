@@ -138,4 +138,24 @@ export const appUtils = {
     multilineTrim(str) {
         return str.split('\n').map((line) => line.trim()).join('\n');
     },
+
+    // Format timestamp as Today, Yesterday, or date along with time
+    formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        const isToday = date.getDate() === today.getDate()
+            && date.getMonth() === today.getMonth()
+            && date.getFullYear() === today.getFullYear();
+
+        const isYesterday = date.getDate() === yesterday.getDate()
+            && date.getMonth() === yesterday.getMonth()
+            && date.getFullYear() === yesterday.getFullYear();
+
+        if (isToday) return `Today at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        if (isYesterday) return `Yesterday at ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        return date.toLocaleDateString([], { month: '2-digit', day: '2-digit', year: 'numeric' });
+    },
 };
