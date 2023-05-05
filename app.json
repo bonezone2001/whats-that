@@ -4,10 +4,10 @@
         "slug": "whats-that",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/images/icon.png",
+        "icon": "./src/assets/images/icon.png",
         "userInterfaceStyle": "dark",
         "splash": {
-            "image": "./assets/images/splash.png",
+            "image": "./src/assets/images/splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#171717"
         },
@@ -20,12 +20,12 @@
         "android": {
             "softwareKeyboardLayoutMode": "pan",
             "adaptiveIcon": {
-                "foregroundImage": "./assets/images/adaptive-icon.png",
+                "foregroundImage": "./src/assets/images/adaptive-icon.png",
                 "backgroundColor": "#171717"
             }
         },
         "web": {
-            "favicon": "./assets/images/favicon.png"
+            "favicon": "./src/assets/images/favicon.png"
         },
         "extra": {
             "API_BASE_URL": "http://192.168.0.85:3333/api/1.0.0"
