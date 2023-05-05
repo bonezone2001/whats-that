@@ -8,33 +8,35 @@ export const colors = {
     secondary: '#57CC99',
     secondaryDark: '#003300',
 
-    danger: '#e16468',
+    danger: '#E16468',
     success: '#57CC99',
     warning: '#FF7F50',
-    info: '#aaa',
+    info: '#AAA',
 
     background: '#171717',
-    buttonBackground: '#aaa',
+    buttonBackground: '#AAA',
     modalBackground: '#101010',
 
     inputBackground: '#101010',
     inputBorder: '#666',
-    inputBorderFocus: '#aaa',
+    inputBorderFocus: '#AAA',
     inputPlaceholder: '#666',
-    inputLabelActive: '#aaa',
+    inputLabelActive: '#AAA',
 
-    text: '#eee',
+    text: '#EEE',
 
     tabIconDefault: '#868686',
-    tabIconSelected: '#52c443',
+    tabIconSelected: '#52C443',
     tabBar: '#242424',
 
-    meBubble: '#c8a48c',
-    otherBubble: '#372d2b',
+    meBubble: '#C8A48C',
+    otherBubble: '#372D2B',
     meText: '#000',
-    otherText: '#fff',
-    holdMenuBackground: '#372d2b',
-    holdMenuText: '#fff',
+    otherText: '#FFF',
+    meTimestamp: '#101010',
+    otherTimestamp: '#EFEFEF',
+    holdMenuBackground: '#372D2B',
+    holdMenuText: '#FFF',
 };
 
 colors.tabIconSelected = colors.secondary;

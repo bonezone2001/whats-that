@@ -16,7 +16,7 @@ import React, { useEffect, useRef } from 'react';
 import { chatStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import PropTypes from 'prop-types';
-import { apiUtils } from '@utils';
+import { apiUtils, chatUtils } from '@utils';
 import { useStore } from '@store';
 
 export default function ChatIndividual({ route }) {
@@ -67,15 +67,20 @@ export default function ChatIndividual({ route }) {
     });
 
     const rendermessageBox = ({ item, index }) => {
+        // Author and message content info
         const isMe = item.author.user_id === store.user.user_id;
-        const isSameAuthorAsNext = index < chat.chatMessages.length - 1
-            && item.author.user_id === chat.chatMessages[index + 1].author.user_id;
+        const isSameAuthorAsNext = chatUtils.isSameAuthorAsNext(index, chat.chatMessages);
+
+        // Timestamp info
+        const shouldShowTimestamp = chatUtils.shouldShowTimestamp(index, chat.chatMessages);
+
         return (
             <ChatBubble
                 key={item.message_id}
                 item={item}
                 isMe={isMe}
                 isSameAuthorAsNext={isSameAuthorAsNext}
+                shouldShowTimestamp={shouldShowTimestamp}
                 onDeletePress={() => chat.handleDeleteMessage(item.message_id)}
                 onEditPress={() => {
                     chat.setEditMessage(item);

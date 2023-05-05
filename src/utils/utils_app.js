@@ -79,45 +79,22 @@ export const appUtils = {
         };
     },
 
-    strToColor(str) {
-        const hash = str.split('').reduce((acc, char) => {
-            const newHash = (acc << 5) - acc + char.charCodeAt(0);
-            return newHash & newHash;
-        }, 0);
-
-        let r = (hash & 0xFF0000) >> 16;
-        let g = (hash & 0x00FF00) >> 8;
-        let b = hash & 0x0000FF;
-
-        const isGreyish = Math.abs(r - g) <= 32 && Math.abs(g - b) <= 32 && Math.abs(r - b) <= 32;
-        const isBlack = r <= 32 && g <= 32 && b <= 32;
-
-        if (isGreyish || isBlack) {
-            r = Math.min(r + 64, 255);
-            g = Math.min(g + 64, 255);
-            b = Math.min(b + 64, 255);
-        }
-
-        const hexColor = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
-        return hexColor;
-    },
-
     getInfoCardData(user, contacts, chats) {
         return [
             {
                 icon: 'mail',
                 label: 'Email',
-                value: user?.email,
+                value: user?.email || '',
             },
             {
                 icon: 'people',
                 label: 'Friends',
-                value: contacts?.length,
+                value: contacts?.length || 0,
             },
             {
                 icon: 'chatbubbles',
                 label: 'Chats',
-                value: chats?.length,
+                value: chats?.length || 0,
             },
         ];
     },
@@ -133,25 +110,5 @@ export const appUtils = {
 
     multilineTrim(str) {
         return str.split('\n').map((line) => line.trim()).join('\n');
-    },
-
-    areSameDay(date1, date2) {
-        return date1.getDate() === date2.getDate()
-            && date1.getMonth() === date2.getMonth()
-            && date1.getFullYear() === date2.getFullYear();
-    },
-
-    // Format timestamp as Today, Yesterday, or date along with time
-    formatTimestamp(timestamp) {
-        if (!timestamp) return '';
-        const today = new Date();
-        const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        const date = new Date(timestamp);
-        const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        if (appUtils.areSameDay(date, today)) return `Today at ${time}`;
-        if (appUtils.areSameDay(date, yesterday)) return `Yesterday at ${time}`;
-        return date.toLocaleDateString([], { month: '2-digit', day: '2-digit', year: 'numeric' });
     },
 };

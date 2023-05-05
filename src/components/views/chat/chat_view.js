@@ -12,7 +12,7 @@ import { chatStyle, contactStyle, globalStyle } from '@styles';
 import { useNavigation } from '@react-navigation/native';
 import Button from '@components/shared/button';
 import { useScreenHeader } from '@hooks';
-import { appUtils } from '@utils';
+import { chatUtils } from '@utils';
 import { useStore } from '@store';
 import React from 'react';
 
@@ -76,7 +76,7 @@ export default function ChatView() {
                                         {renderLastMessage(item)}
                                     </Text>
                                     <Text style={chatStyle.timestamp}>
-                                        {appUtils.formatTimestamp(item.last_message.timestamp)}
+                                        {chatUtils.formatTimestamp(item.last_message.timestamp)}
                                     </Text>
                                 </View>
                             </View>
