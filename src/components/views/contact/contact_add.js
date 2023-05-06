@@ -23,6 +23,7 @@ import noResultsImage from '@assets/images/no_results.png';
 export default function ContactAddScreen() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const store = useStore();
 
@@ -35,7 +36,7 @@ export default function ContactAddScreen() {
                     loading={loading}
                     onChangeText={(text) => {
                         setSearchQuery(text);
-                        search(text);
+                        search(text, true);
                     }}
                     style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
                     value={searchQuery}
@@ -45,15 +46,19 @@ export default function ContactAddScreen() {
         args: [setSearchResults, store, loading, searchQuery],
     });
 
-    const searchForContact = async (query) => {
+    const searchForContact = async (query, page = 1) => {
         if (query.length === 0) {
             setSearchResults([]);
             return;
         }
         try {
-            const response = await api.searchUsers(query);
-            const contactsTemp = response.data.filter((user) => user.user_id !== store.userId);
-            const contacts = await api.getAccompanyingPhotos(contactsTemp);
+            const response = await api.searchUsers(query, 'all', 20, (page - 1) * 20);
+            const contacts = await api.getAccompanyingPhotos(response.data);
+
+            // If there are no more results, set hasMore to false
+            if (response?.data?.length < 20) {
+                setCurrentPage(-1);
+            }
 
             // Update all to appropriate format
             for (let i = 0; i < contacts.length; i++) {
@@ -78,7 +83,12 @@ export default function ContactAddScreen() {
                     );
                 }
             }
-            setSearchResults(contacts);
+
+            if (page === 1) {
+                setSearchResults(contacts);
+            } else {
+                setSearchResults(searchResults.concat(contacts));
+            }
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -90,8 +100,8 @@ export default function ContactAddScreen() {
 
     // Delay calling searchForContact to prevent spamming the server with incomplete queries
     const debouncedSearch = useCallback(
-        appUtils.debounce(async (query) => {
-            searchForContact(query);
+        appUtils.debounce(async (query, page) => {
+            searchForContact(query, page);
             setLoading(false);
         }, 250),
         [],
@@ -99,11 +109,17 @@ export default function ContactAddScreen() {
 
     // Show loading indicator while waiting for debounce and search
     const search = useCallback(
-        (query) => {
+        async (query, isDebounced = false, page = 1) => {
             setLoading(true);
-            debouncedSearch(query);
+            if (isDebounced) {
+                setCurrentPage(1);
+                debouncedSearch(query, page);
+            } else {
+                await searchForContact(query, page);
+                setLoading(false);
+            }
         },
-        [debouncedSearch],
+        [debouncedSearch, currentPage, searchResults],
     );
 
     return (
@@ -112,8 +128,20 @@ export default function ContactAddScreen() {
                 <FlatList
                     style={contactStyle.contactList}
                     data={searchResults}
-                    renderItem={({ item }) => <ContactCard type="add" contact={item} />}
                     keyExtractor={(item) => item.user_id.toString()}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={async () => {
+                        if (currentPage > 0 && searchResults.length >= 20) {
+                            setCurrentPage(currentPage + 1);
+                            search(searchQuery, false, currentPage + 1);
+                        }
+                    }}
+                    renderItem={({ item }) => (
+                        <ContactCard
+                            type={item.user_id === store.user.user_id ? 'none' : 'add'}
+                            contact={item}
+                        />
+                    )}
                 />
             ) : (
                 <View style={[contactStyle.placeholderContainer, { alignItems: 'center' }]}>

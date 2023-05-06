@@ -22,6 +22,7 @@ export default function ChatBubble({
     shouldShowTimestamp,
     onDeletePress,
     onEditPress,
+    style,
 }) {
     // Only state is for showing the timestamp on tap
     const [showSmallTimestamp, setShowSmallTimestamp] = useState(false);
@@ -38,7 +39,7 @@ export default function ChatBubble({
 
     return (
         <>
-            <Wrapper style={[styles.messageBox, { alignSelf: alignment }]}>
+            <Wrapper style={[styles.messageBox, { alignSelf: alignment }, style]}>
                 {showAuthorName && (
                     <Text
                         style={[styles.authorName,
@@ -147,6 +148,11 @@ ChatBubble.propTypes = {
     shouldShowTimestamp: PropTypes.bool.isRequired,
     onDeletePress: PropTypes.func,
     onEditPress: PropTypes.func,
+    style: PropTypes.object,
+};
+
+ChatBubble.defaultProps = {
+    style: {},
 };
 
 ChatBubble.defaultProps = {

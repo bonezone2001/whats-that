@@ -1,22 +1,27 @@
 // Chat conversation screen.
 // Allows users to seen and send/edit/delete messages to the group chat.
 
+// Note on android performance:
+// There is currently a bug in react native that causes the flatlist to lag when inverted
+// There used to be a workaround using scaleY: -1, but it no longer works, for me at least
+// https://github.com/facebook/react-native/issues/30034
+
 import {
     View,
     FlatList,
     ActivityIndicator,
     Platform,
 } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { BackButton } from '@components/shared/headers';
 import ChatBubble from '@components/shared/chat_bubble';
 import TextInput from '@components/shared/text_input';
 import { useChat, useScreenHeader } from '@hooks';
-import React, { useEffect, useRef } from 'react';
 import { chatStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
-import PropTypes from 'prop-types';
 import { apiUtils, chatUtils } from '@utils';
+import PropTypes from 'prop-types';
 import { useStore } from '@store';
 
 export default function ChatIndividual({ route }) {
@@ -66,7 +71,7 @@ export default function ChatIndividual({ route }) {
         args: [chatDetails.name],
     });
 
-    const rendermessageBox = ({ item, index }) => {
+    const rendermessageBox = useCallback(({ item, index }) => {
         // Author and message content info
         const isMe = item.author.user_id === store.user.user_id;
         const isSameAuthorAsNext = chatUtils.isSameAuthorAsNext(index, chat.chatMessages);
@@ -88,7 +93,7 @@ export default function ChatIndividual({ route }) {
                 }}
             />
         );
-    };
+    });
 
     return (
         <View style={globalStyle.container}>
