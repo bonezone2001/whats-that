@@ -119,10 +119,15 @@ export const entryUtils = {
 
     async logout() {
         const store = useStore.getState();
-        await api.logout();
-        AsyncStorage.removeItem('userId');
-        AsyncStorage.removeItem('token');
-        store.setUserId(null);
-        store.setToken(null);
+        try {
+            await api.logout();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            AsyncStorage.removeItem('userId');
+            AsyncStorage.removeItem('token');
+            store.setUserId(null);
+            store.setToken(null);
+        }
     },
 };

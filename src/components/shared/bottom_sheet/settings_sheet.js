@@ -15,7 +15,7 @@ export const settings = {
 
 export function sheet() {
     const handleLogout = async () => {
-        entryUtils.logout().catch(console.log);
+        entryUtils.logout();
     };
 
     return (
