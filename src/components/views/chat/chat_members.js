@@ -49,7 +49,7 @@ export default function ChatMembers({ route }) {
     };
 
     useScreenHeader({
-        title: isAdd ? t('screens.chat.individual.title_add') : t('screens.chat.individual.title_kick'),
+        title: isAdd ? t('screens.chat.members.title_add') : t('screens.chat.members.title_kick'),
         right: (
             <CheckLoad
                 loading={updating}

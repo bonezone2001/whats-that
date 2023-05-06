@@ -12,13 +12,12 @@ I18n.translations = {
     en,
 };
 
-export function getLocale() {
+export async function getLocale() {
     try {
-        const choice = Localization.locale;
-        I18n.locale = choice.substring(0, 2);
-        I18n.initAsync();
+        await I18n.initAsync();
+        I18n.locale = Localization.locale.substring(0, 2);
     } catch (error) {
-        console.log('Failed to get locale, defaulting to en');
+        console.log(error);
         I18n.locale = 'en';
     }
 }

@@ -34,7 +34,7 @@ export default function ProfileViewScreen() {
                 mode="text"
                 icon="menu"
                 iconLibrary="ionicons"
-                prefixSize={38}
+                prefixSize={30}
                 onPress={() => store.bottomSheet?.current?.expand()}
             />
         ),
