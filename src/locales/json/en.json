@@ -1,4 +1,3 @@
-
 {
     "first_name": "First Name",
     "last_name": "Last Name",
@@ -19,11 +18,11 @@
     "new_password": "New Password",
     "confirm_new_password": "Confirm New Password",
     "search": "Search",
-
     "components": {
         "avatar_selector": {
             "take_photo": "Take Photo",
-            "choose_from_library": "Choose from Library"
+            "choose_from_library": "Choose from Library",
+            "flip": "Flip"
         },
         "contact_card": {
             "handleBlock_error": "Failed to block contact",
