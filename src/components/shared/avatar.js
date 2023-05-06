@@ -1,8 +1,8 @@
 // Displays an image in the typical styles associated with an avatar.
 
 import { StyleSheet, Image } from 'react-native';
+import { colors } from '@styles/modules/style_global';
 import PropTypes from 'prop-types';
-import { colors } from '@styles';
 import React from 'react';
 
 export default function Avatar({
