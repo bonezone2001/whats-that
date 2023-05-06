@@ -1,0 +1,121 @@
+{
+    "first_name": "名字",
+    "last_name": "姓氏",
+    "email": "邮箱",
+    "contacts": "联系人",
+    "error": "错误",
+    "password": "密码",
+    "chats": "聊天",
+    "profile": "个人资料",
+    "settings": "设置",
+    "chat": "聊天",
+    "login": "登录",
+    "logout": "注销",
+    "cancel": "取消",
+    "register": "注册",
+    "unknown_error": "出现错误",
+    "confirm_password": "确认密码",
+    "new_password": "新密码",
+    "confirm_new_password": "确认新密码",
+    "search": "搜索",
+    "components": {
+        "avatar_selector": {
+            "take_photo": "拍照",
+            "choose_from_library": "从相册选择",
+            "flip": "翻转"
+        },
+        "contact_card": {
+            "handleBlock_error": "无法屏蔽联系人",
+            "handleAddOrRemove_error": "添加/删除联系人出现错误"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "修改聊天",
+                "add_members": "添加成员",
+                "kick_members": "踢出成员",
+                "leave_chat_error": "无法离开聊天"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "还没有账户？注册"
+            },
+            "register": {
+                "have_account": "已经有账户了？登录"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "新建聊天",
+                "handleCreateChat_error": "无法创建聊天",
+                "name_of_chat": "聊天名称"
+            },
+            "individual": {
+                "message_placeholder": "输入消息……",
+                "editing_message": "编辑消息"
+            },
+            "members": {
+                "title_add": "添加成员",
+                "title_kick": "踢出成员",
+                "handleModifyMembers_error": "无法修改成员",
+                "fail_load_members": "加载成员失败"
+            },
+            "modify": {
+                "title": "修改聊天",
+                "name_of_chat": "新的聊天名称",
+                "handleModifyChat_error": "无法修改聊天"
+            },
+            "view": {
+                "title": "聊天"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "没有找到结果"
+            },
+            "blocked": {
+                "title": "被屏蔽",
+                "no_blocked": "没有被屏蔽的联系人"
+            },
+            "view": {
+                "title": "联系人",
+                "no_contacts": "没有联系人"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "编辑个人资料",
+                "change_avatar": "更改头像"
+            },
+            "view": {
+                "title": "个人资料",
+                "edit_text": "编辑个人资料"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "名字太短",
+            "invalid_email": "邮箱无效",
+            "enter_password": "请输入密码",
+            "password_too_short": "密码太短",
+            "password_weak": "密码太弱",
+            "confirm_password": "请确认密码",
+            "passwords_dont_match": "两次输入的密码不匹配"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "无法从 API 加载数据"
+        },
+        "useChat": {
+            "fetchMessages_error": "无法获取消息",
+            "handleSendMessage_error": "无法发送消息",
+            "handleSendOrEditMessage_error": "无法发送消息",
+            "handleEditMessage_error": "无法编辑消息",
+            "handleDeleteMessage_error": "无法删除消息"
+        }
+    }
+}
