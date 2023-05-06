@@ -1,0 +1,121 @@
+{
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "Email",
+    "contacts": "Contacts",
+    "error": "Erreur",
+    "password": "Mot de passe",
+    "chats": "Discussions",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "chat": "Discussion",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "cancel": "Annuler",
+    "register": "S'inscrire",
+    "unknown_error": "Une erreur est survenue",
+    "confirm_password": "Confirmez le mot de passe",
+    "new_password": "Nouveau mot de passe",
+    "confirm_new_password": "Confirmez le nouveau mot de passe",
+    "search": "Rechercher",
+    "components": {
+        "avatar_selector": {
+            "take_photo": "Prendre une photo",
+            "choose_from_library": "Choisir depuis la bibliothèque",
+            "flip": "Changer"
+        },
+        "contact_card": {
+            "handleBlock_error": "Impossible de bloquer le contact",
+            "handleAddOrRemove_error": "Erreur lors de l'ajout/suppression du contact"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "Modifier la discussion",
+                "add_members": "Ajouter des membres",
+                "kick_members": "Supprimer des membres",
+                "leave_chat_error": "Impossible de quitter la discussion"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "Pas encore de compte ? S'inscrire"
+            },
+            "register": {
+                "have_account": "Déjà un compte ? Se connecter"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "Nouvelle discussion",
+                "handleCreateChat_error": "Erreur lors de la création de la discussion",
+                "name_of_chat": "Nom de la discussion"
+            },
+            "individual": {
+                "message_placeholder": "Tapez un message...",
+                "editing_message": "Modification du message"
+            },
+            "members": {
+                "title_add": "Ajouter des membres",
+                "title_kick": "Supprimer des membres",
+                "handleModifyMembers_error": "Impossible de modifier les membres",
+                "fail_load_members": "Échec du chargement des membres"
+            },
+            "modify": {
+                "title": "Modifier la discussion",
+                "name_of_chat": "Nouveau nom de la discussion",
+                "handleModifyChat_error": "Impossible de modifier la discussion"
+            },
+            "view": {
+                "title": "Discussions"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "Aucun résultat trouvé"
+            },
+            "blocked": {
+                "title": "Bloqués",
+                "no_blocked": "Aucun contact bloqué"
+            },
+            "view": {
+                "title": "Contacts",
+                "no_contacts": "Aucun contact"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "Modifier le profil",
+                "change_avatar": "Changer l'avatar"
+            },
+            "view": {
+                "title": "Profil",
+                "edit_text": "Modifier le profil"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "Le nom est trop court",
+            "invalid_email": "L'adresse email n'est pas valide",
+            "enter_password": "Veuillez saisir un mot de passe",
+            "password_too_short": "Le mot de passe est trop court",
+            "password_weak": "Le mot de passe est trop faible",
+            "confirm_password": "Veuillez confirmer le mot de passe",
+            "passwords_dont_match": "Les mots de passe ne correspondent pas"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "Impossible de charger les données de l'API"
+        },
+        "useChat": {
+            "fetchMessages_error": "Impossible de récupérer les messages",
+            "handleSendMessage_error": "Impossible d'envoyer le message",
+            "handleSendOrEditMessage_error": "Impossible d'envoyer le message",
+            "handleEditMessage_error": "Impossible de modifier le message",
+            "handleDeleteMessage_error": "Impossible de supprimer le message"
+        }
+    }
+}
