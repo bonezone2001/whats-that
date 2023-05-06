@@ -11,7 +11,6 @@ export const useLoadLocale = () => {
         (async () => {
             try {
                 await getLocale();
-                console.log(t('login'));
             } catch (error) {
                 console.log(error);
             } finally {
