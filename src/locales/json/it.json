@@ -1,0 +1,121 @@
+{
+    "first_name": "Nome",
+    "last_name": "Cognome",
+    "email": "Email",
+    "contacts": "Contatti",
+    "error": "Errore",
+    "password": "Password",
+    "chats": "Chat",
+    "profile": "Profilo",
+    "settings": "Impostazioni",
+    "chat": "Chat",
+    "login": "Accesso",
+    "logout": "Esci",
+    "cancel": "Annulla",
+    "register": "Registrazione",
+    "unknown_error": "Qualcosa è andato storto",
+    "confirm_password": "Conferma Password",
+    "new_password": "Nuova Password",
+    "confirm_new_password": "Conferma Nuova Password",
+    "search": "Cerca",
+    "components": {
+        "avatar_selector": {
+            "take_photo": "Scatta Foto",
+            "choose_from_library": "Scegli dalla Libreria",
+            "flip": "Invertire"
+        },
+        "contact_card": {
+            "handleBlock_error": "Impossibile bloccare il contatto",
+            "handleAddOrRemove_error": "Errore aggiunta/rimozione contatto"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "Modifica Chat",
+                "add_members": "Aggiungi Membri",
+                "kick_members": "Rimuovi Membri",
+                "leave_chat_error": "Impossibile lasciare la chat"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "Non hai un account? Registrati"
+            },
+            "register": {
+                "have_account": "Hai già un account? Accedi"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "Nuova Chat",
+                "handleCreateChat_error": "Errore nella creazione della chat",
+                "name_of_chat": "Nome della Chat"
+            },
+            "individual": {
+                "message_placeholder": "Scrivi un messaggio...",
+                "editing_message": "Modifica Messaggio"
+            },
+            "members": {
+                "title_add": "Aggiungi Membri",
+                "title_kick": "Rimuovi Membri",
+                "handleModifyMembers_error": "Impossibile modificare i membri",
+                "fail_load_members": "Impossibile caricare i membri"
+            },
+            "modify": {
+                "title": "Modifica Chat",
+                "name_of_chat": "Nuovo Nome della Chat",
+                "handleModifyChat_error": "Impossibile modificare la chat"
+            },
+            "view": {
+                "title": "Chat"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "Nessun risultato trovato"
+            },
+            "blocked": {
+                "title": "Bloccati",
+                "no_blocked": "Nessun contatto bloccato"
+            },
+            "view": {
+                "title": "Contatti",
+                "no_contacts": "Nessun contatto"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "Modifica Profilo",
+                "change_avatar": "Cambia Avatar"
+            },
+            "view": {
+                "title": "Profilo",
+                "edit_text": "Modifica Profilo"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "Il nome è troppo corto",
+            "invalid_email": "Email non valida",
+            "enter_password": "Inserisci la password",
+            "password_too_short": "La password è troppo corta",
+            "password_weak": "La password è troppo debole",
+            "confirm_password": "Conferma la password",
+            "passwords_dont_match": "Le password non corrispondono"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "Impossibile caricare i dati dall'API"
+        },
+        "useChat": {
+            "fetchMessages_error": "Impossibile recuperare i messaggi",
+            "handleSendMessage_error": "Impossibile inviare il messaggio",
+            "handleSendOrEditMessage_error": "Impossibile inviare il messaggio",
+            "handleEditMessage_error": "Impossibile modificare il messaggio",
+            "handleDeleteMessage_error": "Impossibile eliminare il messaggio"
+        }
+    }
+}

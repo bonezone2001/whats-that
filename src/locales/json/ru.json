@@ -1,0 +1,121 @@
+{
+    "first_name": "Имя",
+    "last_name": "Фамилия",
+    "email": "Email",
+    "contacts": "Контакты",
+    "error": "Ошибка",
+    "password": "Пароль",
+    "chats": "Чаты",
+    "profile": "Профиль",
+    "settings": "Настройки",
+    "chat": "Чат",
+    "login": "Войти",
+    "logout": "Выйти",
+    "cancel": "Отмена",
+    "register": "Зарегистрироваться",
+    "unknown_error": "Что-то пошло не так",
+    "confirm_password": "Подтвердите пароль",
+    "new_password": "Новый пароль",
+    "confirm_new_password": "Подтвердите новый пароль",
+    "search": "Поиск",
+    "components": {
+        "avatar_selector": {
+            "take_photo": "Сделать фото",
+            "choose_from_library": "Выбрать из галереи",
+            "flip": "Переключить"
+        },
+        "contact_card": {
+            "handleBlock_error": "Не удалось заблокировать контакт",
+            "handleAddOrRemove_error": "Ошибка при добавлении/удалении контакта"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "Изменить чат",
+                "add_members": "Добавить участников",
+                "kick_members": "Исключить участников",
+                "leave_chat_error": "Не удалось выйти из чата"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "Нет аккаунта? Зарегистрируйтесь"
+            },
+            "register": {
+                "have_account": "Уже есть аккаунт? Войдите"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "Новый чат",
+                "handleCreateChat_error": "Ошибка при создании чата",
+                "name_of_chat": "Название чата"
+            },
+            "individual": {
+                "message_placeholder": "Введите сообщение...",
+                "editing_message": "Редактирование сообщения"
+            },
+            "members": {
+                "title_add": "Добавить участников",
+                "title_kick": "Исключить участников",
+                "handleModifyMembers_error": "Не удалось изменить участников",
+                "fail_load_members": "Не удалось загрузить участников"
+            },
+            "modify": {
+                "title": "Изменить чат",
+                "name_of_chat": "Новое название чата",
+                "handleModifyChat_error": "Не удалось изменить чат"
+            },
+            "view": {
+                "title": "Чаты"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "Нет результатов"
+            },
+            "blocked": {
+                "title": "Заблокированные",
+                "no_blocked": "Нет заблокированных контактов"
+            },
+            "view": {
+                "title": "Контакты",
+                "no_contacts": "Нет контактов"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "Редактировать профиль",
+                "change_avatar": "Изменить аватар"
+            },
+            "view": {
+                "title": "Профиль",
+                "edit_text": "Редактировать профиль"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "Имя слишком короткое",
+            "invalid_email": "Email недействителен",
+            "enter_password": "Введите пароль",
+            "password_too_short": "Пароль слишком короткий",
+            "password_weak": "Пароль слишком слабый",
+            "confirm_password": "Подтвердите пароль",
+            "passwords_dont_match": "Пароли не совпадают"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "Не удалось загрузить данные из API"
+        },
+        "useChat": {
+            "fetchMessages_error": "Не удалось получить сообщения",
+            "handleSendMessage_error": "Не удалось отправить сообщение",
+            "handleSendOrEditMessage_error": "Не удалось отправить сообщение",
+            "handleEditMessage_error": "Не удалось отредактировать сообщение",
+            "handleDeleteMessage_error": "Не удалось удалить сообщение"
+        }
+    }
+}
