@@ -1,0 +1,121 @@
+{
+    "first_name": "Vorname",
+    "last_name": "Nachname",
+    "email": "E-Mail",
+    "contacts": "Kontakte",
+    "error": "Fehler",
+    "password": "Passwort",
+    "chats": "Chats",
+    "profile": "Profil",
+    "settings": "Einstellungen",
+    "chat": "Chat",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "cancel": "Abbrechen",
+    "register": "Registrieren",
+    "unknown_error": "Etwas ist schief gelaufen",
+    "confirm_password": "Passwort bestätigen",
+    "new_password": "Neues Passwort",
+    "confirm_new_password": "Neues Passwort bestätigen",
+    "search": "Suche",
+    "components": {
+        "avatar_selector": {
+            "take_photo": "Foto aufnehmen",
+            "choose_from_library": "Aus Galerie wählen",
+            "flip": "Umschalten"
+        },
+        "contact_card": {
+            "handleBlock_error": "Kontakt konnte nicht blockiert werden",
+            "handleAddOrRemove_error": "Fehler beim Hinzufügen/Entfernen des Kontakts"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "Chat bearbeiten",
+                "add_members": "Mitglieder hinzufügen",
+                "kick_members": "Mitglieder entfernen",
+                "leave_chat_error": "Konnte Chat nicht verlassen"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "Kein Konto? Registrieren"
+            },
+            "register": {
+                "have_account": "Bereits ein Konto? Anmelden"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "Neuer Chat",
+                "handleCreateChat_error": "Fehler beim Erstellen des Chats",
+                "name_of_chat": "Name des Chats"
+            },
+            "individual": {
+                "message_placeholder": "Eine Nachricht schreiben...",
+                "editing_message": "Nachricht bearbeiten"
+            },
+            "members": {
+                "title_add": "Mitglieder hinzufügen",
+                "title_kick": "Mitglieder entfernen",
+                "handleModifyMembers_error": "Konnte Mitglieder nicht bearbeiten",
+                "fail_load_members": "Konnte Mitglieder nicht laden"
+            },
+            "modify": {
+                "title": "Chat bearbeiten",
+                "name_of_chat": "Neuer Chatname",
+                "handleModifyChat_error": "Konnte Chat nicht bearbeiten"
+            },
+            "view": {
+                "title": "Chats"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "Keine Ergebnisse gefunden"
+            },
+            "blocked": {
+                "title": "Blockierte Kontakte",
+                "no_blocked": "Keine blockierten Kontakte"
+            },
+            "view": {
+                "title": "Kontakte",
+                "no_contacts": "Keine Kontakte"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "Profil bearbeiten",
+                "change_avatar": "Avatar ändern"
+            },
+            "view": {
+                "title": "Profil",
+                "edit_text": "Profil bearbeiten"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "Name ist zu kurz",
+            "invalid_email": "E-Mail ist ungültig",
+            "enter_password": "Bitte Passwort eingeben",
+            "password_too_short": "Passwort ist zu kurz",
+            "password_weak": "Passwort ist zu schwach",
+            "confirm_password": "Passwort bestätigen",
+            "passwords_dont_match": "Passwörter stimmen nicht überein"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "Daten konnten nicht von der API geladen werden"
+        },
+        "useChat": {
+            "fetchMessages_error": "Konnte Nachrichten nicht laden",
+            "handleSendMessage_error": "Konnte Nachricht nicht senden",
+            "handleSendOrEditMessage_error": "Konnte Nachricht nicht senden",
+            "handleEditMessage_error": "Konnte Nachricht nicht bearbeiten",
+            "handleDeleteMessage_error": "Konnte Nachricht nicht löschen"
+        }
+    }
+}
