@@ -8,9 +8,9 @@
 // Also I fully realize I can compress this file by making a lot of the functions one-liners
 // but I think it's more readable this way
 
-import { appUtils } from '@utils/utils_app';
 import Constants from 'expo-constants';
 import { useStore } from '@store';
+import { appUtils } from '@utils';
 import axios from 'axios';
 
 const { API_BASE_URL } = Constants.manifest.extra;

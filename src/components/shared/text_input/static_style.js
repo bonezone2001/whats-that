@@ -1,8 +1,8 @@
 // This is the static style for the text input component.
 // Moved here since component is quite large.
 
-import { colors } from '@styles/style_global';
 import { Platform } from 'react-native';
+import { colors } from '@styles';
 
 export const staticStyles = {
     container: {
