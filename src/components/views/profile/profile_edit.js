@@ -1,25 +1,17 @@
 // View profile screen.
 // Show user their details and allow navigation to edit profile.
 
-import {
-    View,
-    Text,
-    ScrollView,
-    Modal,
-    StyleSheet,
-    Dimensions,
-} from 'react-native';
+import AvatarSelector from '@components/shared/avatar_selector';
 import { useNavigation } from '@react-navigation/native';
 import { CheckLoad } from '@components/shared/headers';
+import { View, Text, ScrollView } from 'react-native';
 import TextInput from '@components/shared/text_input';
 import { profileStyle, globalStyle } from '@styles';
-import * as ImagePicker from 'expo-image-picker';
 import Avatar from '@components/shared/avatar';
 import Toast from 'react-native-toast-message';
 import Button from '@components/shared/button';
 import React, { useState } from 'react';
 import { useScreenHeader } from '@hooks';
-import { Camera } from 'expo-camera';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
@@ -29,16 +21,19 @@ export default function ProfileEditScreen() {
     const store = useStore();
 
     const [firstName, setFirstName] = useState(store.user.first_name);
+    const [showAvatarSelect, setShowAvatarSelect] = useState(false);
     const [lastName, setLastName] = useState(store.user.last_name);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [avatar, setAvatar] = useState(store.user.avatar);
     const [email, setEmail] = useState(store.user.email);
-    const [cameraMode, setCameraMode] = useState(-1);
-    const [cameraRef, setCameraRef] = useState(null);
     const [updating, setUpdating] = useState(false);
+    const [password, setPassword] = useState('');
+
+    const performValidation = () => entryUtils
+        .validateUpdateDetails(firstName, lastName, email, password, confirmPassword);
 
     const submitChanges = async () => {
-        const errors = entryUtils.validateUpdateDetails(firstName, lastName, email);
+        const errors = performValidation();
         if (errors) return;
 
         setUpdating(true);
@@ -50,6 +45,7 @@ export default function ProfileEditScreen() {
                 first_name: firstName,
                 last_name: lastName,
                 email,
+                password,
             });
             store.setUser({
                 ...store.user,
@@ -79,43 +75,11 @@ export default function ProfileEditScreen() {
             <CheckLoad
                 onPress={submitChanges}
                 loading={updating}
-                disabled={entryUtils.validateUpdateDetails(firstName, lastName, email) !== null}
+                disabled={performValidation() !== null}
             />
         ),
-        args: [firstName, lastName, email, avatar, updating],
+        args: [firstName, lastName, email, avatar, updating, password, confirmPassword],
     });
-
-    const takePhoto = async () => {
-        if (cameraRef) {
-            const result = await cameraRef.takePictureAsync({
-                base64: true,
-                quality: 1,
-                exif: false,
-            });
-            setAvatar(
-                result.base64.startsWith('data:')
-                    ? result.base64
-                    : `data:image/png;base64,${result.base64}`,
-            );
-            setCameraMode(-1);
-            setModalVisible(false);
-        }
-    };
-
-    const selectFromLibrary = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-            base64: true,
-            exif: false,
-        });
-
-        if (!result.canceled) {
-            setAvatar(`data:image/png;base64,${result.assets[0].base64}`);
-        }
-        setModalVisible(false);
-    };
 
     return (
         <View style={globalStyle.container}>
@@ -124,7 +88,7 @@ export default function ProfileEditScreen() {
                     <Button
                         mode="text"
                         style={profileStyle.avatarButton}
-                        onPress={() => setModalVisible(true)}
+                        onPress={() => setShowAvatarSelect(true)}
                     >
                         <Avatar
                             source={{ uri: avatar }}
@@ -156,109 +120,36 @@ export default function ProfileEditScreen() {
                         value={email}
                         onChangeText={setEmail}
                         style={profileStyle.formElement}
+                        validation={() => entryUtils.validateEmail(email)}
+                        block={90}
+                    />
+                    <TextInput
+                        label="New Password"
+                        value={password}
+                        onChangeText={setPassword}
+                        style={profileStyle.formElement}
+                        validation={() => entryUtils.validatePassword(password)}
+                        secureTextEntry
+                        block={90}
+                    />
+                    <TextInput
+                        label="Confirm New Password"
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        style={profileStyle.formElement}
+                        validation={() => entryUtils
+                            .validateConfirmPassword(password, confirmPassword)}
+                        secureTextEntry
                         block={90}
                     />
                 </View>
 
-                {/* TODO: This needs a complete refactor */}
-                <Modal
-                    animationType="fade"
-                    transparent
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                    collapsable
-                >
-                    <View style={[profileStyle.modalView, { backgroundColor: cameraMode === -1 ? 'rgba(0,0,0,0.5)' : 'black' }]}>
-                        {
-                            cameraMode === -1
-                                ? (
-                                    <View style={profileStyle.modalButtonContainer}>
-                                        <Button
-                                            mode="text"
-                                            onPress={() => {
-                                                setCameraMode(Camera.Constants.Type.back);
-                                            }}
-                                            style={profileStyle.modalButton}
-                                        >
-                                            Take Photo
-                                        </Button>
-                                        <Button
-                                            mode="text"
-                                            onPress={selectFromLibrary}
-                                            style={profileStyle.modalButton}
-                                        >
-                                            Choose from Library
-                                        </Button>
-                                        <Button
-                                            mode="text"
-                                            onPress={() => {
-                                                setModalVisible(!modalVisible);
-                                            }}
-                                            style={profileStyle.modalButton}
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </View>
-                                )
-                                : (
-                                    <Camera
-                                        style={[styles.camera, { height: Dimensions.get('window').width }]}
-                                        type={cameraMode}
-                                        ratio="1:1"
-                                        ref={(ref) => setCameraRef(ref)}
-                                    >
-                                        <View style={styles.cameraButtonContainer}>
-                                            <Button
-                                                mode="text"
-                                                onPress={() => setCameraMode(-1)}
-                                                style={profileStyle.cameraButton}
-                                            >
-                                                Cancel
-                                            </Button>
-                                            <Button
-                                                mode="text"
-                                                onPress={() => {
-                                                    setCameraMode(
-                                                        cameraMode === Camera.Constants.Type.back
-                                                            ? Camera.Constants.Type.front
-                                                            : Camera.Constants.Type.back,
-                                                    );
-                                                }}
-                                                style={profileStyle.cameraButton}
-                                            >
-                                                Flip
-                                            </Button>
-                                            <Button
-                                                mode="text"
-                                                onPress={takePhoto}
-                                                style={profileStyle.cameraButton}
-                                            >
-                                                Take Photo
-                                            </Button>
-                                        </View>
-                                    </Camera>
-                                )
-                        }
-                    </View>
-                </Modal>
+                <AvatarSelector
+                    visible={showAvatarSelect}
+                    onSelect={setAvatar}
+                    onShouldClose={() => setShowAvatarSelect(false)}
+                />
             </ScrollView>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    camera: {
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
-    cameraButtonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%',
-        paddingVertical: 20,
-        paddingHorizontal: 40,
-    },
-});

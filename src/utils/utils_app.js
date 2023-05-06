@@ -19,12 +19,11 @@ export const appUtils = {
         if (Platform.OS === 'web') window._frameTimestamp = null;
     },
 
-    // Remove web context menu so long press can be used
+    // So long press can be used
     disableContextMenu() {
         if (Platform.OS === 'web') document.addEventListener('contextmenu', (e) => e.preventDefault());
     },
 
-    // Make sure icons are loaded before using them (prevent boxy icons)
     async loadIcons() {
         await Promise.allSettled([
             Ionicons.loadFont(),
