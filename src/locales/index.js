@@ -4,12 +4,28 @@
 import * as Localization from 'expo-localization';
 import I18n from 'ex-react-native-i18n';
 
+import br from '@locales/json/br';
+import cn from '@locales/json/cn';
+import de from '@locales/json/de';
 import en from '@locales/json/en';
+import es from '@locales/json/es';
+import fr from '@locales/json/fr';
+import it from '@locales/json/it';
+import jp from '@locales/json/jp';
+import ru from '@locales/json/ru';
 
 I18n.fallbacks = true;
 I18n.defaultLocale = 'en';
 I18n.translations = {
+    br,
+    cn,
+    de,
     en,
+    es,
+    fr,
+    it,
+    jp,
+    ru,
 };
 
 export async function getLocale() {
