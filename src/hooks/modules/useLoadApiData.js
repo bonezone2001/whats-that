@@ -8,8 +8,8 @@ import { useStore } from '@store';
 import { t } from '@locales';
 
 export const useLoadApiData = () => {
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
     const store = useStore();
-    const [isDataLoaded, setIsDataLoaded] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -27,7 +27,7 @@ export const useLoadApiData = () => {
                 });
             }
             await appUtils.loadIcons();
-            setIsDataLoaded(false);
+            setIsDataLoaded(true);
         })();
     }, [store.token]);
 
