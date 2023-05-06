@@ -1,4 +1,11 @@
 {
+    "go_back": "Go Back",
+    "go_back_hint": "Go back to the start screen",
+    "current_screen": "Current Screen",
+    "loading": "Loading...",
+    "confirm": "Confirm",
+    "menu": "Menu",
+
     "first_name": "First Name",
     "last_name": "Last Name",
     "email": "Email",
@@ -8,16 +15,16 @@
     "chats": "Chats",
     "profile": "Profile",
     "settings": "Settings",
+    "search": "Search",
     "chat": "Chat",
     "login": "Login",
     "logout": "Logout",
     "cancel": "Cancel",
     "register": "Register",
-    "unknown_error": "Something went wrong",
-    "confirm_password": "Confirm Password",
     "new_password": "New Password",
+    "confirm_password": "Confirm Password",
     "confirm_new_password": "Confirm New Password",
-    "search": "Search",
+    "unknown_error": "Something went wrong",
     "components": {
         "avatar_selector": {
             "take_photo": "Take Photo",
@@ -26,7 +33,11 @@
         },
         "contact_card": {
             "handleBlock_error": "Failed to block contact",
-            "handleAddOrRemove_error": "Error adding/removing contact"
+            "handleAddOrRemove_error": "Error adding/removing contact",
+            "block_contact": "Block Contact",
+            "unblock_contact": "Unblock Contact",
+            "add_contact": "Add Contact",
+            "remove_contact": "Remove Contact"
         },
         "bottom_sheet": {
             "chat": {
@@ -54,7 +65,9 @@
             },
             "individual": {
                 "message_placeholder": "Type a message...",
-                "editing_message": "Editing Message"
+                "editing_message": "Editing Message",
+                "chat_options": "Chat Options",
+                "send_message": "Send Message"
             },
             "members": {
                 "title_add": "Add Members",
@@ -68,12 +81,14 @@
                 "handleModifyChat_error": "Failed to modify chat"
             },
             "view": {
-                "title": "Chats"
+                "title": "Chats",
+                "create_button": "Create New Chat"
             }
         },
         "contact": {
             "add": {
-                "no_results": "No results found"
+                "no_results": "No results found",
+                "search_field": "Search for contacts text box"
             },
             "blocked": {
                 "title": "Blocked",
@@ -81,7 +96,9 @@
             },
             "view": {
                 "title": "Contacts",
-                "no_contacts": "No contacts"
+                "no_contacts": "No contacts",
+                "blocked_button": "View blocked contacts",
+                "add_button": "Search for new contacts"
             }
         },
         "profile": {
@@ -91,7 +108,8 @@
             },
             "view": {
                 "title": "Profile",
-                "edit_text": "Edit Profile"
+                "edit_text": "Edit Profile",
+                "menu_hint": "Open settings menu"
             }
         }
     },

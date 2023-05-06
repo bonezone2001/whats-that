@@ -10,6 +10,7 @@ export default function Avatar({
     size,
     style,
     shape,
+    ...props
 }) {
     const styles = StyleSheet.create({
         container: {
@@ -25,6 +26,7 @@ export default function Avatar({
         <Image
             source={source}
             style={[styles.container, style]}
+            {...props}
         />
     );
 }

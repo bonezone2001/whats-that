@@ -78,7 +78,10 @@ export default function Button({
         <TouchableOpacity
             style={styles.buttonContainer}
             onPress={internalOnPress}
+            accessibilityRole="button"
+            accessible
             disabled={disabled}
+            accessibilityState={{ disabled: false }}
             {...props}
         >
             {loading

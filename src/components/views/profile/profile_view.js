@@ -36,6 +36,8 @@ export default function ProfileViewScreen() {
                 iconLibrary="ionicons"
                 prefixSize={30}
                 onPress={() => store.bottomSheet?.current?.expand()}
+                accessibilityLabel={t('menu')}
+                accessibilityHint={t('screens.profile.view.menu_hint')}
             />
         ),
     });

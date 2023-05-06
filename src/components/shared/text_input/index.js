@@ -28,6 +28,7 @@ export default function TextInput({
     shape,
     mode,
     label,
+    accessibleLabel,
     placeholder,
     multiline,
     contentType,
@@ -195,7 +196,16 @@ export default function TextInput({
 
     return (
         <View style={styles.container}>
-            <TouchableWithoutFeedback onFocus={focusInput} onPress={focusInput}>
+            <TouchableWithoutFeedback
+                onFocus={focusInput}
+                onPress={focusInput}
+                accessibilityRole="none"
+                accessibilityLabel={
+                    error.length > 0
+                        ? `${accessibleLabel || label}: ${value}. Error: ${error}`
+                        : `${accessibleLabel || label}: ${value}`
+                }
+            >
                 <Animated.View style={styles.inputContainer}>
                     {label.length > 0 && (!loading || labelShouldFloatTo) ? (
                         <Animated.Text
@@ -221,6 +231,7 @@ export default function TextInput({
                         )}
                         <RNTextInput
                             ref={inputRef}
+                            importantForAccessibility="no-hide-descendants"
                             placeholder={label ? '' : placeholder}
                             multiline={multiline}
                             keyboardType={contentType}
@@ -243,7 +254,12 @@ export default function TextInput({
                 </Animated.View>
             </TouchableWithoutFeedback>
             {error.length > 0 ? (
-                <Text style={styles.error}>{error}</Text>
+                <Text
+                    importantForAccessibility="no-hide-descendants"
+                    style={styles.error}
+                >
+                    {error}
+                </Text>
             ) : null}
         </View>
     );
@@ -253,6 +269,7 @@ TextInput.propTypes = {
     shape: PropTypes.oneOf(['box', 'rounded', 'circle']),
     mode: PropTypes.oneOf(['dense', 'outlined', 'flat']),
     label: PropTypes.string,
+    accessibleLabel: PropTypes.string,
     placeholder: PropTypes.string,
     multiline: PropTypes.bool,
     contentType: PropTypes.oneOf([
@@ -301,6 +318,7 @@ TextInput.defaultProps = {
     shape: 'box',
     mode: 'flat',
     label: '',
+    accessibleLabel: '',
     placeholder: '',
     multiline: false,
     contentType: 'default',

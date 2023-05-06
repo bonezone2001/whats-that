@@ -32,12 +32,14 @@ export default function ContactViewScreen() {
                     icon="x-circle"
                     prefixSize={28}
                     href="Blocked"
+                    accessibilityLabel={t('screens.contact.view.blocked_button')}
                 />
                 <Button
                     mode="text"
                     icon="user-plus"
                     prefixSize={28}
                     href="Add"
+                    accessibilityLabel={t('screens.contact.view.add_button')}
                 />
             </View>
         ),

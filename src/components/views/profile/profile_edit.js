@@ -90,6 +90,7 @@ export default function ProfileEditScreen() {
                         mode="text"
                         style={profileStyle.avatarButton}
                         onPress={() => setShowAvatarSelect(true)}
+                        accessibilityLabel={t('screens.profile.edit.change_avatar')}
                     >
                         <Avatar
                             source={{ uri: avatar }}
@@ -97,7 +98,12 @@ export default function ProfileEditScreen() {
                             size={150}
                         />
                     </Button>
-                    <Text style={profileStyle.avatarSubtext}>{t('screens.profile.edit.change_avatar')}</Text>
+                    <Text
+                        style={profileStyle.avatarSubtext}
+                        importantForAccessibility="no-hide-descendants"
+                    >
+                        {t('screens.profile.edit.change_avatar')}
+                    </Text>
                 </View>
                 <View style={{ marginTop: 40, alignItems: 'center' }}>
                     <TextInput

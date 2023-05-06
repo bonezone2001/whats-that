@@ -38,9 +38,9 @@ export default function InfoCard({
     });
 
     return (
-        <View style={styles.card}>
+        <View style={styles.card} accessible accessibilityRole="text">
             {icon && (
-                <View style={styles.icon}>
+                <View style={styles.icon} accessible>
                     <Ionicons name={icon} size={iconSize} color={iconColor || textColor} />
                 </View>
             )}

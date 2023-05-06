@@ -67,6 +67,7 @@ export default function ChatIndividual({ route }) {
                 onPress={() => store.bottomSheet.current?.expand()}
                 icon="more-vertical"
                 prefixSize={28}
+                accessibilityLabel={t('screens.chat.individual.chat_options')}
             />
         ),
         args: [chatDetails.name],
@@ -119,12 +120,14 @@ export default function ChatIndividual({ route }) {
                     block={80}
                     onSubmitEditing={chat.handleSendOrEditMessage}
                     blurOnSubmit={Platform.OS === 'web'}
+                    accessibleLabel={t('screens.chat.individual.message_placeholder')}
                 />
                 <Button
                     mode="text"
                     onPress={chat.handleSendOrEditMessage}
                     icon="send"
                     prefixSize={25}
+                    accessibilityLabel={t('screens.chat.individual.send_message')}
                 />
             </View>
         </View>

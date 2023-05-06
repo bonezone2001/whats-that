@@ -40,6 +40,7 @@ export default function ContactAddScreen() {
                         search(text, true);
                     }}
                     style={{ width: Platform.OS === 'android' ? '90%' : '100%' }}
+                    accessibleLabel={t('screens.contact.add.search_field')}
                     value={searchQuery}
                 />
             </View>

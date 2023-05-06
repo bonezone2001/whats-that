@@ -61,7 +61,15 @@ export default function ContactCard({
     };
 
     return (
-        <View style={[contactStyle.contact, style]}>
+        <View
+            style={[contactStyle.contact, style]}
+            accessible
+            asccessibilityRole="text"
+            accessibilityLabel={`
+                ${contact.first_name} ${contact.last_name}.
+                ${t('email')}: ${contact.email}.
+            `}
+        >
             <View style={contactStyle.avatarContainer}>
                 <Avatar
                     size={avatarSize}
@@ -90,6 +98,7 @@ export default function ContactCard({
                                 icon={!contact.isBlocked ? 'unlock' : 'lock'}
                                 prefixSize={28}
                                 textColor={!contact.isBlocked ? colors.info : colors.danger}
+                                accessibilityLabel={t(`components.contact_card.${contact.isBlocked ? 'unblock' : 'block'}_contact`)}
                             />
                         ) : null}
                         {(type !== 'block' && !contact.isBlocked) ? (
@@ -99,6 +108,7 @@ export default function ContactCard({
                                 icon={contact.isContact ? 'minus' : 'plus'}
                                 prefixSize={28}
                                 textColor={contact.isContact ? colors.danger : colors.success}
+                                accessibilityLabel={t(`components.contact_card.${contact.isContact ? 'remove' : 'add'}_contact`)}
                             />
                         ) : null}
                     </View>

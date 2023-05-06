@@ -32,6 +32,7 @@ export default function ChatView() {
                 icon="plus"
                 prefixSize={30}
                 href="Create"
+                accessibilityLabel={t('screens.chat.view.create_button')}
             />
         ),
     });

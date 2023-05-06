@@ -10,11 +10,26 @@ import React from 'react';
 const AuthorizedTab = createBottomTabNavigator();
 
 export default function BottomBarNav() {
+    const tabs = [
+        ['Chat', ChatStack],
+        ['Contacts', ContactStack],
+        ['Profile', ProfileStack],
+    ];
     return (
         <AuthorizedTab.Navigator screenOptions={tabBarOptions} initialRouteName="Chat">
-            <AuthorizedTab.Screen name="Chat" component={ChatStack} />
-            <AuthorizedTab.Screen name="Contacts" component={ContactStack} />
-            <AuthorizedTab.Screen name="Profile" component={ProfileStack} />
+            {
+                tabs.map(([name, component]) => (
+                    <AuthorizedTab.Screen
+                        key={name}
+                        name={name}
+                        component={component}
+                        options={{
+                            tabBarAccessibilityLabel: name,
+                            tabBarTestID: `${name.toLowerCase()}-tab`,
+                        }}
+                    />
+                ))
+            }
         </AuthorizedTab.Navigator>
     );
 }

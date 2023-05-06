@@ -2,7 +2,7 @@
 // Used primarily in App.js to load data before rendering the app
 
 import { useEffect, useState } from 'react';
-import { getLocale, t } from '@locales';
+import { getLocale } from '@locales';
 
 export const useLoadLocale = () => {
     const [isLocaleLoaded, setIsLocaleLoaded] = useState(false);

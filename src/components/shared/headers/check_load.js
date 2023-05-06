@@ -4,6 +4,7 @@
 import Button from '@components/shared/button';
 import PropTypes from 'prop-types';
 import { colors } from '@styles';
+import { t } from '@locales';
 import React from 'react';
 
 export function CheckLoad({ loading, onPress, disabled }) {
@@ -16,6 +17,7 @@ export function CheckLoad({ loading, onPress, disabled }) {
             loading={loading}
             disabled={loading || disabled}
             icon="check"
+            accessibilityLabel={loading ? t('loading') : t('confirm')}
         />
     );
 }

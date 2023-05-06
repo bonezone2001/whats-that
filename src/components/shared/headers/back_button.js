@@ -4,6 +4,7 @@
 import { useNavigation } from '@react-navigation/native';
 import Button from '@components/shared/button';
 import PropTypes from 'prop-types';
+import { t } from '@locales';
 import React from 'react';
 
 export function BackButton({ href, onPress }) {
@@ -15,6 +16,8 @@ export function BackButton({ href, onPress }) {
             icon="chevron-left"
             prefixSize={38}
             href={href}
+            accessibilityLabel={t('go_back')}
+            accessibilityHint={t('go_back_hint')}
             onPress={onPress || navigation.goBack}
         />
     );
