@@ -1,0 +1,121 @@
+{
+    "first_name": "Nome",
+    "last_name": "Sobrenome",
+    "email": "E-mail",
+    "contacts": "Contatos",
+    "error": "Erro",
+    "password": "Senha",
+    "chats": "Conversas",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "chat": "Conversa",
+    "login": "Entrar",
+    "logout": "Sair",
+    "cancel": "Cancelar",
+    "register": "Registrar",
+    "unknown_error": "Algo deu errado",
+    "confirm_password": "Confirmar senha",
+    "new_password": "Nova senha",
+    "confirm_new_password": "Confirmar nova senha",
+    "search": "Buscar",
+    "components": {
+        "avatar_selector": {
+            "take_photo": "Tirar foto",
+            "choose_from_library": "Escolher da biblioteca",
+            "flip": "Inverter"
+        },
+        "contact_card": {
+            "handleBlock_error": "Falha ao bloquear contato",
+            "handleAddOrRemove_error": "Erro ao adicionar/remover contato"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "Modificar conversa",
+                "add_members": "Adicionar membros",
+                "kick_members": "Remover membros",
+                "leave_chat_error": "Não foi possível sair da conversa"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "Não tem uma conta? Registrar"
+            },
+            "register": {
+                "have_account": "Já tem uma conta? Entrar"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "Nova conversa",
+                "handleCreateChat_error": "Erro ao criar conversa",
+                "name_of_chat": "Nome da conversa"
+            },
+            "individual": {
+                "message_placeholder": "Digite uma mensagem...",
+                "editing_message": "Editando mensagem"
+            },
+            "members": {
+                "title_add": "Adicionar membros",
+                "title_kick": "Remover membros",
+                "handleModifyMembers_error": "Não foi possível modificar membros",
+                "fail_load_members": "Falha ao carregar membros"
+            },
+            "modify": {
+                "title": "Modificar conversa",
+                "name_of_chat": "Novo nome da conversa",
+                "handleModifyChat_error": "Falha ao modificar conversa"
+            },
+            "view": {
+                "title": "Conversas"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "Nenhum resultado encontrado"
+            },
+            "blocked": {
+                "title": "Bloqueados",
+                "no_blocked": "Nenhum contato bloqueado"
+            },
+            "view": {
+                "title": "Contatos",
+                "no_contacts": "Nenhum contato"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "Editar perfil",
+                "change_avatar": "Trocar avatar"
+            },
+            "view": {
+                "title": "Perfil",
+                "edit_text": "Editar perfil"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "Nome muito curto",
+            "invalid_email": "E-mail inválido",
+            "enter_password": "Por favor, digite a senha",
+            "password_too_short": "Senha muito curta",
+            "password_weak": "Senha muito fraca",
+            "confirm_password": "Por favor, confirme a senha",
+            "passwords_dont_match": "As senhas não coincidem"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "Não foi possível carregar dados da API"
+        },
+        "useChat": {
+            "fetchMessages_error": "Não foi possível buscar mensagens",
+            "handleSendMessage_error": "Não foi possível enviar mensagem",
+            "handleSendOrEditMessage_error": "Não foi possível enviar mensagem",
+            "handleEditMessage_error": "Não foi possível editar mensagem",
+            "handleDeleteMessage_error": "Não foi possível excluir mensagem"
+        }
+    }
+}
