@@ -8,6 +8,7 @@ import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
 import { apiUtils } from '@utils';
+import { t } from '@locales';
 import React from 'react';
 import api from '@api';
 
@@ -40,7 +41,8 @@ export function sheet({ route }) {
                             });
                         }}
                     >
-                        Modify Chat
+                        {/* Modify Chat */}
+                        {t('components.bottom_sheet.chat.modify_chat')}
                     </Button>
                     <Button
                         mode="text"
@@ -53,7 +55,8 @@ export function sheet({ route }) {
                             });
                         }}
                     >
-                        Add Members
+                        {/* Add Members */}
+                        {t('components.bottom_sheet.chat.add_members')}
                     </Button>
                     <Button
                         mode="text"
@@ -66,7 +69,8 @@ export function sheet({ route }) {
                             });
                         }}
                     >
-                        Kick Members
+                        {/* Kick Members */}
+                        {t('components.bottom_sheet.chat.kick_members')}
                     </Button>
                 </>
             )}
@@ -85,8 +89,8 @@ export function sheet({ route }) {
                     } catch (error) {
                         Toast.show({
                             type: 'error',
-                            text1: 'Error',
-                            text2: 'Failed to leave chat',
+                            text1: t('error'),
+                            text2: t('components.bottom_sheet.chat.leave_chat_error'),
                         });
                     }
                 }}

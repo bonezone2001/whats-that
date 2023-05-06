@@ -5,6 +5,7 @@ import { entryUtils, apiUtils, appUtils } from '@utils';
 import Toast from 'react-native-toast-message';
 import { useEffect, useState } from 'react';
 import { useStore } from '@store';
+import { t } from '@locales';
 
 export const useLoadApiData = () => {
     const store = useStore();
@@ -21,8 +22,8 @@ export const useLoadApiData = () => {
             } catch (error) {
                 Toast.show({
                     type: 'error',
-                    text1: 'Error',
-                    text2: 'Could not load data',
+                    text1: t('error'),
+                    text2: t('hooks.useLoadApiData.error'),
                 });
             }
             await appUtils.loadIcons();

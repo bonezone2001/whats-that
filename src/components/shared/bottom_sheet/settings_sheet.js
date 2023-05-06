@@ -5,6 +5,7 @@ import Button from '@components/shared/button';
 import { globalStyle } from '@styles';
 import { entryUtils } from '@utils';
 import PropTypes from 'prop-types';
+import { t } from '@locales';
 import React from 'react';
 
 export const settings = {
@@ -24,7 +25,8 @@ export function sheet() {
                 icon="settings"
                 style={globalStyle.sheetButton}
             >
-                Settings
+                {/* Settings */}
+                {t('settings')}
             </Button>
             <Button
                 mode="text"
@@ -32,7 +34,8 @@ export function sheet() {
                 icon="log-out"
                 style={globalStyle.sheetButton}
             >
-                Logout
+                {/* Logout */}
+                {t('logout')}
             </Button>
         </>
     );

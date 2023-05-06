@@ -15,6 +15,7 @@ import { useScreenHeader } from '@hooks';
 import { globalStyle } from '@styles';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
+import { t } from '@locales';
 import api from '@api';
 
 export default function ChatMembers({ route }) {
@@ -39,8 +40,8 @@ export default function ChatMembers({ route }) {
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Unable to modify members',
+                text1: t('error'),
+                text2: t('screens.chat.members.handleModifyMembers_error'),
             });
         } finally {
             setUpdating(false);
@@ -48,7 +49,7 @@ export default function ChatMembers({ route }) {
     };
 
     useScreenHeader({
-        title: isAdd ? 'Add Members' : 'Kick Members',
+        title: isAdd ? t('screens.chat.individual.title_add') : t('screens.chat.individual.title_kick'),
         right: (
             <CheckLoad
                 loading={updating}
@@ -78,8 +79,8 @@ export default function ChatMembers({ route }) {
             } catch (error) {
                 Toast.show({
                     type: 'error',
-                    text1: 'Error',
-                    text2: 'Unable to load contacts',
+                    text1: t('error'),
+                    text2: t('screens.chat.members.fail_load_members'),
                 });
             }
         })();

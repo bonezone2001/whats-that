@@ -7,6 +7,7 @@ import { colors, contactStyle } from '@styles';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { apiUtils } from '@utils';
+import { t } from '@locales';
 import React from 'react';
 import api from '@api';
 
@@ -33,7 +34,7 @@ export default function ContactCard({
             await apiUtils.updateContactsAndBlocked();
         } catch (error) {
             Toast.show({
-                text1: 'Error blocking user',
+                text1: t('components.contact_card.handleBlock_error'),
                 text2: error.message,
                 type: 'error',
             });
@@ -52,7 +53,7 @@ export default function ContactCard({
             await apiUtils.updateContacts();
         } catch (error) {
             Toast.show({
-                text1: 'Error adding/removing contact',
+                text1: t('components.contact_card.handleAddOrRemove_error'),
                 text2: error.message,
                 type: 'error',
             });

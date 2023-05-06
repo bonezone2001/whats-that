@@ -9,6 +9,7 @@ import Button from '@components/shared/button';
 import { useAuthBackground } from '@hooks';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
+import { t } from '@locales';
 import api from '@api';
 
 // Since mobile doesn't support SVG, we need two versions of the background image
@@ -51,7 +52,7 @@ export default function LoginScreen() {
 
             await entryUtils.loadUserData();
         } catch (error) {
-            const errorMsg = error.response?.data || 'Something went wrong';
+            const errorMsg = error.response?.data || t('unknown_error');
             setMajorError(errorMsg);
         }
         setLoading(false);
@@ -67,7 +68,7 @@ export default function LoginScreen() {
 
                 <TextInput
                     contentType="email-address"
-                    label="Email"
+                    label={t('email')}
                     value={email}
                     onChangeText={setEmail}
                     forceValidation={triggerValidation}
@@ -75,11 +76,11 @@ export default function LoginScreen() {
                     style={entryStyle.formElement}
                 />
                 <TextInput
-                    label="Password"
+                    label={t('password')}
                     value={password}
                     onChangeText={setPassword}
                     forceValidation={triggerValidation}
-                    validation={() => (password.length === 0 ? 'Password is required' : '')}
+                    validation={() => (password.length === 0 ? t('utils.entry.enter_password') : '')}
                     style={entryStyle.formElement}
                     secureTextEntry
                 />
@@ -88,7 +89,8 @@ export default function LoginScreen() {
                     style={entryStyle.formElement}
                     loading={loading}
                 >
-                    Login
+                    {/* Login */}
+                    {t('login')}
                 </Button>
 
                 {
@@ -102,7 +104,7 @@ export default function LoginScreen() {
                     href="Register"
                     style={entryStyle.subtitle}
                 >
-                    Don&apos;t have an account? Register
+                    {t('screens.auth.login.no_account')}
                 </Button>
             </View>
         </ImageBackground>

@@ -14,6 +14,7 @@ import Button from '@components/shared/button';
 import { useScreenHeader } from '@hooks';
 import { chatUtils } from '@utils';
 import { useStore } from '@store';
+import { t } from '@locales';
 import React from 'react';
 
 import noResultsImage from '@assets/images/no_results.png';
@@ -24,7 +25,7 @@ export default function ChatView() {
 
     useScreenHeader({
         left: null,
-        title: 'Chats',
+        title: t('screens.chat.view.title'),
         right: (
             <Button
                 mode="text"
@@ -38,6 +39,7 @@ export default function ChatView() {
     const renderLastMessage = (item) => {
         if (!Object.keys(item.last_message).length) {
             const { creator } = item;
+            // TODO: use i18n
             const placeholder = `created chat "${item.name}"`;
             if (creator.user_id === store.user.user_id) return `You ${placeholder}`;
             return `${creator.first_name} ${creator.last_name} ${placeholder}`;

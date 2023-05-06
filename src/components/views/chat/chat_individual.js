@@ -23,6 +23,7 @@ import Button from '@components/shared/button';
 import { apiUtils, chatUtils } from '@utils';
 import PropTypes from 'prop-types';
 import { useStore } from '@store';
+import { t } from '@locales';
 
 export default function ChatIndividual({ route }) {
     const chatDetails = route.params.chat;
@@ -113,8 +114,8 @@ export default function ChatIndividual({ route }) {
                     value={chat.editMessage ? chat.editMessageContent : chat.message}
                     multiline
                     onChangeText={chat.editMessage ? chat.setEditMessageContent : chat.setMessage}
-                    placeholder="Type a message..."
-                    label={chat.editMessage ? 'Editting message' : ''}
+                    placeholder={t('screens.chat.individual.message_placeholder')}
+                    label={chat.editMessage ? t('screens.chat.individual.editing_message') : ''}
                     block={80}
                     onSubmitEditing={chat.handleSendOrEditMessage}
                     blurOnSubmit={Platform.OS === 'web'}

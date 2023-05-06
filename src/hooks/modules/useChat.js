@@ -1,6 +1,7 @@
 import Toast from 'react-native-toast-message';
 import { appUtils } from '@utils';
 import { useState } from 'react';
+import { t } from '@locales';
 import api from '@api';
 
 export const useChat = ({
@@ -37,8 +38,8 @@ export const useChat = ({
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Could not fetch messages',
+                text1: t('error'),
+                text2: t('hooks.useChat.fetchMessages_error'),
             });
         } finally {
             if (!silent) setChatLoading(false);
@@ -54,8 +55,8 @@ export const useChat = ({
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Could not send message',
+                text1: t('error'),
+                text2: t('hooks.useChat.handleSendMessage_error'),
             });
         }
     };
@@ -74,8 +75,8 @@ export const useChat = ({
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Could not send message',
+                text1: t('error'),
+                text2: t('hooks.useChat.handleSendOrEditMessage_error'),
             });
         } finally {
             clearMessageFields();
@@ -92,8 +93,8 @@ export const useChat = ({
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Could not edit message',
+                text1: t('error'),
+                text2: t('hooks.useChat.handleEditMessage_error'),
             });
         }
     };
@@ -106,8 +107,8 @@ export const useChat = ({
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Could not delete message',
+                text1: t('error'),
+                text2: t('hooks.useChat.handleDeleteMessage_error'),
             });
         }
     };

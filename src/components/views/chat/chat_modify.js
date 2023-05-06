@@ -11,6 +11,7 @@ import { globalStyle } from '@styles';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import { apiUtils } from '@utils';
+import { t } from '@locales';
 import api from '@api';
 
 export default function ChatModify({ route }) {
@@ -29,8 +30,8 @@ export default function ChatModify({ route }) {
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error',
-                text2: 'Failed to modify chat',
+                text1: t('error'),
+                text2: t('screens.chat.modify.handleModifyChat_error'),
             });
         } finally {
             setUpdating(false);
@@ -38,7 +39,7 @@ export default function ChatModify({ route }) {
     };
 
     useScreenHeader({
-        title: 'Modify Chat',
+        title: t('screens.chat.modify.title'),
         right: (
             <CheckLoad
                 loading={updating}
@@ -53,7 +54,7 @@ export default function ChatModify({ route }) {
         <View style={globalStyle.container}>
             <View style={{ width: '90%' }}>
                 <TextInput
-                    label="New name of chat"
+                    label={t('screens.chat.modify.name_of_chat')}
                     value={chatName}
                     onChangeText={setChatName}
                 />

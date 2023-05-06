@@ -5,12 +5,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import BottomSheet from '@components/shared/bottom_sheet';
 import { MenuProvider } from 'react-native-popup-menu';
 import { useLoadFonts, useLoadApiData } from '@hooks';
+import React, { useCallback, useEffect } from 'react';
 import AuthStack from '@navigator/stack/stack_auth';
 import * as SplashScreen from 'expo-splash-screen';
 import { globalStyle, toastConfig } from '@styles';
 import Toast from 'react-native-toast-message';
 import { StatusBar } from 'expo-status-bar';
-import React, { useCallback } from 'react';
+import { getLocale } from '@locales';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
 
@@ -24,6 +25,7 @@ export default function App() {
     const store = useStore();
 
     // Display splash screen until app is ready
+    useEffect(() => getLocale(), []);
     const onLayoutRootView = useCallback(
         async () => isFontLoaded && !isDataLoaded && SplashScreen.hideAsync(),
         [isFontLoaded, isDataLoaded],

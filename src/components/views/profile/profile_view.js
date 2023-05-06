@@ -14,6 +14,7 @@ import { useScreenHeader } from '@hooks';
 import React, { useMemo } from 'react';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
+import { t } from '@locales';
 
 export default function ProfileViewScreen() {
     const store = useStore();
@@ -27,7 +28,7 @@ export default function ProfileViewScreen() {
 
     useScreenHeader({
         left: null,
-        title: 'Profile',
+        title: t('screens.profile.view.title'),
         right: (
             <Button
                 mode="text"
@@ -57,7 +58,7 @@ export default function ProfileViewScreen() {
                         style={profileStyle.button}
                         href="Edit"
                     >
-                        Edit Profile
+                        {t('screens.profile.view.edit_text')}
                     </Button>
                 </View>
                 <View style={{ marginTop: 20 }}>

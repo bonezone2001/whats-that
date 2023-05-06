@@ -13,6 +13,7 @@ import { useScreenHeader } from '@hooks';
 import { globalStyle } from '@styles';
 import { apiUtils } from '@utils';
 import { useStore } from '@store';
+import { t } from '@locales';
 import api from '@api';
 
 export default function ChatCreate() {
@@ -44,7 +45,7 @@ export default function ChatCreate() {
             });
         } catch (error) {
             Toast.show({
-                text1: 'Error creating chat',
+                text1: t('screens.chat.create.handleCreateChat_error'),
                 text2: error.message,
                 type: 'error',
             });
@@ -55,7 +56,7 @@ export default function ChatCreate() {
     };
 
     useScreenHeader({
-        title: 'New Chat',
+        title: t('screens.chat.create.title'),
         right: (
             <CheckLoad
                 onPress={handleCreateChat}
@@ -74,7 +75,7 @@ export default function ChatCreate() {
     return (
         <View style={globalStyle.container}>
             <View style={{ width: '90%' }}>
-                <TextInput label="Name of chat" value={chatName} onChangeText={setChatName} />
+                <TextInput label={t('screens.chat.create.name_of_chat')} value={chatName} onChangeText={setChatName} />
 
                 <ScrollView style={{ marginTop: 20, maxHeight: Dimensions.get('window').height * 0.6 }}>
                     <ContactSelectionBox

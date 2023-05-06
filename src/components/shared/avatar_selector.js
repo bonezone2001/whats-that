@@ -12,6 +12,7 @@ import { profileStyle } from '@styles';
 import React, { useState } from 'react';
 import { Camera } from 'expo-camera';
 import PropTypes from 'prop-types';
+import { t } from '@locales';
 
 export default function AvatarSelector({
     onShouldClose,
@@ -75,21 +76,21 @@ export default function AvatarSelector({
                                     }}
                                     style={profileStyle.modalButton}
                                 >
-                                    Take Photo
+                                    {t('components.avatar_selector.take_photo')}
                                 </Button>
                                 <Button
                                     mode="text"
                                     onPress={selectFromLibrary}
                                     style={profileStyle.modalButton}
                                 >
-                                    Choose from Library
+                                    {t('components.avatar_selector.choose_from_library')}
                                 </Button>
                                 <Button
                                     mode="text"
                                     onPress={onShouldClose}
                                     style={profileStyle.modalButton}
                                 >
-                                    Cancel
+                                    {t('cancel')}
                                 </Button>
                             </View>
                         )
@@ -106,7 +107,7 @@ export default function AvatarSelector({
                                         onPress={() => setCameraMode(-1)}
                                         style={profileStyle.cameraButton}
                                     >
-                                        Cancel
+                                        {t('cancel')}
                                     </Button>
                                     <Button
                                         mode="text"
@@ -119,14 +120,14 @@ export default function AvatarSelector({
                                         }}
                                         style={profileStyle.cameraButton}
                                     >
-                                        Flip
+                                        {t('components.avatar_selector.flip')}
                                     </Button>
                                     <Button
                                         mode="text"
                                         onPress={takePhoto}
                                         style={profileStyle.cameraButton}
                                     >
-                                        Take Photo
+                                        {t('components.avatar_selector.take_photo')}
                                     </Button>
                                 </View>
                             </Camera>

@@ -1,0 +1,122 @@
+
+{
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "contacts": "Contacts",
+    "error": "Error",
+    "password": "Password",
+    "chats": "Chats",
+    "profile": "Profile",
+    "settings": "Settings",
+    "chat": "Chat",
+    "login": "Login",
+    "logout": "Logout",
+    "cancel": "Cancel",
+    "register": "Register",
+    "unknown_error": "Something went wrong",
+    "confirm_password": "Confirm Password",
+    "new_password": "New Password",
+    "confirm_new_password": "Confirm New Password",
+    "search": "Search",
+
+    "components": {
+        "avatar_selector": {
+            "take_photo": "Take Photo",
+            "choose_from_library": "Choose from Library"
+        },
+        "contact_card": {
+            "handleBlock_error": "Failed to block contact",
+            "handleAddOrRemove_error": "Error adding/removing contact"
+        },
+        "bottom_sheet": {
+            "chat": {
+                "modify_chat": "Modify Chat",
+                "add_members": "Add Members",
+                "kick_members": "Kick Members",
+                "leave_chat_error": "Could not leave chat"
+            }
+        }
+    },
+    "screens": {
+        "auth": {
+            "login": {
+                "no_account": "Don't have an account? Register"
+            },
+            "register": {
+                "have_account": "Already have an account? Login"
+            }
+        },
+        "chat": {
+            "create": {
+                "title": "New Chat",
+                "handleCreateChat_error": "Error creating chat",
+                "name_of_chat": "Name of Chat"
+            },
+            "individual": {
+                "message_placeholder": "Type a message...",
+                "editing_message": "Editing Message"
+            },
+            "members": {
+                "title_add": "Add Members",
+                "title_kick": "Kick Members",
+                "handleModifyMembers_error": "Unable to modify members",
+                "fail_load_members": "Failed to load members"
+            },
+            "modify": {
+                "title": "Modify Chat",
+                "name_of_chat": "New Name of Chat",
+                "handleModifyChat_error": "Failed to modify chat"
+            },
+            "view": {
+                "title": "Chats"
+            }
+        },
+        "contact": {
+            "add": {
+                "no_results": "No results found"
+            },
+            "blocked": {
+                "title": "Blocked",
+                "no_blocked": "No blocked contacts"
+            },
+            "view": {
+                "title": "Contacts",
+                "no_contacts": "No contacts"
+            }
+        },
+        "profile": {
+            "edit": {
+                "title": "Edit Profile",
+                "change_avatar": "Change Avatar"
+            },
+            "view": {
+                "title": "Profile",
+                "edit_text": "Edit Profile"
+            }
+        }
+    },
+    "utils": {
+        "entry": {
+            "name_too_short": "Name is too short",
+            "invalid_email": "Email is invalid",
+            "enter_password": "Please enter password",
+            "password_too_short": "Password is too short",
+            "password_weak": "Password is too weak",
+            "confirm_password": "Please confirm password",
+            "passwords_dont_match": "Passwords don't match"
+        }
+    },
+    "hooks": {
+        "useLoadApiData": {
+            "error": "Could not load data from API"
+        },
+        "useChat": {
+            "fetchMessages_error": "Could not fetch messages",
+            "handleSendMessage_error": "Could not send message",
+            "handleSendOrEditMessage_error": "Could not send message",
+            "handleEditMessage_error": "Could not edit message",
+            "handleDeleteMessage_error": "Could not delete message"
+        }
+    }
+}

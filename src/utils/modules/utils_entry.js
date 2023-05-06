@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dimensions, Platform } from 'react-native';
 import emailValidator from 'email-validator';
 import { useStore } from '@store';
+import { t } from '@locales';
 import api from '@api';
 
 export const entryUtils = {
@@ -27,26 +28,26 @@ export const entryUtils = {
 
     validateName(name) {
         if (name?.trim().length >= 3) return '';
-        return 'Name too short';
+        return t('utils.entry.name_too_short');
     },
 
     validateEmail(email) {
         if (emailValidator.validate(email?.trim())) return '';
-        return 'Invalid email address';
+        return t('utils.entry.invalid_email');
     },
 
     validatePassword(password) {
         const passwordRegex = /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-        if (password?.length === 0) return 'Please enter a password';
-        if (password?.length < 8) return 'Password too short';
+        if (password?.length === 0) return t('utils.entry.enter_password');
+        if (password?.length < 8) return t('utils.entry.password_too_short');
         if (passwordRegex.test(password)) return '';
-        return 'Password is too weak';
+        return t('utils.entry.password_weak');
     },
 
     validateConfirmPassword(password, confirmPassword) {
-        if (confirmPassword?.length === 0) return 'Please confirm your password';
+        if (confirmPassword?.length === 0) return t('utils.entry.confirm_password');
         if (password === confirmPassword) return '';
-        return 'Passwords do not match';
+        return t('utils.entry.passwords_dont_match');
     },
 
     validateRegister(firstName, lastName, email, password, confirmPassword) {
@@ -63,7 +64,7 @@ export const entryUtils = {
 
     validateLogin(email, password) {
         const emailError = entryUtils.validateEmail(email);
-        const passwordError = password.length === 0 ? 'Please enter a password' : null;
+        const passwordError = password.length === 0 ? t('utils.entry.enter_password') : null;
         if (!emailError && !passwordError) return null;
         return { email: emailError, password: passwordError };
     },

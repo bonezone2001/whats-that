@@ -16,6 +16,7 @@ import { useScreenHeader } from '@hooks';
 import { contactStyle } from '@styles';
 import { appUtils } from '@utils';
 import { useStore } from '@store';
+import { t } from '@locales';
 import api from '@api';
 
 import noResultsImage from '@assets/images/no_results.png';
@@ -31,7 +32,7 @@ export default function ContactAddScreen() {
         title: (
             <View style={contactStyle.searchBar}>
                 <TextInput
-                    placeholder="Search"
+                    placeholder={t('search')}
                     icon="search"
                     loading={loading}
                     onChangeText={(text) => {
@@ -146,7 +147,7 @@ export default function ContactAddScreen() {
             ) : (
                 <View style={[contactStyle.placeholderContainer, { alignItems: 'center' }]}>
                     <Image source={noResultsImage} style={contactStyle.placeholderImage} />
-                    <Text style={contactStyle.placeholderText}>No results found</Text>
+                    <Text style={contactStyle.placeholderText}>{t('screens.contact.add.no_results')}</Text>
                 </View>
             )}
         </View>

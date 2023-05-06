@@ -8,6 +8,7 @@ import {
 } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import { Buffer } from 'buffer';
+import { t } from '@locales';
 
 export const appUtils = {
     // https://github.com/software-mansion/react-native-reanimated/issues/3355
@@ -82,17 +83,17 @@ export const appUtils = {
         return [
             {
                 icon: 'mail',
-                label: 'Email',
+                label: t('email'),
                 value: user?.email || '',
             },
             {
                 icon: 'people',
-                label: 'Friends',
+                label: t('contacts'),
                 value: contacts?.length || 0,
             },
             {
                 icon: 'chatbubbles',
-                label: 'Chats',
+                label: t('chats'),
                 value: chats?.length || 0,
             },
         ];

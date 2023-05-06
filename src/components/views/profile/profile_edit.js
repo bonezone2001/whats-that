@@ -15,6 +15,7 @@ import { useScreenHeader } from '@hooks';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
 import api from '@api';
+import { t } from '@locales';
 
 export default function ProfileEditScreen() {
     const navigation = useNavigation();
@@ -70,7 +71,7 @@ export default function ProfileEditScreen() {
     };
 
     useScreenHeader({
-        title: 'Edit Profile',
+        title: t('screens.profile.edit.title'),
         right: (
             <CheckLoad
                 onPress={submitChanges}
@@ -96,11 +97,11 @@ export default function ProfileEditScreen() {
                             size={150}
                         />
                     </Button>
-                    <Text style={profileStyle.avatarSubtext}>Edit Avatar</Text>
+                    <Text style={profileStyle.avatarSubtext}>{t('screens.profile.edit.change_avatar')}</Text>
                 </View>
                 <View style={{ marginTop: 40, alignItems: 'center' }}>
                     <TextInput
-                        label="First Name"
+                        label={t('first_name')}
                         value={firstName}
                         onChangeText={setFirstName}
                         style={profileStyle.formElement}
@@ -108,7 +109,7 @@ export default function ProfileEditScreen() {
                         block={90}
                     />
                     <TextInput
-                        label="Last Name"
+                        label={t('last_name')}
                         value={lastName}
                         onChangeText={setLastName}
                         style={profileStyle.formElement}
@@ -116,7 +117,7 @@ export default function ProfileEditScreen() {
                         block={90}
                     />
                     <TextInput
-                        label="Email"
+                        label={t('email')}
                         value={email}
                         onChangeText={setEmail}
                         style={profileStyle.formElement}
@@ -124,7 +125,7 @@ export default function ProfileEditScreen() {
                         block={90}
                     />
                     <TextInput
-                        label="New Password"
+                        label={t('new_password')}
                         value={password}
                         onChangeText={setPassword}
                         style={profileStyle.formElement}
@@ -133,7 +134,7 @@ export default function ProfileEditScreen() {
                         block={90}
                     />
                     <TextInput
-                        label="Confirm New Password"
+                        label={t('confirm_new_password')}
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                         style={profileStyle.formElement}

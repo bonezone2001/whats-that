@@ -1,34 +1,37 @@
 {
-    "expo": {
-        "name": "whats-that",
-        "slug": "whats-that",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./src/assets/images/icon.png",
-        "userInterfaceStyle": "dark",
-        "splash": {
-            "image": "./src/assets/images/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#171717"
-        },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "softwareKeyboardLayoutMode": "pan",
-            "adaptiveIcon": {
-                "foregroundImage": "./src/assets/images/adaptive-icon.png",
-                "backgroundColor": "#171717"
-            }
-        },
-        "web": {
-            "favicon": "./src/assets/images/favicon.png"
-        },
-        "extra": {
-            "API_BASE_URL": "http://192.168.0.85:3333/api/1.0.0"
-        }
-    }
+  "expo": {
+    "name": "whats-that",
+    "slug": "whats-that",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#171717"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#171717"
+      }
+    },
+    "web": {
+      "favicon": "./src/assets/images/favicon.png"
+    },
+    "extra": {
+      "API_BASE_URL": "http://192.168.0.85:3333/api/1.0.0"
+    },
+    "plugins": [
+      "expo-localization"
+    ]
+  }
 }

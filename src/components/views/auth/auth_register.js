@@ -8,6 +8,7 @@ import { entryStyle, globalStyle } from '@styles';
 import Button from '@components/shared/button';
 import { useAuthBackground } from '@hooks';
 import { entryUtils } from '@utils';
+import { t } from '@locales';
 import api from '@api';
 
 // Since mobile doesn't support SVG, we need two versions of the background image
@@ -57,7 +58,7 @@ export default function RegisterScreen() {
             await api.register(firstName, lastName, email, password);
             navigation.navigate('Login');
         } catch (error) {
-            const errorMsg = error?.response.data?.split('-').splice(1).join('-').trim() || 'Something went wrong';
+            const errorMsg = error?.response.data?.split('-').splice(1).join('-').trim() || t('unknown_error');
             setMajorError(errorMsg);
         }
         setLoading(false);
@@ -67,11 +68,11 @@ export default function RegisterScreen() {
         <ImageBackground source={bgImage} style={entryStyle.backgroundImage}>
             <View style={entryStyle.container}>
                 <Text style={entryStyle.title}>
-                    Register
+                    {t('register')}
                 </Text>
 
                 <TextInput
-                    label="First Name"
+                    label={t('first_name')}
                     value={firstName}
                     onChangeText={setFirstName}
                     forceValidation={triggerValidation}
@@ -79,7 +80,7 @@ export default function RegisterScreen() {
                     style={entryStyle.formElement}
                 />
                 <TextInput
-                    label="Last Name"
+                    label={t('last_name')}
                     value={lastName}
                     onChangeText={setLastName}
                     forceValidation={triggerValidation}
@@ -88,7 +89,7 @@ export default function RegisterScreen() {
                 />
                 <TextInput
                     contentType="email-address"
-                    label="Email"
+                    label={t('email')}
                     value={email}
                     onChangeText={setEmail}
                     forceValidation={triggerValidation}
@@ -96,7 +97,7 @@ export default function RegisterScreen() {
                     style={entryStyle.formElement}
                 />
                 <TextInput
-                    label="Password"
+                    label={t('password')}
                     value={password}
                     onChangeText={setPassword}
                     forceValidation={triggerValidation}
@@ -105,7 +106,7 @@ export default function RegisterScreen() {
                     secureTextEntry
                 />
                 <TextInput
-                    label="Confirm Password"
+                    label={t('confirm_password')}
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
                     forceValidation={triggerValidation}
@@ -118,7 +119,7 @@ export default function RegisterScreen() {
                     style={entryStyle.formElement}
                     loading={loading}
                 >
-                    Login
+                    {t('register')}
                 </Button>
 
                 {
@@ -132,7 +133,7 @@ export default function RegisterScreen() {
                     href="Login"
                     style={entryStyle.subtitle}
                 >
-                    Already have an account? Login
+                    {t('screens.auth.register.have_account')}
                 </Button>
             </View>
         </ImageBackground>
