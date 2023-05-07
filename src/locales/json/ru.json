@@ -1,32 +1,42 @@
 {
+    "current_screen": "Текущий экран",
+    "loading": "Загрузка...",
+    "confirm": "Подтвердить",
+    "menu": "Меню",
     "first_name": "Имя",
     "last_name": "Фамилия",
-    "email": "Email",
+    "email": "Электронная почта",
     "contacts": "Контакты",
     "error": "Ошибка",
     "password": "Пароль",
     "chats": "Чаты",
     "profile": "Профиль",
     "settings": "Настройки",
+    "search": "Поиск",
     "chat": "Чат",
     "login": "Войти",
     "logout": "Выйти",
-    "cancel": "Отмена",
+    "cancel": "Отменить",
     "register": "Зарегистрироваться",
-    "unknown_error": "Что-то пошло не так",
-    "confirm_password": "Подтвердите пароль",
+    "go_back": "Назад",
+    "go_back_hint": "Вернуться на начальный экран",
     "new_password": "Новый пароль",
+    "confirm_password": "Подтвердите пароль",
     "confirm_new_password": "Подтвердите новый пароль",
-    "search": "Поиск",
+    "unknown_error": "Что-то пошло не так",
     "components": {
         "avatar_selector": {
             "take_photo": "Сделать фото",
-            "choose_from_library": "Выбрать из галереи",
-            "flip": "Переключить"
+            "choose_from_library": "Выбрать из библиотеки",
+            "flip": "Перевернуть"
         },
         "contact_card": {
             "handleBlock_error": "Не удалось заблокировать контакт",
-            "handleAddOrRemove_error": "Ошибка при добавлении/удалении контакта"
+            "handleAddOrRemove_error": "Ошибка добавления/удаления контакта",
+            "block_contact": "Заблокировать контакт",
+            "unblock_contact": "Разблокировать контакт",
+            "add_contact": "Добавить контакт",
+            "remove_contact": "Удалить контакт"
         },
         "bottom_sheet": {
             "chat": {
@@ -40,21 +50,23 @@
     "screens": {
         "auth": {
             "login": {
-                "no_account": "Нет аккаунта? Зарегистрируйтесь"
+                "no_account": "Ещё нет аккаунта? Зарегистрироваться"
             },
             "register": {
-                "have_account": "Уже есть аккаунт? Войдите"
+                "have_account": "Уже есть аккаунт? Войти"
             }
         },
         "chat": {
             "create": {
                 "title": "Новый чат",
-                "handleCreateChat_error": "Ошибка при создании чата",
+                "handleCreateChat_error": "Ошибка создания чата",
                 "name_of_chat": "Название чата"
             },
             "individual": {
-                "message_placeholder": "Введите сообщение...",
-                "editing_message": "Редактирование сообщения"
+                "message_placeholder": "Напишите сообщение...",
+                "editing_message": "Редактирование сообщения",
+                "chat_options": "Опции чата",
+                "send_message": "Отправить сообщение"
             },
             "members": {
                 "title_add": "Добавить участников",
@@ -68,12 +80,14 @@
                 "handleModifyChat_error": "Не удалось изменить чат"
             },
             "view": {
-                "title": "Чаты"
+                "title": "Чаты",
+                "create_button": "Создать новый чат"
             }
         },
         "contact": {
             "add": {
-                "no_results": "Нет результатов"
+                "no_results": "Ничего не найдено",
+                "search_field": "Поиск в окне текста контактов"
             },
             "blocked": {
                 "title": "Заблокированные",
@@ -81,27 +95,30 @@
             },
             "view": {
                 "title": "Контакты",
-                "no_contacts": "Нет контактов"
+                "no_contacts": "Нет контактов",
+                "blocked_button": "Показать заблокированных контактов",
+                "add_button": "Поиск новых контактов"
             }
         },
         "profile": {
             "edit": {
-                "title": "Редактировать профиль",
+                "title": "Изменить профиль",
                 "change_avatar": "Изменить аватар"
             },
             "view": {
                 "title": "Профиль",
-                "edit_text": "Редактировать профиль"
+                "edit_text": "Изменить профиль",
+                "menu_hint": "Открыть меню настроек"
             }
         }
     },
     "utils": {
         "entry": {
             "name_too_short": "Имя слишком короткое",
-            "invalid_email": "Email недействителен",
-            "enter_password": "Введите пароль",
+            "invalid_email": "Неправильный адрес электронной почты",
+            "enter_password": "Пожалуйста, введите пароль",
             "password_too_short": "Пароль слишком короткий",
-            "password_weak": "Пароль слишком слабый",
+            "password_weak": "Пароль слишком простой",
             "confirm_password": "Подтвердите пароль",
             "passwords_dont_match": "Пароли не совпадают"
         }
@@ -111,10 +128,10 @@
             "error": "Не удалось загрузить данные из API"
         },
         "useChat": {
-            "fetchMessages_error": "Не удалось получить сообщения",
+            "fetchMessages_error": "Не удалось загрузить сообщения",
             "handleSendMessage_error": "Не удалось отправить сообщение",
             "handleSendOrEditMessage_error": "Не удалось отправить сообщение",
-            "handleEditMessage_error": "Не удалось отредактировать сообщение",
+            "handleEditMessage_error": "Не удалось изменить сообщение",
             "handleDeleteMessage_error": "Не удалось удалить сообщение"
         }
     }

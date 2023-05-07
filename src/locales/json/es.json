@@ -1,38 +1,48 @@
 {
+    "current_screen": "Pantalla Actual",
+    "loading": "Cargando...",
+    "confirm": "Confirmar",
+    "menu": "Menú",
     "first_name": "Nombre",
     "last_name": "Apellido",
-    "email": "Correo electrónico",
+    "email": "Correo Electrónico",
     "contacts": "Contactos",
     "error": "Error",
     "password": "Contraseña",
     "chats": "Chats",
     "profile": "Perfil",
-    "settings": "Configuración",
+    "settings": "Configuraciones",
+    "search": "Buscar",
     "chat": "Chat",
-    "login": "Iniciar sesión",
-    "logout": "Cerrar sesión",
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
     "cancel": "Cancelar",
     "register": "Registrarse",
+    "go_back": "Regresar",
+    "go_back_hint": "Regresa a la pantalla de inicio",
+    "new_password": "Nueva Contraseña",
+    "confirm_password": "Confirmar Contraseña",
+    "confirm_new_password": "Confirmar Nueva Contraseña",
     "unknown_error": "Algo salió mal",
-    "confirm_password": "Confirmar contraseña",
-    "new_password": "Nueva contraseña",
-    "confirm_new_password": "Confirmar nueva contraseña",
-    "search": "Buscar",
     "components": {
         "avatar_selector": {
-            "take_photo": "Tomar foto",
-            "choose_from_library": "Elegir de la biblioteca",
-            "flip": "Cambiar"
+            "take_photo": "Tomar Foto",
+            "choose_from_library": "Elegir de la Biblioteca",
+            "flip": "Voltear"
         },
         "contact_card": {
-            "handleBlock_error": "No se pudo bloquear el contacto",
-            "handleAddOrRemove_error": "Error al agregar/eliminar contacto"
+            "handleBlock_error": "Error al bloquear contacto",
+            "handleAddOrRemove_error": "Error al añadir/quitar contacto",
+            "block_contact": "Bloquear Contacto",
+            "unblock_contact": "Desbloquear Contacto",
+            "add_contact": "Añadir Contacto",
+            "remove_contact": "Quitar Contacto"
         },
         "bottom_sheet": {
             "chat": {
                 "modify_chat": "Modificar Chat",
-                "add_members": "Agregar miembros",
-                "kick_members": "Expulsar miembros",
+                "add_members": "Agregar Miembros",
+                "kick_members": "Expulsar Miembros",
                 "leave_chat_error": "No se pudo salir del chat"
             }
         }
@@ -43,37 +53,41 @@
                 "no_account": "¿No tienes una cuenta? Regístrate"
             },
             "register": {
-                "have_account": "¿Ya tienes una cuenta? Inicia sesión"
+                "have_account": "¿Ya tienes una cuenta? Inicia Sesión"
             }
         },
         "chat": {
             "create": {
                 "title": "Nuevo Chat",
-                "handleCreateChat_error": "Error al crear el chat",
-                "name_of_chat": "Nombre del chat"
+                "handleCreateChat_error": "Error al crear chat",
+                "name_of_chat": "Nombre del Chat"
             },
             "individual": {
-                "message_placeholder": "Escriba un mensaje...",
-                "editing_message": "Editando mensaje"
+                "message_placeholder": "Escribe un mensaje...",
+                "editing_message": "Editando Mensaje",
+                "chat_options": "Opciones de Chat",
+                "send_message": "Enviar Mensaje"
             },
             "members": {
-                "title_add": "Agregar miembros",
-                "title_kick": "Expulsar miembros",
-                "handleModifyMembers_error": "No se pudo modificar los miembros",
-                "fail_load_members": "No se pudieron cargar los miembros"
+                "title_add": "Agregar Miembros",
+                "title_kick": "Expulsar Miembros",
+                "handleModifyMembers_error": "No se pudieron modificar los miembros",
+                "fail_load_members": "Error al cargar miembros"
             },
             "modify": {
                 "title": "Modificar Chat",
-                "name_of_chat": "Nuevo nombre del chat",
-                "handleModifyChat_error": "No se pudo modificar el chat"
+                "name_of_chat": "Nuevo Nombre del Chat",
+                "handleModifyChat_error": "Error al modificar el chat"
             },
             "view": {
-                "title": "Chats"
+                "title": "Chats",
+                "create_button": "Crear Nuevo Chat"
             }
         },
         "contact": {
             "add": {
-                "no_results": "No se encontraron resultados"
+                "no_results": "No se encontraron resultados",
+                "search_field": "Campo de búsqueda de contactos"
             },
             "blocked": {
                 "title": "Bloqueados",
@@ -81,34 +95,37 @@
             },
             "view": {
                 "title": "Contactos",
-                "no_contacts": "No hay contactos"
+                "no_contacts": "No hay contactos",
+                "blocked_button": "Ver contactos bloqueados",
+                "add_button": "Buscar nuevos contactos"
             }
         },
         "profile": {
             "edit": {
-                "title": "Editar perfil",
-                "change_avatar": "Cambiar avatar"
+                "title": "Editar Perfil",
+                "change_avatar": "Cambiar Avatar"
             },
             "view": {
                 "title": "Perfil",
-                "edit_text": "Editar perfil"
+                "edit_text": "Editar Perfil",
+                "menu_hint": "Abrir menú de configuraciones"
             }
         }
     },
     "utils": {
         "entry": {
-            "name_too_short": "El nombre es demasiado corto",
-            "invalid_email": "El correo electrónico es inválido",
-            "enter_password": "Ingrese la contraseña",
-            "password_too_short": "La contraseña es demasiado corta",
-            "password_weak": "La contraseña es demasiado débil",
-            "confirm_password": "Confirme la contraseña",
+            "name_too_short": "El nombre es muy corto",
+            "invalid_email": "Correo electrónico inválido",
+            "enter_password": "Por favor ingresa una contraseña",
+            "password_too_short": "La contraseña es muy corta",
+            "password_weak": "La contraseña es muy débil",
+            "confirm_password": "Por favor confirma la contraseña",
             "passwords_dont_match": "Las contraseñas no coinciden"
         }
     },
     "hooks": {
         "useLoadApiData": {
-            "error": "No se pudo cargar los datos de la API"
+            "error": "No se pudo cargar los datos del API"
         },
         "useChat": {
             "fetchMessages_error": "No se pudieron obtener los mensajes",

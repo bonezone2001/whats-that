@@ -1,4 +1,8 @@
 {
+    "current_screen": "Schermata corrente",
+    "loading": "Caricamento...",
+    "confirm": "Conferma",
+    "menu": "Menu",
     "first_name": "Nome",
     "last_name": "Cognome",
     "email": "Email",
@@ -8,32 +12,38 @@
     "chats": "Chat",
     "profile": "Profilo",
     "settings": "Impostazioni",
+    "search": "Cerca",
     "chat": "Chat",
-    "login": "Accesso",
+    "login": "Accedi",
     "logout": "Esci",
     "cancel": "Annulla",
-    "register": "Registrazione",
+    "register": "Registrati",
+    "go_back": "Indietro",
+    "go_back_hint": "Ritorna alla schermata iniziale",
+    "new_password": "Nuova password",
+    "confirm_password": "Conferma password",
+    "confirm_new_password": "Conferma nuova password",
     "unknown_error": "Qualcosa è andato storto",
-    "confirm_password": "Conferma Password",
-    "new_password": "Nuova Password",
-    "confirm_new_password": "Conferma Nuova Password",
-    "search": "Cerca",
     "components": {
         "avatar_selector": {
-            "take_photo": "Scatta Foto",
-            "choose_from_library": "Scegli dalla Libreria",
-            "flip": "Invertire"
+            "take_photo": "Scatta foto",
+            "choose_from_library": "Scegli dalla libreria",
+            "flip": "Ruota"
         },
         "contact_card": {
             "handleBlock_error": "Impossibile bloccare il contatto",
-            "handleAddOrRemove_error": "Errore aggiunta/rimozione contatto"
+            "handleAddOrRemove_error": "Errore nell'aggiungere/rimuovere il contatto",
+            "block_contact": "Blocca contatto",
+            "unblock_contact": "Sblocca contatto",
+            "add_contact": "Aggiungi contatto",
+            "remove_contact": "Rimuovi contatto"
         },
         "bottom_sheet": {
             "chat": {
-                "modify_chat": "Modifica Chat",
-                "add_members": "Aggiungi Membri",
-                "kick_members": "Rimuovi Membri",
-                "leave_chat_error": "Impossibile lasciare la chat"
+                "modify_chat": "Modifica chat",
+                "add_members": "Aggiungi membri",
+                "kick_members": "Rimuovi membri",
+                "leave_chat_error": "Impossibile abbandonare la chat"
             }
         }
     },
@@ -48,32 +58,36 @@
         },
         "chat": {
             "create": {
-                "title": "Nuova Chat",
+                "title": "Nuova chat",
                 "handleCreateChat_error": "Errore nella creazione della chat",
-                "name_of_chat": "Nome della Chat"
+                "name_of_chat": "Nome della chat"
             },
             "individual": {
                 "message_placeholder": "Scrivi un messaggio...",
-                "editing_message": "Modifica Messaggio"
+                "editing_message": "Modifica messaggio",
+                "chat_options": "Opzioni chat",
+                "send_message": "Invia messaggio"
             },
             "members": {
-                "title_add": "Aggiungi Membri",
-                "title_kick": "Rimuovi Membri",
+                "title_add": "Aggiungi membri",
+                "title_kick": "Rimuovi membri",
                 "handleModifyMembers_error": "Impossibile modificare i membri",
-                "fail_load_members": "Impossibile caricare i membri"
+                "fail_load_members": "Caricamento dei membri non riuscito"
             },
             "modify": {
-                "title": "Modifica Chat",
-                "name_of_chat": "Nuovo Nome della Chat",
+                "title": "Modifica chat",
+                "name_of_chat": "Nuovo nome della chat",
                 "handleModifyChat_error": "Impossibile modificare la chat"
             },
             "view": {
-                "title": "Chat"
+                "title": "Chat",
+                "create_button": "Crea nuova chat"
             }
         },
         "contact": {
             "add": {
-                "no_results": "Nessun risultato trovato"
+                "no_results": "Nessun risultato trovato",
+                "search_field": "Ricerca contatti"
             },
             "blocked": {
                 "title": "Bloccati",
@@ -81,23 +95,26 @@
             },
             "view": {
                 "title": "Contatti",
-                "no_contacts": "Nessun contatto"
+                "no_contacts": "Nessun contatto",
+                "blocked_button": "Visualizza contatti bloccati",
+                "add_button": "Aggiungi nuovi contatti"
             }
         },
         "profile": {
             "edit": {
-                "title": "Modifica Profilo",
-                "change_avatar": "Cambia Avatar"
+                "title": "Modifica profilo",
+                "change_avatar": "Cambia avatar"
             },
             "view": {
                 "title": "Profilo",
-                "edit_text": "Modifica Profilo"
+                "edit_text": "Modifica profilo",
+                "menu_hint": "Apri menu impostazioni"
             }
         }
     },
     "utils": {
         "entry": {
-            "name_too_short": "Il nome è troppo corto",
+            "name_too_short": "Nome troppo corto",
             "invalid_email": "Email non valida",
             "enter_password": "Inserisci la password",
             "password_too_short": "La password è troppo corta",

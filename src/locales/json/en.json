@@ -1,11 +1,8 @@
 {
-    "go_back": "Go Back",
-    "go_back_hint": "Go back to the start screen",
     "current_screen": "Current Screen",
     "loading": "Loading...",
     "confirm": "Confirm",
     "menu": "Menu",
-
     "first_name": "First Name",
     "last_name": "Last Name",
     "email": "Email",
@@ -21,6 +18,8 @@
     "logout": "Logout",
     "cancel": "Cancel",
     "register": "Register",
+    "go_back": "Go Back",
+    "go_back_hint": "Go back to the start screen",
     "new_password": "New Password",
     "confirm_password": "Confirm Password",
     "confirm_new_password": "Confirm New Password",

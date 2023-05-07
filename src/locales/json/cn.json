@@ -1,87 +1,103 @@
 {
+    "current_screen": "当前屏幕",
+    "loading": "载入中...",
+    "confirm": "确认",
+    "menu": "菜单",
     "first_name": "名字",
     "last_name": "姓氏",
-    "email": "邮箱",
+    "email": "电子邮件",
     "contacts": "联系人",
     "error": "错误",
     "password": "密码",
     "chats": "聊天",
     "profile": "个人资料",
-    "settings": "设置",
-    "chat": "聊天",
+    "settings": "设定",
+    "search": "搜寻",
+    "chat": "聊天室",
     "login": "登录",
-    "logout": "注销",
+    "logout": "登出",
     "cancel": "取消",
     "register": "注册",
-    "unknown_error": "出现错误",
-    "confirm_password": "确认密码",
+    "go_back": "返回",
+    "go_back_hint": "返回起始画面",
     "new_password": "新密码",
+    "confirm_password": "确认密码",
     "confirm_new_password": "确认新密码",
-    "search": "搜索",
+    "unknown_error": "发生错误了",
     "components": {
         "avatar_selector": {
             "take_photo": "拍照",
-            "choose_from_library": "从相册选择",
+            "choose_from_library": "选择图库",
             "flip": "翻转"
         },
         "contact_card": {
-            "handleBlock_error": "无法屏蔽联系人",
-            "handleAddOrRemove_error": "添加/删除联系人出现错误"
+            "handleBlock_error": "联系人封锁失败",
+            "handleAddOrRemove_error": "加入或移除联系人失败",
+            "block_contact": "封锁联系人",
+            "unblock_contact": "解封联系人",
+            "add_contact": "加入联系人",
+            "remove_contact": "移除联系人"
         },
         "bottom_sheet": {
             "chat": {
-                "modify_chat": "修改聊天",
-                "add_members": "添加成员",
-                "kick_members": "踢出成员",
-                "leave_chat_error": "无法离开聊天"
+                "modify_chat": "修改聊天室",
+                "add_members": "加入成员",
+                "kick_members": "踢除成员",
+                "leave_chat_error": "离开聊天室失败"
             }
         }
     },
     "screens": {
         "auth": {
             "login": {
-                "no_account": "还没有账户？注册"
+                "no_account": "没有账户？注册"
             },
             "register": {
-                "have_account": "已经有账户了？登录"
+                "have_account": "已经有账户? 登录"
             }
         },
         "chat": {
             "create": {
-                "title": "新建聊天",
-                "handleCreateChat_error": "无法创建聊天",
-                "name_of_chat": "聊天名称"
+                "title": "新聊天室",
+                "handleCreateChat_error": "创建聊天室失败",
+                "name_of_chat": "聊天室名称"
             },
             "individual": {
-                "message_placeholder": "输入消息……",
-                "editing_message": "编辑消息"
+                "message_placeholder": "输入信息...",
+                "editing_message": "编辑信息",
+                "chat_options": "选项",
+                "send_message": "送出信息"
             },
             "members": {
-                "title_add": "添加成员",
-                "title_kick": "踢出成员",
+                "title_add": "加入成员",
+                "title_kick": "踢除成员",
                 "handleModifyMembers_error": "无法修改成员",
-                "fail_load_members": "加载成员失败"
+                "fail_load_members": "载入成员失败"
             },
             "modify": {
-                "title": "修改聊天",
-                "name_of_chat": "新的聊天名称",
-                "handleModifyChat_error": "无法修改聊天"
+                "title": "修改聊天室",
+                "name_of_chat": "修改聊天室名称",
+                "handleModifyChat_error": "更改聊天室失败"
             },
             "view": {
-                "title": "聊天"
+                "title": "聊天室",
+                "create_button": "新聊天室"
             }
         },
         "contact": {
             "add": {
-                "no_results": "没有找到结果"
+                "no_results": "搜寻无结果",
+                "search_field": "搜寻联系人"
             },
             "blocked": {
-                "title": "被屏蔽",
-                "no_blocked": "没有被屏蔽的联系人"
+                "title": "封锁",
+                "no_blocked": "未封锁任何联系人"
             },
             "view": {
                 "title": "联系人",
-                "no_contacts": "没有联系人"
+                "no_contacts": "无联系人",
+                "blocked_button": "封锁的联系人",
+                "add_button": "搜寻新联系人"
             }
         },
         "profile": {
@@ -91,31 +107,32 @@
             },
             "view": {
                 "title": "个人资料",
-                "edit_text": "编辑个人资料"
+                "edit_text": "编辑",
+                "menu_hint": "开启设定菜单"
             }
         }
     },
     "utils": {
         "entry": {
             "name_too_short": "名字太短",
-            "invalid_email": "邮箱无效",
+            "invalid_email": "邮件无效",
             "enter_password": "请输入密码",
-            "password_too_short": "密码太短",
-            "password_weak": "密码太弱",
+            "password_too_short": "密码太简单",
+            "password_weak": "密码太简单",
             "confirm_password": "请确认密码",
-            "passwords_dont_match": "两次输入的密码不匹配"
+            "passwords_dont_match": "密码不一样"
         }
     },
     "hooks": {
         "useLoadApiData": {
-            "error": "无法从 API 加载数据"
+            "error": "无法从API载入数据"
         },
         "useChat": {
-            "fetchMessages_error": "无法获取消息",
-            "handleSendMessage_error": "无法发送消息",
-            "handleSendOrEditMessage_error": "无法发送消息",
-            "handleEditMessage_error": "无法编辑消息",
-            "handleDeleteMessage_error": "无法删除消息"
+            "fetchMessages_error": "无法获取信息",
+            "handleSendMessage_error": "无法发送信息",
+            "handleSendOrEditMessage_error": "无法发送信息",
+            "handleEditMessage_error": "无法编辑信息",
+            "handleDeleteMessage_error": "无法删除信息"
         }
     }
 }
