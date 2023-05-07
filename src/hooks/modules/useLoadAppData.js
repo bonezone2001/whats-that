@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useStore } from '@store';
 import { t } from '@locales';
 
-export const useLoadApiData = () => {
+export const useLoadAppData = () => {
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const store = useStore();
 
@@ -18,6 +18,7 @@ export const useLoadApiData = () => {
                     await entryUtils.loadUserData();
                     apiUtils.updateChats();
                     apiUtils.updateContactsAndBlocked();
+                    entryUtils.loadDraftsFromStorage();
                 }
             } catch (error) {
                 Toast.show({

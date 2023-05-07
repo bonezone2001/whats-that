@@ -8,7 +8,10 @@ import {
     MenuTrigger,
 } from 'react-native-popup-menu';
 import {
-    View, Text, StyleSheet, TouchableOpacity,
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -20,6 +23,8 @@ export default function ChatBubble({
     isMe,
     isSameAuthorAsNext,
     shouldShowTimestamp,
+    onSendPress, // Used for drafts
+    onSchedulePress, // Used for drafts
     onDeletePress,
     onEditPress,
     style,
@@ -30,12 +35,17 @@ export default function ChatBubble({
     // Switch between elements and styles depending on if message is current user or not
     const onPress = isMe ? null : () => setShowSmallTimestamp(!showSmallTimestamp);
     const timeColor = isMe ? colors.meTimestamp : colors.otherTimestamp;
-    const bubbleStyle = isMe ? styles.meBubble : styles.otherBubble;
-    const textColor = isMe ? colors.meText : colors.otherText;
     const showAuthorName = !isSameAuthorAsNext && !isMe;
     const alignment = isMe ? 'flex-end' : 'flex-start';
     const Container = isMe ? MenuTrigger : TouchableOpacity;
     const Wrapper = isMe ? Menu : View;
+
+    let bubbleStyle = isMe ? styles.meBubble : styles.otherBubble;
+    let textColor = isMe ? colors.meText : colors.otherText;
+    if (item.isDraft) {
+        textColor = colors.draftText;
+        bubbleStyle = styles.draftBubble;
+    }
 
     return (
         <>
@@ -43,7 +53,7 @@ export default function ChatBubble({
                 {showAuthorName && (
                     <Text
                         style={[styles.authorName,
-                            { color: chatUtils.strToColor(item.author.email) },
+                            { color: chatUtils.strToColor(item?.author?.email) },
                             { alignSelf: alignment },
                         ]}
                     >
@@ -61,13 +71,13 @@ export default function ChatBubble({
                         {item.message}
                     </Text>
                     {
-                        showSmallTimestamp ? (
+                        (showSmallTimestamp && item.timestamp > 0) ? (
                             <Text style={[styles.localTimestamp, {
                                 color: timeColor,
                                 alignSelf: alignment,
                             }]}
                             >
-                                {chatUtils.formatTimestamp(item.timestamp, false, true)}
+                                {chatUtils.formatTimestamp(item.timestamp, false, !item.isDraft)}
                             </Text>
                         ) : null
                     }
@@ -75,6 +85,12 @@ export default function ChatBubble({
                 {
                     isMe && (
                         <MenuOptions customStyles={menuStyles}>
+                            {item.isDraft && (
+                                <>
+                                    <MenuOption onSelect={() => onSendPress(item)} text="Send" />
+                                    <MenuOption onSelect={() => onSchedulePress(item)} text="Schedule" />
+                                </>
+                            )}
                             <MenuOption onSelect={() => onEditPress(item)} text="Edit" />
                             <MenuOption onSelect={() => onDeletePress(item)} text="Delete" />
                         </MenuOptions>
@@ -119,6 +135,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.otherBubble,
         borderBottomLeftRadius: 0,
     },
+    draftBubble: {
+        backgroundColor: colors.draftBubble,
+        borderBottomRightRadius: 0,
+    },
     chatText: {
         fontSize: 16,
         lineHeight: 20,
@@ -143,19 +163,23 @@ const styles = StyleSheet.create({
 
 ChatBubble.propTypes = {
     item: PropTypes.object.isRequired,
-    isMe: PropTypes.bool.isRequired,
-    isSameAuthorAsNext: PropTypes.bool.isRequired,
-    shouldShowTimestamp: PropTypes.bool.isRequired,
+    isMe: PropTypes.bool,
+    isSameAuthorAsNext: PropTypes.bool,
+    shouldShowTimestamp: PropTypes.bool,
     onDeletePress: PropTypes.func,
     onEditPress: PropTypes.func,
+    onSendPress: PropTypes.func,
+    onSchedulePress: PropTypes.func,
     style: PropTypes.object,
 };
 
 ChatBubble.defaultProps = {
     style: {},
-};
-
-ChatBubble.defaultProps = {
+    isMe: false,
+    isSameAuthorAsNext: false,
+    shouldShowTimestamp: false,
     onDeletePress: () => {},
     onEditPress: () => {},
+    onSendPress: () => {},
+    onSchedulePress: () => {},
 };

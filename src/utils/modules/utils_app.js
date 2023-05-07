@@ -111,4 +111,9 @@ export const appUtils = {
     multilineTrim(str) {
         return str.split('\n').map((line) => line.trim()).join('\n');
     },
+
+    clone(obj) {
+        if (!obj) return null;
+        return JSON.parse(JSON.stringify(obj));
+    },
 };

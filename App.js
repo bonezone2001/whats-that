@@ -1,11 +1,15 @@
+import {
+    useLoadFonts,
+    useLoadAppData,
+    useLoadLocale,
+    useDraftScheduler,
+} from '@hooks';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthorizedTabs from '@navigator/bottom/bottom_authorized';
 import { NavigationContainer } from '@react-navigation/native';
-import { useLoadLocale } from '@hooks/modules/useLoadLocale';
 import BottomSheet from '@components/shared/bottom_sheet';
 import { MenuProvider } from 'react-native-popup-menu';
-import { useLoadFonts, useLoadApiData } from '@hooks';
 import AuthStack from '@navigator/stack/stack_auth';
 import * as SplashScreen from 'expo-splash-screen';
 import { globalStyle, toastConfig } from '@styles';
@@ -21,13 +25,16 @@ appUtils.fixReanimated();
 
 export default function App() {
     const { isFontLoaded } = useLoadFonts();
-    const { isDataLoaded } = useLoadApiData();
+    const { isDataLoaded } = useLoadAppData();
     const { isLocaleLoaded } = useLoadLocale();
+    const { startScheduler } = useDraftScheduler();
     const store = useStore();
 
     // Display splash screen until app is ready
     const onLayoutRootView = useCallback(
-        async () => isFontLoaded && isDataLoaded && isLocaleLoaded && SplashScreen.hideAsync(),
+        async () => isFontLoaded && isDataLoaded && isLocaleLoaded
+            && SplashScreen.hideAsync()
+            && startScheduler(),
         [isFontLoaded, isDataLoaded, isLocaleLoaded],
     );
     if (!isDataLoaded || !isFontLoaded || !isLocaleLoaded) return null;

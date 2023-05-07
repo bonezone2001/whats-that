@@ -1,10 +1,13 @@
 // Utility functions for the api wrapper.
 // Mainly used to automatically update the store after an api call.
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useStore } from '@store';
+
 export const chatUtils = {
     isSameAuthorAsNext: (index, chatMessages) => {
         if (index >= chatMessages.length - 1) return false;
-        return chatMessages[index].author.user_id === chatMessages[index + 1].author.user_id;
+        return chatMessages[index]?.author?.user_id === chatMessages[index + 1]?.author?.user_id;
     },
 
     areSameDay(date1, date2) {
@@ -63,5 +66,48 @@ export const chatUtils = {
 
         const hexColor = `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
         return hexColor;
+    },
+
+    saveDraftToStorage: async (chatId, draft) => {
+        const store = useStore.getState();
+        const draftDict = store.drafts;
+
+        if (!draftDict[chatId]) draftDict[chatId] = [];
+        draftDict[chatId].push(draft);
+
+        store.setDrafts(draftDict);
+        await AsyncStorage.setItem('drafts', JSON.stringify(draftDict));
+    },
+
+    updateDraftInStorage: async (chatId, created, draft) => {
+        const store = useStore.getState();
+        const draftDict = store.drafts;
+
+        if (!draftDict[chatId]) return;
+        draftDict[chatId] = draftDict[chatId].map((d) => {
+            if (d.created === created) return draft;
+            return d;
+        });
+
+        store.setDrafts(draftDict);
+        await AsyncStorage.setItem('drafts', JSON.stringify(draftDict));
+    },
+
+    removeDraftFromStorage: async (chatId, created) => {
+        const store = useStore.getState();
+        const draftDict = store.drafts;
+
+        if (!draftDict[chatId]) return;
+        draftDict[chatId] = draftDict[chatId].filter((draft) => draft.created !== created);
+        if (draftDict[chatId].length === 0) delete draftDict[chatId];
+
+        store.setDrafts(draftDict);
+        await AsyncStorage.setItem('drafts', JSON.stringify(draftDict));
+    },
+
+    clearDraftStorage: async () => {
+        const store = useStore.getState();
+        store.setDrafts({});
+        await AsyncStorage.removeItem('drafts');
     },
 };

@@ -18,6 +18,7 @@
     "logout": "Logout",
     "cancel": "Cancel",
     "register": "Register",
+    "draft_sent": "Draft sent",
     "go_back": "Go Back",
     "go_back_hint": "Go back to the start screen",
     "new_password": "New Password",
@@ -43,7 +44,8 @@
                 "modify_chat": "Modify Chat",
                 "add_members": "Add Members",
                 "kick_members": "Kick Members",
-                "leave_chat_error": "Could not leave chat"
+                "leave_chat_error": "Could not leave chat",
+                "leave_chat": "Leave Chat"
             }
         }
     },

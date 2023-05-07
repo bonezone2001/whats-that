@@ -95,7 +95,7 @@ export function sheet({ route }) {
                     }
                 }}
             >
-                Leave Chat
+                {t('components.bottom_sheet.chat.leave_chat')}
             </Button>
         </>
     );

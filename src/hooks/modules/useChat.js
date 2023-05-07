@@ -1,6 +1,7 @@
 import Toast from 'react-native-toast-message';
-import { appUtils } from '@utils';
-import { useState } from 'react';
+import { appUtils, chatUtils } from '@utils';
+import { useEffect, useState } from 'react';
+import { useStore } from '@store';
 import { t } from '@locales';
 import api from '@api';
 
@@ -9,10 +10,14 @@ export const useChat = ({
     ...props
 }) => {
     const [editMessageContent, setEditMessageContent] = useState('');
+    const [postDateTime, setPostDateTime] = useState(new Date());
+    const [draftToSchedule, setDraftToSchedule] = useState(null);
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const [chatLoading, setChatLoading] = useState(false);
     const [chatMessages, setChatMessages] = useState([]);
     const [editMessage, setEditMessage] = useState(null);
     const [message, setMessage] = useState('');
+    const store = useStore();
 
     // Deconstructed here so they can be reasigned
     let {
@@ -20,6 +25,9 @@ export const useChat = ({
         onMessageEdit = () => {},
         onMessageDelete = () => {},
     } = props;
+
+    // Initialize chat messages
+    useEffect(() => { fetchMessages(); }, []);
 
     const beginChatRefresher = (ms) => {
         const interval = setInterval(() => fetchMessages(true), ms);
@@ -29,10 +37,22 @@ export const useChat = ({
     const fetchMessages = async (silent = false) => {
         try {
             if (!silent) setChatLoading(true);
+
+            // Clone drafts so they can be reversed without affecting store
+            // Add isDraft property to distinguish drafts from actual messages
+            const drafts = appUtils.clone(store.drafts[chat.chat_id])
+                ?.reverse()
+                ?.map((draft) => ({ ...draft, isDraft: true }))
+                || [];
+
+            // Merge drafts and actual messages
             const { messages } = (await api.getChatDetails(chat.chat_id)).data;
-            if (JSON.stringify(messages) !== JSON.stringify(chatMessages)) {
-                const wasDelete = chatMessages.length > messages.length;
-                setChatMessages(messages);
+            const allMessages = [...drafts, ...messages];
+
+            // Only update when there is a difference
+            if (JSON.stringify(allMessages) !== JSON.stringify(chatMessages)) {
+                const wasDelete = chatMessages.length > allMessages.length;
+                setChatMessages(allMessages);
                 if (!wasDelete) onNewMessages();
             }
         } catch (error) {
@@ -61,16 +81,26 @@ export const useChat = ({
         }
     };
 
-    const handleSendOrEditMessage = async () => {
+    const handleSendOrEditMessage = async (draft) => {
         try {
-            const trimmedMsg = appUtils.multilineTrim(editMessageContent || message);
+            const trimmedMsg = appUtils.multilineTrim(
+                editMessageContent || message || draft?.message,
+            );
             if (trimmedMsg === '') return;
-            if (editMessage) {
+
+            if (draft || editMessage?.isDraft) {
+                await chatUtils.removeDraftFromStorage(
+                    chat.chat_id,
+                    editMessage?.created || draft?.created,
+                );
+                await api.sendMessage(chat.chat_id, trimmedMsg);
+            } else if (editMessage) {
                 await api.editMessage(chat.chat_id, editMessage.message_id, trimmedMsg);
-                onMessageEdit(editMessage.message_id);
+                onMessageEdit(editMessage);
             } else {
                 await api.sendMessage(chat.chat_id, trimmedMsg);
             }
+
             await fetchMessages();
         } catch (error) {
             Toast.show({
@@ -83,12 +113,12 @@ export const useChat = ({
         }
     };
 
-    const handleEditMessage = async (messageId) => {
+    const handleEditMessage = async (msg) => {
         try {
             const trimmedMsg = appUtils.multilineTrim(message);
             if (trimmedMsg === '') return;
-            await api.editMessage(chat.chat_id, messageId, trimmedMsg);
-            onMessageEdit(messageId);
+            await api.editMessage(chat.chat_id, msg.message_id, trimmedMsg);
+            onMessageEdit(msg);
             await fetchMessages();
         } catch (error) {
             Toast.show({
@@ -99,16 +129,67 @@ export const useChat = ({
         }
     };
 
-    const handleDeleteMessage = async (messageId) => {
+    const handleDeleteMessage = async (msg) => {
         try {
-            await api.deleteMessage(chat.chat_id, messageId);
-            onMessageDelete(messageId);
+            if (msg.isDraft) {
+                await chatUtils.removeDraftFromStorage(chat.chat_id, msg.created);
+                await fetchMessages();
+                return;
+            }
+            await api.deleteMessage(chat.chat_id, msg.message_id);
+            onMessageDelete(msg);
             await fetchMessages();
         } catch (error) {
             Toast.show({
                 type: 'error',
                 text1: t('error'),
                 text2: t('hooks.useChat.handleDeleteMessage_error'),
+            });
+        }
+    };
+
+    const handleSaveDraft = async () => {
+        try {
+            const trimmedMsg = appUtils.multilineTrim(editMessageContent || message);
+            if (trimmedMsg === '') return;
+            if (editMessage) {
+                await chatUtils.updateDraftInStorage(chat.chat_id, editMessage.created, {
+                    ...editMessage, // will add isDraft property but it's ok
+                    message: trimmedMsg,
+                });
+            } else {
+                await chatUtils.saveDraftToStorage(chat.chat_id, {
+                    message: trimmedMsg,
+                    timestamp: -1,
+                    created: Date.now(),
+                });
+            }
+            await fetchMessages();
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: t('error'),
+                text2: t('hooks.useChat.handleSaveDraft_error'),
+            });
+        } finally {
+            clearMessageFields();
+        }
+    };
+
+    const handleScheduleDraft = async () => {
+        try {
+            // Update draft in storage with new timestamp
+            if (!draftToSchedule) return;
+            await chatUtils.updateDraftInStorage(chat.chat_id, draftToSchedule?.created, {
+                ...draftToSchedule,
+                timestamp: postDateTime.valueOf(),
+            });
+            await fetchMessages();
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: t('error'),
+                text2: t('hooks.useChat.handleScheduleDraft_error'),
             });
         }
     };
@@ -139,6 +220,8 @@ export const useChat = ({
         handleSendOrEditMessage,
         handleEditMessage,
         handleDeleteMessage,
+        handleSaveDraft,
+        handleScheduleDraft,
         fetchMessages,
         setOnNewMessages,
         setOnMessageEdit,
@@ -150,5 +233,11 @@ export const useChat = ({
         setEditMessageContent,
         message,
         setMessage,
+        showDatePicker,
+        setShowDatePicker,
+        postDateTime,
+        setPostDateTime,
+        draftToSchedule,
+        setDraftToSchedule,
     };
 };

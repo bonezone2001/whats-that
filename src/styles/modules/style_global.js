@@ -31,8 +31,10 @@ export const colors = {
 
     meBubble: '#C8A48C',
     otherBubble: '#372D2B',
+    draftBubble: '#AAA',
     meText: '#000',
     otherText: '#FFF',
+    draftText: '#FFF',
     meTimestamp: '#101010',
     otherTimestamp: '#EFEFEF',
     holdMenuBackground: '#372D2B',

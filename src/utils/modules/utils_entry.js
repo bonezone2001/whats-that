@@ -6,6 +6,7 @@ import emailValidator from 'email-validator';
 import { useStore } from '@store';
 import { t } from '@locales';
 import api from '@api';
+import { chatUtils } from './utils_chat';
 
 export const entryUtils = {
     // Change bgImage based on the platform and dimensions
@@ -121,6 +122,7 @@ export const entryUtils = {
         const store = useStore.getState();
         try {
             await api.logout();
+            chatUtils.clearDraftStorage();
         } catch (error) {
             console.log(error);
         } finally {
@@ -129,5 +131,12 @@ export const entryUtils = {
             store.setUserId(null);
             store.setToken(null);
         }
+    },
+
+    loadDraftsFromStorage() {
+        const store = useStore.getState();
+        AsyncStorage.getItem('drafts').then((drafts) => {
+            if (drafts) store.setDrafts(JSON.parse(drafts));
+        });
     },
 };
