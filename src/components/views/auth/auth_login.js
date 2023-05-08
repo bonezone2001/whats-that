@@ -89,7 +89,6 @@ export default function LoginScreen() {
                     style={entryStyle.formElement}
                     loading={loading}
                 >
-                    {/* Login */}
                     {t('login')}
                 </Button>
 

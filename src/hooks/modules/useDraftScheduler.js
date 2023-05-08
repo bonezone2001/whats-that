@@ -17,8 +17,10 @@ export const useDraftScheduler = () => {
     useEffect(() => {
         if (!isStarted) return () => {};
         const interval = setInterval(async () => {
-            const drafts = store?.drafts || {};
+            if (!store.token) return;
+
             // Find drafts that are ready
+            const drafts = store?.drafts || {};
             const draftsToSend = Object.entries(drafts)
                 .map(([chatId, chatDrafts]) => chatDrafts
                     .filter((draft) => (draft.timestamp > 0 && draft.timestamp <= Date.now()))
@@ -27,15 +29,17 @@ export const useDraftScheduler = () => {
 
             // Send scheduled drafts
             draftsToSend.forEach((entry) => {
-                api.sendMessage(entry.chatId, entry.draft.message);
+                if (store.chats.find((chat) => chat.chat_id === entry.chatId)) {
+                    api.sendMessage(entry.chatId, entry.draft.message);
+                    Toast.show({
+                        type: 'success',
+                        text1: t('draft_sent'),
+                        text2: entry.draft.message,
+                    });
+                }
                 chatUtils.removeDraftFromStorage(entry.chatId, entry.draft.created);
-                Toast.show({
-                    type: 'success',
-                    text1: t('draft_sent'),
-                    text2: entry.draft.message,
-                });
             });
-        }, 1_000);
+        }, 30_000);
         return () => clearInterval(interval);
     }, [isStarted, store.drafts]);
 

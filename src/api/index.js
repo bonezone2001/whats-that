@@ -5,7 +5,7 @@
 // Since most of the api is stateless (we don't store any data in the api itself)
 // we don't need react hooks, just use an object and import the store for the single state (token)
 
-// Also I fully realize I can compress this file by making a lot of the functions one-liners
+// I can compress this file by making a lot of the functions one-liners
 // but I think it's more readable this way
 
 import { appUtils } from '@utils/modules/utils_app';
