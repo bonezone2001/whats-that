@@ -1,5 +1,4 @@
-// Utility functions for the api wrapper.
-// Mainly used to automatically update the store after an api call.
+// Utility functions for displaying and formatting chat messages
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useStore } from '@store';

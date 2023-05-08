@@ -1,4 +1,4 @@
-// Styles for the contact related elements.
+// Styles for the chat related elements.
 
 import { StyleSheet } from 'react-native';
 

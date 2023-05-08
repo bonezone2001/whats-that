@@ -1,3 +1,6 @@
+// Hook for controlling chat messages
+// Primarily used to neaten and extend upon the chat view
+
 import Toast from 'react-native-toast-message';
 import { appUtils, chatUtils } from '@utils';
 import { useEffect, useState } from 'react';
@@ -7,7 +10,9 @@ import api from '@api';
 
 export const useChat = ({
     chat,
-    ...props
+    onNewMessages = () => {},
+    onMessageEdit = () => {},
+    onMessageDelete = () => {},
 }) => {
     const [editMessageContent, setEditMessageContent] = useState('');
     const [postDateTime, setPostDateTime] = useState(new Date());
@@ -19,15 +24,10 @@ export const useChat = ({
     const [message, setMessage] = useState('');
     const store = useStore();
 
-    // Deconstructed here so they can be reasigned
-    let {
-        onNewMessages = () => {},
-        onMessageEdit = () => {},
-        onMessageDelete = () => {},
-    } = props;
-
     // Initialize chat messages
-    useEffect(() => { fetchMessages(); }, []);
+    useEffect(() => {
+        fetchMessages();
+    }, []);
 
     const beginChatRefresher = (ms) => {
         const interval = setInterval(() => fetchMessages(true), ms);
@@ -83,22 +83,25 @@ export const useChat = ({
 
     const handleSendOrEditMessage = async (draft) => {
         try {
+            const isDraft = draft || editMessage?.isDraft;
             const trimmedMsg = appUtils.multilineTrim(
-                editMessageContent || message || draft?.message,
+                editMessageContent
+                || message
+                || draft?.message,
             );
             if (trimmedMsg === '') return;
-
-            if (draft || editMessage?.isDraft) {
-                await chatUtils.removeDraftFromStorage(
-                    chat.chat_id,
-                    editMessage?.created || draft?.created,
-                );
-                await api.sendMessage(chat.chat_id, trimmedMsg);
-            } else if (editMessage) {
+            
+            if (editMessage && !isDraft) {
                 await api.editMessage(chat.chat_id, editMessage.message_id, trimmedMsg);
                 onMessageEdit(editMessage);
             } else {
                 await api.sendMessage(chat.chat_id, trimmedMsg);
+                if (isDraft) {
+                    await chatUtils.removeDraftFromStorage(
+                        chat.chat_id,
+                        editMessage?.created || draft?.created,
+                    );
+                }
             }
 
             await fetchMessages();
@@ -158,6 +161,7 @@ export const useChat = ({
                     message: trimmedMsg,
                 });
             } else {
+                // -1 timestamp means it's not scheduled
                 await chatUtils.saveDraftToStorage(chat.chat_id, {
                     message: trimmedMsg,
                     timestamp: -1,

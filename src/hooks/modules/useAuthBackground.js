@@ -1,5 +1,6 @@
-// Hook to load data from API and put it into store
-// Used primarily in App.js to load data before rendering the app
+// Change background image on mobile and web
+// Make sure the background isn't occluding entry fields
+
 import { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { entryUtils } from '@utils';

@@ -1,5 +1,6 @@
 // View profile screen.
 // Show user their details and allow navigation to edit profile.
+// A lot of this code could be moved into a hook.
 
 import AvatarSelector from '@components/shared/avatar_selector';
 import { useNavigation } from '@react-navigation/native';
@@ -14,8 +15,8 @@ import React, { useState } from 'react';
 import { useScreenHeader } from '@hooks';
 import { entryUtils } from '@utils';
 import { useStore } from '@store';
-import api from '@api';
 import { t } from '@locales';
+import api from '@api';
 
 export default function ProfileEditScreen() {
     const navigation = useNavigation();

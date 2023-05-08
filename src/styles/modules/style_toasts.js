@@ -1,7 +1,9 @@
+// Theme and styles related to toast messages.
+
 import { BaseToast, ErrorToast } from 'react-native-toast-message';
-import React from 'react';
 import { Text, View } from 'react-native';
 import { colors } from './style_global';
+import React from 'react';
 
 export const toastStyles = {
     info: {

@@ -1,5 +1,6 @@
-// Hook to load data from API and put it into store
-// Used primarily in App.js to load data before rendering the app
+// Hook to load all locales used within the app
+// This is primarily used to prevent the app from loading without the locales
+// Since loading is asynchronous
 
 import { useEffect, useState } from 'react';
 import { getLocale } from '@locales';

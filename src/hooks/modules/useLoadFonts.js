@@ -1,4 +1,4 @@
-// Load fonts used within the app
+// Hook to load fonts used within the app
 
 import { useFonts } from 'expo-font';
 

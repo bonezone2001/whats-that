@@ -1,4 +1,5 @@
-// Displays an image in the typical styles associated with an avatar.
+// Modal for selecting avatar or taking a photo for avatar
+// Ability to switch between front and back camera and crop the photo on mobile
 
 import {
     Dimensions,
