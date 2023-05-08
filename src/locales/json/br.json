@@ -5,34 +5,35 @@
     "menu": "Menu",
     "first_name": "Nome",
     "last_name": "Sobrenome",
-    "email": "Email",
+    "email": "E-mail",
     "contacts": "Contatos",
     "error": "Erro",
     "password": "Senha",
-    "chats": "Chats",
+    "chats": "Conversas",
     "profile": "Perfil",
     "settings": "Configurações",
     "search": "Busca",
-    "chat": "Chat",
+    "chat": "Conversa",
     "login": "Entrar",
     "logout": "Sair",
     "cancel": "Cancelar",
     "register": "Registrar",
+    "draft_sent": "Rascunho enviado",
     "go_back": "Voltar",
-    "go_back_hint": "Voltar para a tela inicial",
-    "new_password": "Nova Senha",
-    "confirm_password": "Confirmar Senha",
-    "confirm_new_password": "Confirmar Nova Senha",
+    "go_back_hint": "Voltar para a tela de início",
+    "new_password": "Nova senha",
+    "confirm_password": "Confirmar senha",
+    "confirm_new_password": "Confirmar nova senha",
     "unknown_error": "Algo deu errado",
     "components": {
         "avatar_selector": {
             "take_photo": "Tirar foto",
             "choose_from_library": "Escolher da biblioteca",
-            "flip": "Inverter"
+            "flip": "Virar"
         },
         "contact_card": {
             "handleBlock_error": "Falha ao bloquear contato",
-            "handleAddOrRemove_error": "Erro ao adicionar/ remvoer contato",
+            "handleAddOrRemove_error": "Erro ao adicionar/remover contato",
             "block_contact": "Bloquear contato",
             "unblock_contact": "Desbloquear contato",
             "add_contact": "Adicionar contato",
@@ -40,54 +41,55 @@
         },
         "bottom_sheet": {
             "chat": {
-                "modify_chat": "Modificar Chat",
+                "modify_chat": "Modificar conversa",
                 "add_members": "Adicionar membros",
                 "kick_members": "Expulsar membros",
-                "leave_chat_error": "Não foi possível sair do chat"
+                "leave_chat_error": "Não foi possível sair da conversa",
+                "leave_chat": "Sair da conversa"
             }
         }
     },
     "screens": {
         "auth": {
             "login": {
-                "no_account": "Não tem uma conta? Registre-se"
+                "no_account": "Não tem uma conta? Registrar"
             },
             "register": {
-                "have_account": "Já tem uma conta? Entre"
+                "have_account": "Já tem uma conta? Entrar"
             }
         },
         "chat": {
             "create": {
-                "title": "Chat novo",
-                "handleCreateChat_error": "Não foi possível criar chat",
-                "name_of_chat": "Nome do chat"
+                "title": "Nova conversa",
+                "handleCreateChat_error": "Erro ao criar conversa",
+                "name_of_chat": "Nome da Conversa"
             },
             "individual": {
                 "message_placeholder": "Digite uma mensagem...",
                 "editing_message": "Editando mensagem",
-                "chat_options": "Opções de chat",
+                "chat_options": "Opções da conversa",
                 "send_message": "Enviar mensagem"
             },
             "members": {
                 "title_add": "Adicionar membros",
-                "title_kick": "Remover membros",
-                "handleModifyMembers_error": "Falha ao modificar membros",
+                "title_kick": "Expulsar membros",
+                "handleModifyMembers_error": "Não foi possível modificar membros",
                 "fail_load_members": "Falha ao carregar membros"
             },
             "modify": {
-                "title": "Modificar Chat",
-                "name_of_chat": "Novo nome do chat",
-                "handleModifyChat_error": "Falha ao modificar chat"
+                "title": "Modificar conversa",
+                "name_of_chat": "Novo nome da conversa",
+                "handleModifyChat_error": "Falha ao modificar conversa"
             },
             "view": {
-                "title": "Chats",
-                "create_button": "Criar novo chat"
+                "title": "Conversas",
+                "create_button": "Nova conversa"
             }
         },
         "contact": {
             "add": {
                 "no_results": "Nenhum resultado encontrado",
-                "search_field": "Campo de busca de contatos"
+                "search_field": "Digite aqui para buscar contatos"
             },
             "blocked": {
                 "title": "Bloqueados",
@@ -103,7 +105,7 @@
         "profile": {
             "edit": {
                 "title": "Editar perfil",
-                "change_avatar": "Alterar avatar"
+                "change_avatar": "Mudar avatar"
             },
             "view": {
                 "title": "Perfil",
@@ -115,11 +117,11 @@
     "utils": {
         "entry": {
             "name_too_short": "Nome é muito curto",
-            "invalid_email": "Email inválido",
-            "enter_password": "Por favor, insira a senha",
+            "invalid_email": "E-mail inválido",
+            "enter_password": "Por favor, digite sua senha",
             "password_too_short": "Senha muito curta",
-            "password_weak": "Senha muito fraca",
-            "confirm_password": "Por favor, confirme a senha",
+            "password_weak": "Senha fraca",
+            "confirm_password": "Por favor, confirme sua senha",
             "passwords_dont_match": "Senhas não coincidem"
         }
     },
@@ -132,7 +134,7 @@
             "handleSendMessage_error": "Não foi possível enviar mensagem",
             "handleSendOrEditMessage_error": "Não foi possível enviar mensagem",
             "handleEditMessage_error": "Não foi possível editar mensagem",
-            "handleDeleteMessage_error": "Não foi possível deletar mensagem"
+            "handleDeleteMessage_error": "Não foi possível excluir mensagem"
         }
     }
 }

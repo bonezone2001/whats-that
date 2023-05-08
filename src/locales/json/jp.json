@@ -1,15 +1,15 @@
 {
-    "current_screen": "現在のスクリーン",
-    "loading": "読み込み中...",
+    "current_screen": "現在の画面",
+    "loading": "読み込んでいます...",
     "confirm": "確認",
     "menu": "メニュー",
     "first_name": "名前",
     "last_name": "姓",
-    "email": "電子メール",
+    "email": "メールアドレス",
     "contacts": "連絡先",
     "error": "エラー",
     "password": "パスワード",
-    "chats": "チャット",
+    "chats": "チャッツ",
     "profile": "プロフィール",
     "settings": "設定",
     "search": "検索",
@@ -17,22 +17,23 @@
     "login": "ログイン",
     "logout": "ログアウト",
     "cancel": "キャンセル",
-    "register": "登録する",
+    "register": "登録",
+    "draft_sent": "下書きを送信しました",
     "go_back": "戻る",
-    "go_back_hint": "スタート画面に戻る",
+    "go_back_hint": "最初の画面に戻る",
     "new_password": "新しいパスワード",
-    "confirm_password": "パスワードを確認する",
-    "confirm_new_password": "新しいパスワードを確認する",
-    "unknown_error": "何かが間違っていた",
+    "confirm_password": "パスワードを確認",
+    "confirm_new_password": "新しいパスワードを確認",
+    "unknown_error": "何かが間違っていました",
     "components": {
         "avatar_selector": {
             "take_photo": "写真を撮る",
-            "choose_from_library": "ライブラリから選択する",
+            "choose_from_library": "ライブラリから選択",
             "flip": "反転"
         },
         "contact_card": {
             "handleBlock_error": "連絡先をブロックできませんでした",
-            "handleAddOrRemove_error": "連絡先を追加/削除できませんでした",
+            "handleAddOrRemove_error": "連絡先の追加/削除でエラーが発生しました",
             "block_contact": "連絡先をブロックする",
             "unblock_contact": "連絡先のブロックを解除する",
             "add_contact": "連絡先を追加する",
@@ -40,64 +41,65 @@
         },
         "bottom_sheet": {
             "chat": {
-                "modify_chat": "チャットの変更",
-                "add_members": "メンバーを追加する",
+                "modify_chat": "チャットを変更",
+                "add_members": "メンバーを追加",
                 "kick_members": "メンバーをキックする",
-                "leave_chat_error": "チャットから抜けることができませんでした"
+                "leave_chat_error": "チャットから退出できませんでした",
+                "leave_chat": "チャットから退出"
             }
         }
     },
     "screens": {
         "auth": {
             "login": {
-                "no_account": "アカウントをお持ちでない場合は、登録してください"
+                "no_account": "アカウントをお持ちでない方は登録してください"
             },
             "register": {
-                "have_account": "すでにアカウントをお持ちですか？ログイン"
+                "have_account": "既にアカウントをお持ちの方はログインしてください"
             }
         },
         "chat": {
             "create": {
                 "title": "新しいチャット",
-                "handleCreateChat_error": "チャットの作成に失敗しました",
+                "handleCreateChat_error": "チャットを作成できませんでした",
                 "name_of_chat": "チャットの名前"
             },
             "individual": {
-                "message_placeholder": "メッセージを入力...",
+                "message_placeholder": "メッセージを入力してください...",
                 "editing_message": "メッセージを編集中",
                 "chat_options": "チャットオプション",
                 "send_message": "メッセージを送信する"
             },
             "members": {
-                "title_add": "メンバーを追加する",
+                "title_add": "メンバーを追加",
                 "title_kick": "メンバーをキックする",
-                "handleModifyMembers_error": "メンバーを変更できません",
-                "fail_load_members": "メンバーの読み込みに失敗しました"
+                "handleModifyMembers_error": "メンバーを変更できませんでした",
+                "fail_load_members": "メンバーをロードできませんでした"
             },
             "modify": {
-                "title": "チャットの変更",
-                "name_of_chat": "新しいチャットの名前",
-                "handleModifyChat_error": "チャットの変更に失敗しました"
+                "title": "チャットを変更",
+                "name_of_chat": "新しいチャット名",
+                "handleModifyChat_error": "チャットを変更できませんでした"
             },
             "view": {
-                "title": "チャット",
+                "title": "チャッツ",
                 "create_button": "新しいチャットを作成する"
             }
         },
         "contact": {
             "add": {
-                "no_results": "結果が見つかりませんでした",
-                "search_field": "連絡先のテキストボックスを検索する"
+                "no_results": "結果が見つかりません",
+                "search_field": "連絡先の検索フィールド"
             },
             "blocked": {
-                "title": "ブロックされた",
+                "title": "ブロックされた連絡先",
                 "no_blocked": "ブロックされた連絡先はありません"
             },
             "view": {
                 "title": "連絡先",
-                "no_contacts": "連絡先がありません",
-                "blocked_button": "ブロックされた連絡先を表示する",
-                "add_button": "新しい連絡先を検索する"
+                "no_contacts": "連絡先はありません",
+                "blocked_button": "ブロックされた連絡先を表示",
+                "add_button": "新しい連絡先を検索"
             }
         },
         "profile": {
@@ -115,7 +117,7 @@
     "utils": {
         "entry": {
             "name_too_short": "名前が短すぎます",
-            "invalid_email": "電子メールが無効です",
+            "invalid_email": "メールアドレスが無効です",
             "enter_password": "パスワードを入力してください",
             "password_too_short": "パスワードが短すぎます",
             "password_weak": "パスワードが弱すぎます",

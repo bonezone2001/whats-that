@@ -5,7 +5,7 @@
     "menu": "Меню",
     "first_name": "Имя",
     "last_name": "Фамилия",
-    "email": "Электронная почта",
+    "email": "Email",
     "contacts": "Контакты",
     "error": "Ошибка",
     "password": "Пароль",
@@ -14,10 +14,11 @@
     "settings": "Настройки",
     "search": "Поиск",
     "chat": "Чат",
-    "login": "Войти",
-    "logout": "Выйти",
-    "cancel": "Отменить",
-    "register": "Зарегистрироваться",
+    "login": "Вход",
+    "logout": "Выход",
+    "cancel": "Отмена",
+    "register": "Регистрация",
+    "draft_sent": "Черновик отправлен",
     "go_back": "Назад",
     "go_back_hint": "Вернуться на начальный экран",
     "new_password": "Новый пароль",
@@ -27,7 +28,7 @@
     "components": {
         "avatar_selector": {
             "take_photo": "Сделать фото",
-            "choose_from_library": "Выбрать из библиотеки",
+            "choose_from_library": "Выбрать фото",
             "flip": "Перевернуть"
         },
         "contact_card": {
@@ -43,29 +44,30 @@
                 "modify_chat": "Изменить чат",
                 "add_members": "Добавить участников",
                 "kick_members": "Исключить участников",
-                "leave_chat_error": "Не удалось выйти из чата"
+                "leave_chat_error": "Не удалось выйти из чата",
+                "leave_chat": "Выйти из чата"
             }
         }
     },
     "screens": {
         "auth": {
             "login": {
-                "no_account": "Ещё нет аккаунта? Зарегистрироваться"
+                "no_account": "Нет аккаунта? Зарегистрируйтесь"
             },
             "register": {
-                "have_account": "Уже есть аккаунт? Войти"
+                "have_account": "Уже есть аккаунт? Войдите"
             }
         },
         "chat": {
             "create": {
                 "title": "Новый чат",
                 "handleCreateChat_error": "Ошибка создания чата",
-                "name_of_chat": "Название чата"
+                "name_of_chat": "Имя чата"
             },
             "individual": {
-                "message_placeholder": "Напишите сообщение...",
+                "message_placeholder": "Введите сообщение...",
                 "editing_message": "Редактирование сообщения",
-                "chat_options": "Опции чата",
+                "chat_options": "Параметры чата",
                 "send_message": "Отправить сообщение"
             },
             "members": {
@@ -76,7 +78,7 @@
             },
             "modify": {
                 "title": "Изменить чат",
-                "name_of_chat": "Новое название чата",
+                "name_of_chat": "Новое имя чата",
                 "handleModifyChat_error": "Не удалось изменить чат"
             },
             "view": {
@@ -86,8 +88,8 @@
         },
         "contact": {
             "add": {
-                "no_results": "Ничего не найдено",
-                "search_field": "Поиск в окне текста контактов"
+                "no_results": "Результатов не найдено",
+                "search_field": "Поиск по контактам"
             },
             "blocked": {
                 "title": "Заблокированные",
@@ -96,18 +98,18 @@
             "view": {
                 "title": "Контакты",
                 "no_contacts": "Нет контактов",
-                "blocked_button": "Показать заблокированных контактов",
+                "blocked_button": "Посмотреть заблокированные контакты",
                 "add_button": "Поиск новых контактов"
             }
         },
         "profile": {
             "edit": {
-                "title": "Изменить профиль",
+                "title": "Редактировать профиль",
                 "change_avatar": "Изменить аватар"
             },
             "view": {
                 "title": "Профиль",
-                "edit_text": "Изменить профиль",
+                "edit_text": "Редактировать профиль",
                 "menu_hint": "Открыть меню настроек"
             }
         }
@@ -115,10 +117,10 @@
     "utils": {
         "entry": {
             "name_too_short": "Имя слишком короткое",
-            "invalid_email": "Неправильный адрес электронной почты",
-            "enter_password": "Пожалуйста, введите пароль",
+            "invalid_email": "Email недействителен",
+            "enter_password": "Введите пароль",
             "password_too_short": "Пароль слишком короткий",
-            "password_weak": "Пароль слишком простой",
+            "password_weak": "Пароль слишком слабый",
             "confirm_password": "Подтвердите пароль",
             "passwords_dont_match": "Пароли не совпадают"
         }

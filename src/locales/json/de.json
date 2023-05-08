@@ -1,6 +1,6 @@
 {
     "current_screen": "Aktueller Bildschirm",
-    "loading": "Ladevorgang...",
+    "loading": "Wird geladen...",
     "confirm": "Bestätigen",
     "menu": "Menü",
     "first_name": "Vorname",
@@ -18,8 +18,9 @@
     "logout": "Abmelden",
     "cancel": "Abbrechen",
     "register": "Registrieren",
+    "draft_sent": "Entwurf gesendet",
     "go_back": "Zurück",
-    "go_back_hint": "Zurück zum Startbildschirm",
+    "go_back_hint": "Zurück zur Startseite",
     "new_password": "Neues Passwort",
     "confirm_password": "Passwort bestätigen",
     "confirm_new_password": "Neues Passwort bestätigen",
@@ -27,33 +28,34 @@
     "components": {
         "avatar_selector": {
             "take_photo": "Foto aufnehmen",
-            "choose_from_library": "Aus Bibliothek wählen",
-            "flip": "Spiegeln"
+            "choose_from_library": "Aus der Bibliothek wählen",
+            "flip": "Drehen"
         },
         "contact_card": {
-            "handleBlock_error": "Blockieren des Kontakts fehlgeschlagen",
-            "handleAddOrRemove_error": "Fehler beim Hinzufügen / Entfernen des Kontakts",
+            "handleBlock_error": "Kontakt konnte nicht blockiert werden",
+            "handleAddOrRemove_error": "Fehler beim Hinzufügen/Entfernen des Kontakts",
             "block_contact": "Kontakt blockieren",
-            "unblock_contact": "Kontaktsperre aufheben",
+            "unblock_contact": "Kontakt freigeben",
             "add_contact": "Kontakt hinzufügen",
             "remove_contact": "Kontakt entfernen"
         },
         "bottom_sheet": {
             "chat": {
-                "modify_chat": "Chat ändern",
+                "modify_chat": "Chat bearbeiten",
                 "add_members": "Mitglieder hinzufügen",
                 "kick_members": "Mitglieder entfernen",
-                "leave_chat_error": "Verlassen des Chats nicht möglich"
+                "leave_chat_error": "Konnte den Chat nicht verlassen",
+                "leave_chat": "Chat verlassen"
             }
         }
     },
     "screens": {
         "auth": {
             "login": {
-                "no_account": "Sie haben noch keinen Account? Registrieren"
+                "no_account": "Sie haben noch kein Konto? Registrieren"
             },
             "register": {
-                "have_account": "Haben Sie bereits einen Account? Anmelden"
+                "have_account": "Sie haben bereits ein Konto? Anmelden"
             }
         },
         "chat": {
@@ -63,7 +65,7 @@
                 "name_of_chat": "Name des Chats"
             },
             "individual": {
-                "message_placeholder": "Nachricht eingeben...",
+                "message_placeholder": "Geben Sie eine Nachricht ein...",
                 "editing_message": "Nachricht bearbeiten",
                 "chat_options": "Chat-Optionen",
                 "send_message": "Nachricht senden"
@@ -71,13 +73,13 @@
             "members": {
                 "title_add": "Mitglieder hinzufügen",
                 "title_kick": "Mitglieder entfernen",
-                "handleModifyMembers_error": "Mitgliederänderungen nicht möglich",
-                "fail_load_members": "Fehler beim Laden der Mitglieder"
+                "handleModifyMembers_error": "Mitglieder konnten nicht bearbeitet werden",
+                "fail_load_members": "Mitglieder konnten nicht geladen werden"
             },
             "modify": {
-                "title": "Chat ändern",
+                "title": "Chat bearbeiten",
                 "name_of_chat": "Neuer Name des Chats",
-                "handleModifyChat_error": "Änderungen des Chats fehlgeschlagen"
+                "handleModifyChat_error": "Chat konnte nicht bearbeitet werden"
             },
             "view": {
                 "title": "Chats",
@@ -87,10 +89,10 @@
         "contact": {
             "add": {
                 "no_results": "Keine Ergebnisse gefunden",
-                "search_field": "Suchfeld für Kontakte"
+                "search_field": "Suchtextfeld für Kontakte"
             },
             "blocked": {
-                "title": "Geblockt",
+                "title": "Blockierte Kontakte",
                 "no_blocked": "Keine blockierten Kontakte"
             },
             "view": {
@@ -116,16 +118,16 @@
         "entry": {
             "name_too_short": "Name ist zu kurz",
             "invalid_email": "E-Mail ist ungültig",
-            "enter_password": "Bitte geben Sie das Passwort ein",
+            "enter_password": "Bitte geben Sie ein Passwort ein",
             "password_too_short": "Passwort ist zu kurz",
             "password_weak": "Passwort ist zu schwach",
-            "confirm_password": "Bitte bestätigen Sie das Passwort",
-            "passwords_dont_match": "Passwörter stimmen nicht überein"
+            "confirm_password": "Passwort bitte bestätigen",
+            "passwords_dont_match": "Die Passwörter stimmen nicht überein"
         }
     },
     "hooks": {
         "useLoadApiData": {
-            "error": "Daten können nicht aus der API geladen werden"
+            "error": "Daten konnten nicht von der API geladen werden"
         },
         "useChat": {
             "fetchMessages_error": "Nachrichten konnten nicht abgerufen werden",

@@ -1,29 +1,30 @@
 {
-    "current_screen": "Écran actuel",
+    "current_screen": "Écran Courant",
     "loading": "Chargement...",
-    "confirm": "Confirmez",
+    "confirm": "Confirmer",
     "menu": "Menu",
     "first_name": "Prénom",
-    "last_name": "Nom de famille",
+    "last_name": "Nom",
     "email": "E-mail",
     "contacts": "Contacts",
     "error": "Erreur",
     "password": "Mot de passe",
-    "chats": "Chats",
+    "chats": "Discussions",
     "profile": "Profil",
     "settings": "Paramètres",
-    "search": "Recherche",
+    "search": "Rechercher",
     "chat": "Discussion",
     "login": "Connexion",
-    "logout": "Se déconnecter",
+    "logout": "Déconnexion",
     "cancel": "Annuler",
     "register": "S'inscrire",
+    "draft_sent": "Brouillon envoyé",
     "go_back": "Retour",
     "go_back_hint": "Retour à l'écran de départ",
     "new_password": "Nouveau mot de passe",
-    "confirm_password": "Confirmez le mot de passe",
-    "confirm_new_password": "Confirmez le nouveau mot de passe",
-    "unknown_error": "Un problème est survenu",
+    "confirm_password": "Confirmer le mot de passe",
+    "confirm_new_password": "Confirmer le nouveau mot de passe",
+    "unknown_error": "Quelque chose s'est mal passé",
     "components": {
         "avatar_selector": {
             "take_photo": "Prendre une photo",
@@ -32,8 +33,8 @@
         },
         "contact_card": {
             "handleBlock_error": "Impossible de bloquer le contact",
-            "handleAddOrRemove_error": "Erreur lors de l'ajout/suppression de contact",
-            "block_contact": "Bloquer le contact",
+            "handleAddOrRemove_error": "Erreur lors de l'ajout/suppression du contact",
+            "block_contact": "Bloquer un contact",
             "unblock_contact": "Débloquer le contact",
             "add_contact": "Ajouter un contact",
             "remove_contact": "Supprimer le contact"
@@ -42,8 +43,9 @@
             "chat": {
                 "modify_chat": "Modifier la discussion",
                 "add_members": "Ajouter des membres",
-                "kick_members": "Expulser des membres",
-                "leave_chat_error": "Impossible de quitter la discussion"
+                "kick_members": "Exclure des membres",
+                "leave_chat_error": "Impossible de quitter la discussion",
+                "leave_chat": "Quitter la discussion"
             }
         }
     },
@@ -64,15 +66,15 @@
             },
             "individual": {
                 "message_placeholder": "Tapez un message...",
-                "editing_message": "Modifier le message",
-                "chat_options": "Options de la discussion",
+                "editing_message": "Modification du message",
+                "chat_options": "Options de discussion",
                 "send_message": "Envoyer le message"
             },
             "members": {
                 "title_add": "Ajouter des membres",
-                "title_kick": "Expulser des membres",
+                "title_kick": "Exclure des membres",
                 "handleModifyMembers_error": "Impossible de modifier les membres",
-                "fail_load_members": "Impossible de charger les membres"
+                "fail_load_members": "Échec du chargement des membres"
             },
             "modify": {
                 "title": "Modifier la discussion",
@@ -80,17 +82,17 @@
                 "handleModifyChat_error": "Impossible de modifier la discussion"
             },
             "view": {
-                "title": "Chats",
+                "title": "Discussions",
                 "create_button": "Créer une nouvelle discussion"
             }
         },
         "contact": {
             "add": {
                 "no_results": "Aucun résultat trouvé",
-                "search_field": "Boîte de texte de recherche de contacts"
+                "search_field": "Champ de recherche pour les contacts"
             },
             "blocked": {
-                "title": "Bloqué",
+                "title": "Bloqués",
                 "no_blocked": "Aucun contact bloqué"
             },
             "view": {
@@ -103,20 +105,20 @@
         "profile": {
             "edit": {
                 "title": "Modifier le profil",
-                "change_avatar": "Modifier l'image de profil"
+                "change_avatar": "Changer d'avatar"
             },
             "view": {
                 "title": "Profil",
                 "edit_text": "Modifier le profil",
-                "menu_hint": "Ouvrir le menu de paramètres"
+                "menu_hint": "Ouvrir le menu des paramètres"
             }
         }
     },
     "utils": {
         "entry": {
             "name_too_short": "Le nom est trop court",
-            "invalid_email": "L'e-mail est invalide",
-            "enter_password": "Veuillez entrer le mot de passe",
+            "invalid_email": "L'e-mail n'est pas valide",
+            "enter_password": "Veuillez entrer un mot de passe",
             "password_too_short": "Le mot de passe est trop court",
             "password_weak": "Le mot de passe est trop faible",
             "confirm_password": "Veuillez confirmer le mot de passe",
