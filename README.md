@@ -10,6 +10,11 @@ Getting Started
 
 To get started, clone this repository and run `npm install` to install all dependencies. Then, you can run the app using `npm run start`.
 
+Video
+--------------
+
+The video is stored as SCREENCAST.mp4. Due to time constraints, the video doesn't showcase the accessibility or ability to see when a scheduled chat is due to send (just tap on it and it'll show). I probably missed other things out of the video but it shows the general video.
+
 Libraries Used / Credits
 --------------
 
