@@ -90,7 +90,7 @@ export const useChat = ({
                 || draft?.message,
             );
             if (trimmedMsg === '') return;
-            
+
             if (editMessage && !isDraft) {
                 await api.editMessage(chat.chat_id, editMessage.message_id, trimmedMsg);
                 onMessageEdit(editMessage);
@@ -205,14 +205,17 @@ export const useChat = ({
     };
 
     const setOnNewMessages = (callback) => {
+        // eslint-disable-next-line no-param-reassign
         onNewMessages = callback;
     };
 
     const setOnMessageEdit = (callback) => {
+        // eslint-disable-next-line no-param-reassign
         onMessageEdit = callback;
     };
 
     const setOnMessageDelete = (callback) => {
+        // eslint-disable-next-line no-param-reassign
         onMessageDelete = callback;
     };
 

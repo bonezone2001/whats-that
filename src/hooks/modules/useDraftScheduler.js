@@ -2,7 +2,7 @@
 
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEffect, useState } from 'react';
-import { chatUtils } from '@utils';
+import { apiUtils, chatUtils } from '@utils';
 import { useStore } from '@store';
 import { t } from '@locales';
 import api from '@api';
@@ -28,9 +28,9 @@ export const useDraftScheduler = () => {
                 .flat();
 
             // Send scheduled drafts
-            draftsToSend.forEach((entry) => {
+            draftsToSend.forEach(async (entry) => {
                 if (store.chats.find((chat) => chat.chat_id === entry.chatId)) {
-                    api.sendMessage(entry.chatId, entry.draft.message);
+                    await api.sendMessage(entry.chatId, entry.draft.message);
                     Toast.show({
                         type: 'success',
                         text1: t('draft_sent'),
@@ -39,9 +39,9 @@ export const useDraftScheduler = () => {
                 }
                 chatUtils.removeDraftFromStorage(entry.chatId, entry.draft.created);
             });
-        }, 30_000);
+        }, 10_000);
         return () => clearInterval(interval);
-    }, [isStarted, store.drafts]);
+    }, [isStarted, store.drafts, store.chats]);
 
     return {
         startScheduler,
