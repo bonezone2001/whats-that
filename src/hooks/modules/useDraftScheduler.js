@@ -2,7 +2,7 @@
 
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEffect, useState } from 'react';
-import { apiUtils, chatUtils } from '@utils';
+import { chatUtils } from '@utils';
 import { useStore } from '@store';
 import { t } from '@locales';
 import api from '@api';

@@ -102,7 +102,7 @@ export default function ChatIndividual({ route }) {
         let isSameAuthorAsNext = false;
         let shouldShowTimestamp = false;
         if (!item.isDraft) {
-            isSameAuthorAsNext = chatUtils.isSameAuthorAsNext(item, index, chat.chatMessages);
+            isSameAuthorAsNext = chatUtils.isSameAuthorAsNext(index, chat.chatMessages);
             shouldShowTimestamp = chatUtils.shouldShowTimestamp(index, chat.chatMessages);
         }
 
@@ -181,7 +181,7 @@ export default function ChatIndividual({ route }) {
                         setDateTimeMode(DateTimePickerMode.Day);
                         chat.postDateTime.setTime(date.getTime());
                         chat.setShowDatePicker(false);
-                        chat.handleScheduleDraft()
+                        chat.handleScheduleDraft();
                     }
                 }}
                 onCancel={() => {
