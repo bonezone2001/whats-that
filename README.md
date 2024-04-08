@@ -1,5 +1,3 @@
-Check out the [Github Repo](https://github.com/bonezone2001/whats-that) for this project.
-
 Whatsthat - React Native App
 ============================
 
